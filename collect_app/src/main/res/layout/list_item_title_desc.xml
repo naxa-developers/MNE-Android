@@ -21,6 +21,7 @@
 
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rela_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -53,23 +53,11 @@ public class TitleDescAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
         View v1 = inflater.inflate(R.layout.list_item_title_desc, parent, false);
-        viewHolder = new TitleDescAdapter.TitleDescVH(v1);
+        viewHolder = new TitleDescVH(v1);
 
         return viewHolder;
     }
 
-    protected class TitleDescVH extends RecyclerView.ViewHolder {
-        public final RelativeLayout rootLayout;
-        public TextView tvTitle, tvDesc, tvIconText;
-
-        public TitleDescVH(View itemView) {
-            super(itemView);
-            rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
-            tvTitle = itemView.findViewById(R.id.tv_list_item_title);
-            tvDesc = itemView.findViewById(R.id.tv_list_item_desc);
-            tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
-        }
-    }
 
     public void add(TitleDesc mc) {
         listOfItems.add(mc);

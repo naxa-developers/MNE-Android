@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Activity {
-
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("activity_group")
     @Expose
     private Integer activityGroup;
@@ -42,6 +44,15 @@ public class Activity {
     @SerializedName("target_met")
     @Expose
     private Boolean targetMet;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Integer getActivityGroup() {
         return activityGroup;

@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Activitygroup {
 
+
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("output")
     @Expose
     private Integer output;
@@ -23,6 +27,14 @@ public class Activitygroup {
     @SerializedName("cluster")
     @Expose
     private Integer cluster;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Integer getOutput() {
         return output;

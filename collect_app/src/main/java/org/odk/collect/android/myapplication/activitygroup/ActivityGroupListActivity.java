@@ -7,8 +7,10 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.BaseAdapter;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormDownloadList;
@@ -17,14 +19,18 @@ import org.odk.collect.android.activities.MainMenuActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activity.ActivityListActivity;
+import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
+import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
+import org.odk.collect.android.myapplication.common.TitleDescVH;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -37,6 +43,8 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
+    private ArrayList<TitleDesc> titleDescs;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                     public void onNext(ArrayList<TitleDesc> titleDescs) {
                         listAdapter.clear();
                         listAdapter.addAll(titleDescs);
+                        ActivityGroupListActivity.this.titleDescs = titleDescs;
                     }
 
                     @Override
@@ -102,9 +111,19 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
                     }
                 });
-        listAdapter = new TitleDescAdapter();
-        listAdapter.setOnCardClickListener(this);
-        recyclerView.setAdapter(listAdapter);
+
+        BaseRecyclerViewAdapter<TitleDesc, TitleDescVH> adapter = new BaseRecyclerViewAdapter<TitleDesc, TitleDescVH>(titleDescs,R.layout.list_item_title_desc) {
+            @Override
+            public void viewBinded(TitleDescVH titleDescVH, TitleDesc titleDesc) {
+                titleDescVH.bindView(titleDesc);
+            }
+
+            @Override
+            public TitleDescVH attachViewHolder(View view) {
+                return new TitleDescVH(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -156,6 +175,9 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onCardClicked(TitleDesc surveyForm) {
-        ActivityUtil.openActivity(ActivityListActivity.class, this, null, false);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("cluster_id", surveyForm.getSecondaryId());
+
+        ActivityUtil.openActivity(BeneficiariesActivity.class, this, hashMap, false);
     }
 }
