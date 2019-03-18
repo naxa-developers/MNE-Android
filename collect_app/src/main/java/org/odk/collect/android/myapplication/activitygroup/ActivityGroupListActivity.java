@@ -110,9 +110,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        showProgress();
-
-
     }
 
     @Override
