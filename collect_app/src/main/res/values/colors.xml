@@ -48,4 +48,19 @@ the License.
     <color name="locationStatusSearching">#333333</color>
     <color name="locationStatusAcceptable">#337733</color>
     <color name="locationStatusUnacceptable">#773333</color>
+
+
+    <color name="colorPrimary">@color/bg_dark</color>
+    <color name="colorPrimaryDark">@color/bg_dark</color>
+    <color name="colorAccent">@color/green</color>
+
+    <color name="textColor">#8c909a</color>
+    <color name="green">#00A890</color>
+    <color name="orange">#E69A34</color>
+    <color name="bg_dark">#1E1E2F</color>
+    <color name="bg_light">#27293D</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+
+
 </resources>

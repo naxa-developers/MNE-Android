@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_small"
+    android:layout_marginRight="@dimen/margin_small"
+    android:background="@android:color/white"
+    app:cardUseCompatPadding="true"
+    style="@style/CardViewStyleDark"
+    card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
+    card_view:cardElevation="@dimen/card_recycler_elevation">
+
+    <RelativeLayout
+        android:id="@+id/card_view_list_item_title_desc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_large">
+
+
+        <RelativeLayout
+            android:id="@+id/rela_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large">
+
+
+            <TextView
+                android:id="@+id/title_desc_tv_icon_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_medium" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/rela_round"
+            android:layout_toRightOf="@id/rela_round"
+            android:text="Title"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/tv_list_item_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_list_item_title"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_toEndOf="@id/rela_round"
+            android:layout_toRightOf="@id/rela_round"
+            android:text="Subtitle"
+            android:textColor="@color/textColor"/>
+
+
+        <!--progress layout-->
+        <RelativeLayout
+            android:layout_below="@id/tv_list_item_desc"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_completion_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="5/9"
+                android:textColor="@color/green"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_completed_lbl"
+                android:layout_below="@id/tv_completion_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Completed"
+                android:textColor="@color/green"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/determinate_progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/greenprogressbarbg"
+                android:layout_below="@id/tv_completed_lbl"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_large"
+                android:progress="60"
+                android:backgroundTint="@color/green"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

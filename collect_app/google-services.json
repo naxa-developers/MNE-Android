@@ -1,32 +1,34 @@
 {
   "project_info": {
-    "project_number": "895206029843",
-    "project_id": "opendatakit-collect-forks"
+    "project_number": "561674404239",
+    "firebase_url": "https://mande-5962b.firebaseio.com",
+    "project_id": "mande-5962b",
+    "storage_bucket": "mande-5962b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:895206029843:android:5e1d7c3c296329e8",
+        "mobilesdk_app_id": "1:561674404239:android:8fe19d91b4bf7af5",
         "android_client_info": {
-          "package_name": "org.odk.collect.android"
+          "package_name": "np.com.naxa.mande"
         }
       },
       "oauth_client": [
         {
-          "client_id": "895206029843-btufcdli1qptfd4sjrq5f0vdacsg68fj.apps.googleusercontent.com",
+          "client_id": "561674404239-m7bl96ob7kfhmn6eptco19aai04bjpiv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAD_MRym4ELgrqCJ4IGkPAdkfPXYX1WDeI"
+          "current_key": "AIzaSyBx3a1Kel7D_MPYg2fIJlALV058p1ST1Nk"
         }
       ],
       "services": {
         "analytics_service": {
           "status": 2,
           "analytics_property": {
-            "tracking_id": "UA-111083836-1"
+            "tracking_id": "UA-DEMONIHO"
           }
         },
         "appinvite_service": {
@@ -34,7 +36,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
