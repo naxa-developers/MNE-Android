@@ -1,6 +1,9 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.activities.FormDownloadList;
+import org.odk.collect.android.activities.GoogleDriveActivity;
+import org.odk.collect.android.activities.MainMenuActivity;
+import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activity.ActivityListActivity;
 import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
+import org.odk.collect.android.preferences.GeneralKeys;
+import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.ArrayList;
 
@@ -41,7 +50,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-
+                        showProgress();
                     }
                 })
                 .doOnTerminate(new Action() {
@@ -68,6 +77,8 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
                     }
                 });
+
+        findViewById(R.id.download_forms).setOnClickListener(this);
     }
 
     private void initView() {
@@ -118,6 +129,29 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
             case R.id.btn_retry:
                 // TODO 19/03/17
                 break;
+            case R.id.download_forms:
+                if (Collect.allowClick(getClass().getName())) {
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(ActivityGroupListActivity.this);
+                    String protocol = sharedPreferences.getString(
+                            GeneralKeys.KEY_PROTOCOL, getString(R.string.protocol_odk_default));
+                    Intent i = null;
+                    if (protocol.equalsIgnoreCase(getString(R.string.protocol_google_sheets))) {
+                        if (PlayServicesUtil.isGooglePlayServicesAvailable(ActivityGroupListActivity.this)) {
+                            i = new Intent(getApplicationContext(),
+                                    GoogleDriveActivity.class);
+                        } else {
+                            PlayServicesUtil.showGooglePlayServicesAvailabilityErrorDialog(ActivityGroupListActivity.this);
+                            return;
+                        }
+                    } else {
+                        i = new Intent(getApplicationContext(),
+                                FormDownloadList.class);
+                    }
+                    startActivity(i);
+                }
+                break;
+
             default:
                 break;
         }

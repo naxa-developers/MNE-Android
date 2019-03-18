@@ -27,9 +27,9 @@ public class Activity {
     @SerializedName("end_date")
     @Expose
     private String endDate;
-    @SerializedName("form")
+    @SerializedName("id_string")
     @Expose
-    private Integer form;
+    private String form;
     @SerializedName("target_complete")
     @Expose
     private Boolean targetComplete;
@@ -99,11 +99,11 @@ public class Activity {
         this.endDate = endDate;
     }
 
-    public Integer getForm() {
+    public String getForm() {
         return form;
     }
 
-    public void setForm(Integer form) {
+    public void setForm(String form) {
         this.form = form;
     }
 

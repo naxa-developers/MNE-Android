@@ -709,5 +709,6 @@
     <string name="action_check_now">Check Now</string>
     <string name="msg_please_wait">Please wait. This could take a few minutes.</string>
     <string name="toolbar_title_activities">Activities</string>
+    <string name="action_download">Download</string>
     <!--mande strings end-->
 </resources>

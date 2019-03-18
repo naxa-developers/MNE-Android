@@ -73,7 +73,7 @@ public class ActivityGroupRemoteSource {
                                 for (Activity activity : activitygroup.getActivity()){
                                     String name = activity.getName();
                                     String desc = activity.getDescription();
-                                    titleDesc = new TitleDesc(name, desc, "", "");
+                                    titleDesc = new TitleDesc(name, desc, activity.getForm(), "");
                                     titleDescs.add(titleDesc);
                                 }
                             }
