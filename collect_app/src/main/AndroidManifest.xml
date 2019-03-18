@@ -74,14 +74,14 @@
         android:supportsRtl="true">
         <activity android:name=".myapplication.beneficary.BeneficiariesActivity"></activity>
 
-        <provider
-            android:name=".provider.FormsProvider"
-            android:authorities="org.odk.collect.android.provider.odk.forms"
-            android:exported="true" />
-        <provider
-            android:name=".provider.InstanceProvider"
-            android:authorities="org.odk.collect.android.provider.odk.instances"
-            android:exported="true" />
+        <!--<provider-->
+            <!--android:name=".provider.FormsProvider"-->
+            <!--android:authorities="org.odk.collect.android.provider.odk.forms"-->
+            <!--android:exported="true" />-->
+        <!--<provider-->
+            <!--android:name=".provider.InstanceProvider"-->
+            <!--android:authorities="org.odk.collect.android.provider.odk.instances"-->
+            <!--android:exported="true" />-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

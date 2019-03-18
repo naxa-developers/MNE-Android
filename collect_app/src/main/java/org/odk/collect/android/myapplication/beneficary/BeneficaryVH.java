@@ -1,4 +1,4 @@
-package org.odk.collect.android.myapplication.common;
+package org.odk.collect.android.myapplication.beneficary;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,16 +6,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.myapplication.activity.ActivityListActivity;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.HashMap;
 
-public class TitleDescVH extends RecyclerView.ViewHolder {
+public class BeneficaryVH extends RecyclerView.ViewHolder {
     final RelativeLayout rootLayout;
     TextView tvTitle, tvDesc, tvIconText;
 
-    public TitleDescVH(View itemView) {
+    public BeneficaryVH(View itemView) {
         super(itemView);
         rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
         tvTitle = itemView.findViewById(R.id.tv_list_item_title);
@@ -23,16 +24,16 @@ public class TitleDescVH extends RecyclerView.ViewHolder {
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
     }
 
-    public void bindView(TitleDesc desc) {
+    public void bindView(BeneficaryResponse desc) {
         tvTitle.setText(desc.getName());
+        tvDesc.setText(desc.getAddress());
         itemView.setOnClickListener(addClickListener(desc));
     }
 
-    View.OnClickListener addClickListener(TitleDesc desc) {
+    View.OnClickListener addClickListener(BeneficaryResponse desc) {
         return v -> {
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("cluster_id", desc.getSecondaryId());
-            ActivityUtil.openActivity(BeneficiariesActivity.class, itemView.getContext(), hashMap, false);
+            ActivityUtil.openActivity(ActivityListActivity.class, itemView.getContext(), hashMap, false);
         };
     }
 }

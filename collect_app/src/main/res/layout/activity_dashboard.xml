@@ -35,9 +35,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/download_forms"
-                layout="@layout/grid_item" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/download_forms"
+                    layout="@layout/grid_item" />
+
+                <RelativeLayout
+                    android:id="@+id/upload_forms"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:background="@color/bg_dark"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/action_upload"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/text_size_small" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
 
             <org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport
                 android:id="@+id/rv_activity_group"

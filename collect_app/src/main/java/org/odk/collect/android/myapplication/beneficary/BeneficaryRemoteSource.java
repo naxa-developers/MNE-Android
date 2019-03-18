@@ -21,17 +21,8 @@ public class BeneficaryRemoteSource {
     }
 
 
-    public Observable<List<ClusterResponse>> getBeneficaryByClusterId(String clusterId){
+    public Observable<List<BeneficaryResponse>> getBeneficaryByClusterId(String clusterId){
         return ServiceGenerator.createService(BenficaryAPI.class).getBenficaryForCluster(clusterId);
     }
 
-    public Observable<List<TitleDesc>> getBeneficaryByClusterIdAsTitleDesc(String clusterId){
-        return ServiceGenerator.createService(BenficaryAPI.class).getBenficaryForCluster(clusterId)
-                .map(new Function<List<ClusterResponse>, List<TitleDesc>>() {
-                    @Override
-                    public List<TitleDesc> apply(List<ClusterResponse> clusterResponses) throws Exception {
-                        return null;
-                    }
-                });
-    }
 }

@@ -7,18 +7,15 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.BaseAdapter;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormDownloadList;
 import org.odk.collect.android.activities.GoogleDriveActivity;
-import org.odk.collect.android.activities.MainMenuActivity;
+import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
-import org.odk.collect.android.myapplication.activity.ActivityListActivity;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
@@ -43,7 +40,8 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
-    private ArrayList<TitleDesc> titleDescs;
+    private ArrayList<TitleDesc> titleDescs = new ArrayList<>(0);
+    private BaseRecyclerViewAdapter<TitleDesc, TitleDescVH> adapter;
 
 
     @Override
@@ -51,7 +49,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initView();
-        setupListAdapter();
+        setupListAdapter(titleDescs);
 
         dis = ActivityGroupRemoteSource.getInstance()
                 .getAllActivitiesGroup()
@@ -70,9 +68,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 .subscribeWith(new DisposableObserver<ArrayList<TitleDesc>>() {
                     @Override
                     public void onNext(ArrayList<TitleDesc> titleDescs) {
-                        listAdapter.clear();
-                        listAdapter.addAll(titleDescs);
-                        ActivityGroupListActivity.this.titleDescs = titleDescs;
+                        setupListAdapter(titleDescs);
                     }
 
                     @Override
@@ -88,6 +84,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 });
 
         findViewById(R.id.download_forms).setOnClickListener(this);
+        findViewById(R.id.upload_forms).setOnClickListener(this);
     }
 
     private void initView() {
@@ -99,7 +96,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void setupListAdapter() {
+    private void setupListAdapter(ArrayList<TitleDesc> titleDescs) {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -112,7 +109,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                     }
                 });
 
-        BaseRecyclerViewAdapter<TitleDesc, TitleDescVH> adapter = new BaseRecyclerViewAdapter<TitleDesc, TitleDescVH>(titleDescs,R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<TitleDesc, TitleDescVH>(titleDescs, R.layout.list_item_title_desc) {
             @Override
             public void viewBinded(TitleDescVH titleDescVH, TitleDesc titleDesc) {
                 titleDescVH.bindView(titleDesc);
@@ -167,6 +164,14 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                     startActivity(i);
                 }
                 break;
+            case R.id.upload_forms:
+                if (Collect.allowClick(getClass().getName())) {
+                    Intent i = new Intent(getApplicationContext(),
+                            InstanceUploaderList.class);
+                    startActivity(i);
+                }
+                break;
+
 
             default:
                 break;
