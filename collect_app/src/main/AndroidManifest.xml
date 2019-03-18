@@ -164,7 +164,7 @@ the specific language governing permissions and limitations under the License.
         <activity android:name=".activities.FormDownloadList">
             <intent-filter>
                 <action android:name="org.odk.collect.android.FORM_DOWNLOAD" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.dir/vnd.odk.form" />
             </intent-filter>
         </activity>
@@ -184,11 +184,10 @@ the specific language governing permissions and limitations under the License.
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.InstanceUploaderActivity">
+        <activity android:name=".activities.InstanceUploaderActivity">
             <intent-filter>
                 <action android:name="org.odk.collect.android.INSTANCE_UPLOAD" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.dir/vnd.odk.instance" />
             </intent-filter>
         </activity>
@@ -208,12 +207,6 @@ the specific language governing permissions and limitations under the License.
         <activity
             android:name=".activities.SplashScreenActivity"
             android:theme="@android:style/Theme.Dialog">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- Enable Shortcuts for Command Actions -->
         <activity
@@ -270,5 +263,28 @@ the specific language governing permissions and limitations under the License.
         <activity android:name=".activities.WebViewActivity" />
         <activity android:name=".activities.CaptureSelfieVideoActivity" />
         <activity android:name=".activities.CaptureSelfieVideoActivityNewApi" />
+
+        <activity
+            android:name=".myapplication.onboarding.LoginActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <activity
+            android:name=".myapplication.PracticalActionSplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".myapplication.activitygroup.ActivityGroupListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".myapplication.activity.ActivityListActivity"
+            android:exported="true" />
     </application>
 </manifest>

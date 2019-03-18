@@ -68,7 +68,7 @@ android {
     compileSdkVersion(28)
 
     defaultConfig {
-        applicationId('org.odk.collect.android')
+        applicationId('np.com.naxa.mande')
         minSdkVersion(16)
         targetSdkVersion(26)
         versionCode LEGACY_BUILD_NUMBER_OFFSET + getMasterCommitCount()
@@ -181,7 +181,13 @@ allprojects {
 }
 
 dependencies {
+    ext.retrofit_version = "2.4.0"
     implementation fileTree(dir: 'libs', include: '*.jar')
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
     implementation "com.android.support:support-v13:${rootProject.supportLibraryVersion}"
     implementation "com.android.support:customtabs:${rootProject.supportLibraryVersion}"
     implementation "com.android.support:design:${rootProject.supportLibraryVersion}"
