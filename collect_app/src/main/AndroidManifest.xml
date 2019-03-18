@@ -207,12 +207,6 @@ the specific language governing permissions and limitations under the License.
         <activity
             android:name=".activities.SplashScreenActivity"
             android:theme="@android:style/Theme.Dialog">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- Enable Shortcuts for Command Actions -->
         <activity
@@ -277,7 +271,7 @@ the specific language governing permissions and limitations under the License.
 
         </activity>
         <activity
-            android:name=".myapplication.SplashScreenActivity"
+            android:name=".myapplication.PracticalActionSplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
