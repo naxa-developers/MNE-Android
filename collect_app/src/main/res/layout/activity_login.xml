@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,12 +15,15 @@
         android:orientation="vertical"
         tools:context=".onboarding.LoginActivity">
 
+
+
         <RelativeLayout
             android:id="@+id/header_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
+                android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/login_cover_legacy" />
@@ -52,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/header_wrapper"
             android:text="@string/pratical_action_motto"
-
             />
 
 
