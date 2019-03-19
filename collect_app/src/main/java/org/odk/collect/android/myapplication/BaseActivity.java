@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.CollectAbstractActivity;
+import org.odk.collect.android.activities.FormEntryActivity;
+import org.odk.collect.android.utilities.ThemeUtils;
 
 
 public class BaseActivity extends CollectAbstractActivity {
@@ -22,7 +24,8 @@ public class BaseActivity extends CollectAbstractActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        themeUtils = new ThemeUtils(this);
+        setTheme(themeUtils.getPracticalActionTheme());
     }
 
     @Override
@@ -67,19 +70,19 @@ public class BaseActivity extends CollectAbstractActivity {
     }
 
     protected void showProgress() {
-        try{
+        try {
             findViewById(R.id.fl_toolbar_progress_wrapper).setVisibility(View.VISIBLE);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //unused
             e.printStackTrace();
         }
-     }
+    }
 
 
     protected void hideProgress() {
-        try{
+        try {
             findViewById(R.id.fl_toolbar_progress_wrapper).setVisibility(View.GONE);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //unused
             e.printStackTrace();
         }
