@@ -35,12 +35,7 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
         showDialogOK();
     }
 
-<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
 
-        new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
-            @Override
-            public void granted() {
-=======
     private void showDialogOK() {
         new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
             @Override
@@ -52,17 +47,14 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
                             e.getMessage(), EXIT), PracticalActionSplashScreenActivity.this);
                     return;
                 }
->>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
                 startSplash();
             }
 
             @Override
             public void denied() {
-
+                finishAffinity();
             }
         });
-<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
-=======
     }
 
     @Override
@@ -78,13 +70,6 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
                 break;
         }
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
->>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
-    }
-
 
     private void startSplash() {
         int SPLASH_TIME = 3000;
