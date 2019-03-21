@@ -3,16 +3,16 @@ package org.odk.collect.android.myapplication.activitygroup;
 import android.content.Context;
 
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.myapplication.activitygroup.model.Activitygroup;
+import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.database.PracticalActionDatabase;
 import org.odk.collect.android.myapplication.database.base.BaseLocalDataSourceRX;
 import org.odk.collect.android.myapplication.database.dao.ActivityGroupDAO;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 
-public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<Activitygroup> {
+public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<ActivityGroup> {
     private static ActivityGroupLocalSouce INSTANCE = null;
     private final ActivityGroupDAO dao;
 
@@ -32,12 +32,12 @@ public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<Activitygr
 
 
     @Override
-    public Completable save(Activitygroup... items) {
+    public Completable save(ActivityGroup... items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 
     @Override
-    public Completable save(ArrayList<Activitygroup> items) {
+    public Completable save(List<ActivityGroup> items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 }

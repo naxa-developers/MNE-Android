@@ -9,7 +9,7 @@ import org.odk.collect.android.myapplication.database.PracticalActionDatabase;
 import org.odk.collect.android.myapplication.database.base.BaseLocalDataSourceRX;
 import org.odk.collect.android.myapplication.database.dao.ActivityDAO;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 
@@ -38,8 +38,7 @@ public class ActivityLocalSource implements BaseLocalDataSourceRX<Activity> {
     }
 
     @Override
-    public Completable save(ArrayList<Activity> items) {
+    public Completable save(List<Activity> items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
-
 }

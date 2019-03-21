@@ -1,14 +1,21 @@
 
 package org.odk.collect.android.myapplication.activitygroup.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Activitygroup {
 
+@Entity(tableName = "activity_groups",
+        primaryKeys = {"id"})
+public class ActivityGroup {
 
+    @NonNull
     @SerializedName("id")
     @Expose
     private String id;
@@ -23,6 +30,7 @@ public class Activitygroup {
     private String description;
     @SerializedName("activity")
     @Expose
+    @Ignore
     private List<Activity> activity = null;
     @SerializedName("cluster")
     @Expose

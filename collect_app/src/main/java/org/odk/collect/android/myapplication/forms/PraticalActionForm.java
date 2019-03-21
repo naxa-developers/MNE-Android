@@ -18,6 +18,14 @@ public class PraticalActionForm {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getBeneficiaryId() {
         return beneficiaryId;
     }

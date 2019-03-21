@@ -1,6 +1,8 @@
 package org.odk.collect.android.myapplication.beneficary;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -8,25 +10,21 @@ import android.view.View;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
-import org.odk.collect.android.myapplication.activity.ActivityListActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
-import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
-import org.odk.collect.android.myapplication.common.TitleDescVH;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
-import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class BeneficiariesActivity extends BaseActivity {
 
-    DisposableObserver<List<BeneficaryResponse>> dis;
+    DisposableObserver<Object> dis;
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
@@ -41,19 +39,24 @@ public class BeneficiariesActivity extends BaseActivity {
         HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         String clusterId = hashMap.get("cluster_id");
 
-        dis = BeneficaryRemoteSource.getInstance().getBeneficaryByClusterId(clusterId)
+        BeneficaryLocalSource.getInstance().getById("1")
+                .observe(this, beneficiaries -> {
+                    Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
+                    setupListAdapter(beneficiaries);
+                });
+
+        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByClusterId(clusterId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<BeneficaryResponse>>() {
+                .subscribeWith(new DisposableObserver<Object>() {
                     @Override
-                    public void onNext(List<BeneficaryResponse> beneficaryResponses) {
-                        setupListAdapter(beneficaryResponses);
+                    public void onNext(Object o) {
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
-                        toast(e.getMessage());
+                        Timber.e(e);
                     }
 
                     @Override

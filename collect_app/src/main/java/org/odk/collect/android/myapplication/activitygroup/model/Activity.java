@@ -1,12 +1,18 @@
 
 package org.odk.collect.android.myapplication.activitygroup.model;
 
+import android.arch.persistence.room.Entity;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "activities",
+        primaryKeys = {"id"})
 public class Activity {
     @SerializedName("id")
     @Expose
+    @NonNull
     private String id;
     @SerializedName("activity_group")
     @Expose

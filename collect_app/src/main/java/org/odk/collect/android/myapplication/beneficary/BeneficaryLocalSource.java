@@ -1,13 +1,14 @@
 package org.odk.collect.android.myapplication.beneficary;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.myapplication.database.dao.BeneficiaryDAO;
 import org.odk.collect.android.myapplication.database.PracticalActionDatabase;
 import org.odk.collect.android.myapplication.database.base.BaseLocalDataSourceRX;
+import org.odk.collect.android.myapplication.database.dao.BeneficiaryDAO;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 
@@ -36,8 +37,11 @@ public class BeneficaryLocalSource implements BaseLocalDataSourceRX<BeneficaryRe
     }
 
     @Override
-    public Completable save(ArrayList<BeneficaryResponse> items) {
+    public Completable save(List<BeneficaryResponse> items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 
+    public LiveData<List<BeneficaryResponse>> getById(String clusterID) {
+        return dao.getById();
+    }
 }

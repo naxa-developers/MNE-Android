@@ -1,7 +1,7 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
-import org.odk.collect.android.myapplication.activitygroup.model.Activitygroup;
+import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.activitygroup.model.ClusterResponse;
 import org.odk.collect.android.myapplication.api.ServiceGenerator;
 import org.odk.collect.android.myapplication.common.TitleDesc;
@@ -44,7 +44,7 @@ public class ActivityGroupRemoteSource {
                         ArrayList<TitleDesc> titleDescs = new ArrayList<>();
                         TitleDesc titleDesc;
                         for (ClusterResponse clusterResponse : clusterResponses) {
-                            for (Activitygroup activitygroup : clusterResponse.getActivitygroup()) {
+                            for (ActivityGroup activitygroup : clusterResponse.getActivitygroup()) {
                                 String clusterId = clusterResponse.getId();
                                 String name = activitygroup.getName();
                                 String desc = activitygroup.getDescription();
@@ -70,7 +70,7 @@ public class ActivityGroupRemoteSource {
                         ArrayList<TitleDesc> titleDescs = new ArrayList<>();
                         TitleDesc titleDesc;
                         for (ClusterResponse clusterResponse : clusterResponses) {
-                            for (Activitygroup activitygroup : clusterResponse.getActivitygroup()) {
+                            for (ActivityGroup activitygroup : clusterResponse.getActivitygroup()) {
                                 for (Activity activity : activitygroup.getActivity()) {
                                     String name = activity.getName();
                                     String desc = activity.getDescription();
