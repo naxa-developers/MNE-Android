@@ -7,12 +7,8 @@ import org.odk.collect.android.myapplication.database.PracticalActionDatabase;
 import org.odk.collect.android.myapplication.database.base.BaseLocalDataSourceRX;
 import org.odk.collect.android.myapplication.database.dao.PracticalActionFormsDAO;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Completable;
-import io.reactivex.functions.Action;
-
 public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionForm> {
 
     private static FormsLocalSource INSTANCE = null;
@@ -40,6 +36,11 @@ public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionFor
     @Override
     public Completable saveCompletable(List<PraticalActionForm> items) {
         return Completable.fromAction(() -> dao.insert(items));
+    }
+
+
+    public void save(PraticalActionForm... items) {
+        dao.insert(items);
     }
 
 }

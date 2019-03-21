@@ -80,7 +80,6 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
     @Override
     protected SaveResult doInBackground(Void... nothing) {
         SaveResult saveResult = new SaveResult();
-
         FormController formController = Collect.getInstance().getFormController();
 
         publishProgress(Collect.getInstance().getString(R.string.survey_saving_validating_message));
@@ -140,6 +139,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
             saveResult.setSaveResult(SAVE_ERROR, markCompleted);
         }
 
+        saveResult.setUri(uri);
         return saveResult;
     }
 
@@ -223,6 +223,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
                     }
                 }
                 uri = new InstancesDao().saveInstance(values);
+
             }
         }
     }

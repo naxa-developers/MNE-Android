@@ -41,6 +41,10 @@ public class BeneficaryLocalSource implements BaseLocalDataSourceRX<BeneficaryRe
         return Completable.fromAction(() -> dao.insert(items));
     }
 
+    public void save(List<BeneficaryResponse> items) {
+        dao.insert(items);
+    }
+
     public LiveData<List<BeneficaryResponse>> getById(String clusterID) {
         return dao.getById();
     }

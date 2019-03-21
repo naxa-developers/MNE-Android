@@ -109,6 +109,8 @@ import org.odk.collect.android.logic.AuditEvent;
 import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.logic.FormController.FailedConstraint;
 import org.odk.collect.android.logic.FormInfo;
+import org.odk.collect.android.myapplication.forms.FormsLocalSource;
+import org.odk.collect.android.myapplication.forms.PraticalActionForm;
 import org.odk.collect.android.preferences.AdminKeys;
 import org.odk.collect.android.preferences.AdminSharedPreferences;
 import org.odk.collect.android.preferences.GeneralKeys;
@@ -278,6 +280,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     MediaLoadingFragment mediaLoadingFragment;
+    private String beneficiaryId, activityId;
 
     public void allowSwiping(boolean doSwipe) {
         this.doSwipe = doSwipe;
@@ -315,12 +318,12 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
         compositeDisposable
                 .add(eventBus
-                .register(ReadPhoneStatePermissionRxEvent.class)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(event -> {
-                    readPhoneStatePermissionRequestNeeded = true;
-                }));
+                        .register(ReadPhoneStatePermissionRxEvent.class)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(event -> {
+                            readPhoneStatePermissionRequestNeeded = true;
+                        }));
 
         errorMessage = null;
 
@@ -458,6 +461,10 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
             Intent intent = getIntent();
             if (intent != null) {
                 loadFromIntent(intent);
+                if (intent.hasExtra("activity_id")) {
+                    activityId = intent.getStringExtra("activity_id");
+                    beneficiaryId = intent.getStringExtra("beneficiary_id");
+                }
             }
         }
     }
@@ -2547,6 +2554,15 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         FormController formController = getFormController();
         switch (saveStatus) {
             case SaveToDiskTask.SAVED:
+            case SaveToDiskTask.SAVED_AND_EXIT:
+                AsyncTask.execute(() -> {
+                    FormsLocalSource.getInstance().save(new PraticalActionForm(beneficiaryId, activityId, saveResult.getUri().getLastPathSegment()));
+                });
+                break;
+        }
+
+        switch (saveStatus) {
+            case SaveToDiskTask.SAVED:
                 ToastUtils.showShortToast(R.string.data_saved_ok);
                 formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.FORM_SAVE, null, false);
                 break;
@@ -2634,7 +2650,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     /**
      * Requests that unsent finalized forms be auto-sent. If no network connection is available,
      * the work will be performed when a connection becomes available.
-     *
+     * <p>
      * TODO: if the user changes auto-send settings, should an auto-send job immediately be enqueued?
      */
     private void requestAutoSend() {

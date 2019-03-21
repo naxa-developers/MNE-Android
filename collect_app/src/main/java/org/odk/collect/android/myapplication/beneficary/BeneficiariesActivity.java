@@ -36,16 +36,16 @@ public class BeneficiariesActivity extends BaseActivity {
         setContentView(R.layout.activity_beneficiaries_acitivity);
         initView();
 
-        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
-        String clusterId = hashMap.get("cluster_id");
+//        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+//        String clusterId = hashMap.get("cluster_id");
 
-        BeneficaryLocalSource.getInstance().getById("1")
+        BeneficaryLocalSource.getInstance().getById("")
                 .observe(this, beneficiaries -> {
                     Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
                     setupListAdapter(beneficiaries);
                 });
 
-        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByClusterId(clusterId)
+        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByClusterId("2")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Object>() {

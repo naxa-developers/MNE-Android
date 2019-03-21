@@ -7,4 +7,5 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
 
 @Dao
 public abstract class PracticalActionFormsDAO implements BaseDAO<PraticalActionForm> {
+
 }

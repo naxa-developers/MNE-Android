@@ -22,7 +22,7 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
                 Activity.class,
                 ActivityGroup.class,
                 PraticalActionForm.class
-        }, version = 3)
+        }, version = 2)
 
 @TypeConverters({ActivityTypeConverter.class})
 public abstract class PracticalActionDatabase extends RoomDatabase {

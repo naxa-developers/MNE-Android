@@ -116,17 +116,23 @@ public class ActivityGroupRemoteSource {
     }
 
 
-    public Observable<ActivityGroup> getActivityGroups() {
+    public Observable<List<ActivityGroup>> getActivityGroups() {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
                 .getActivityGroup()
-                .map(activityGroups -> {
-                    ActivityGroupLocalSouce.getINSTANCE().save(activityGroups);
-                    return activityGroups;
-                })
-                .flatMapIterable((Function<List<ActivityGroup>, Iterable<ActivityGroup>>) activityGroups -> activityGroups)
-                .map(activityGroup -> {
-                    ActivityLocalSource.getInstance().save(activityGroup.getActivity());
-                    return activityGroup;
+                .map(new Function<List<ActivityGroup>, List<ActivityGroup>>() {
+                    @Override
+                    public List<ActivityGroup> apply(List<ActivityGroup> activityGroups) throws Exception {
+                        ActivityGroupLocalSouce.getINSTANCE().save(activityGroups);
+
+                        for (ActivityGroup activityGroup : activityGroups) {
+                            for (Activity activity : activityGroup.getActivity()) {
+                                activity.setActivityGroupId(activityGroup.getId());
+                            }
+                            ActivityLocalSource.getInstance().save(activityGroup.getActivity());
+                        }
+
+                        return activityGroups;
+                    }
                 });
     }
 

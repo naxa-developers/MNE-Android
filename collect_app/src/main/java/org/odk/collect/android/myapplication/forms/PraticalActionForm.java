@@ -7,12 +7,12 @@ import android.arch.persistence.room.PrimaryKey;
 public class PraticalActionForm {
     private String beneficiaryId;
     private String activityId;
-    private String idString;
+    private String instanceId;
 
-    public PraticalActionForm(String beneficiaryId, String activityId, String idString) {
+    public PraticalActionForm(String beneficiaryId, String activityId, String instanceId) {
         this.beneficiaryId = beneficiaryId;
         this.activityId = activityId;
-        this.idString = idString;
+        this.instanceId = instanceId;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -34,8 +34,7 @@ public class PraticalActionForm {
         return activityId;
     }
 
-    public String getIdString() {
-        return idString;
+    public String getInstanceId() {
+        return instanceId;
     }
-
 }

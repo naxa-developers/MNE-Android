@@ -17,6 +17,7 @@ import org.odk.collect.android.myapplication.common.TitleDescAdapter;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
@@ -29,6 +30,7 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
     private DisposableObserver<ArrayList<TitleDesc>> dis;
     private Toolbar toolbar;
     private BaseRecyclerViewAdapter<Activity, ActivityVH> adapter;
+    private String activityGroupId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +39,9 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
         initView();
 
 
-        ActivityLocalSource.getInstance().getById("1")
+        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+        activityGroupId = hashMap.get("activity_group_id");
+        ActivityLocalSource.getInstance().getById(activityGroupId)
                 .observe(this, activityList -> {
                     Timber.i("activity: %d", activityList != null ? activityList.size() : 0);
                     setupListAdapter(activityList);
@@ -98,6 +102,6 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
     public void onCardClicked(TitleDesc surveyForm) {
         String idString = surveyForm.getId();
         toast(idString);
-        fillODKForm(idString);
+
     }
 }

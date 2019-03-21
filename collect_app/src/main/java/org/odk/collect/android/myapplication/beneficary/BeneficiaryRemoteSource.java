@@ -22,11 +22,11 @@ public class BeneficiaryRemoteSource {
 
     Observable<Object> getBeneficiaryByClusterId(String clusterId) {
         return ServiceGenerator.createService(BenficaryAPI.class).getBenficaryForCluster(clusterId)
-                .flatMap(new Function<List<BeneficaryResponse>, ObservableSource<?>>() {
+                .map(new Function<List<BeneficaryResponse>, Object>() {
                     @Override
-                    public ObservableSource<?> apply(List<BeneficaryResponse> beneficaryResponses) throws Exception {
-                        return BeneficaryLocalSource.getInstance().saveCompletable(beneficaryResponses).toObservable();
-
+                    public Object apply(List<BeneficaryResponse> beneficaryResponses) throws Exception {
+                        BeneficaryLocalSource.getInstance().save(beneficaryResponses);
+                        return beneficaryResponses;
                     }
                 });
     }

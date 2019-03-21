@@ -33,7 +33,7 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
     View.OnClickListener addClickListener(BeneficaryResponse desc) {
         return v -> {
             HashMap<String, String> hashMap = new HashMap<>();
-            ActivityUtil.openActivity(ActivityListActivity.class, itemView.getContext(), hashMap, false);
+//
         };
     }
 }
