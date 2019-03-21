@@ -4,10 +4,17 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import org.odk.collect.android.myapplication.database.dao.ActivityDAO;
+import org.odk.collect.android.myapplication.database.dao.ActivityGroupDAO;
+import org.odk.collect.android.myapplication.database.dao.BeneficiaryDAO;
+import org.odk.collect.android.myapplication.database.dao.PracticalActionFormsDAO;
+
 public abstract class PracticalActionDatabase extends RoomDatabase {
 
     private static PracticalActionDatabase INSTANCE;
     private static final String DB_PATH = "practical_action.db";
+
+
 
     public static PracticalActionDatabase getDatabase(final Context context) {
         if (INSTANCE != null) {
@@ -25,4 +32,11 @@ public abstract class PracticalActionDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    public abstract ActivityDAO getActivityDAO();
+
+    public abstract BeneficiaryDAO getBeneficiaryDAO();
+
+    public abstract ActivityGroupDAO getActivityGroupDAO();
+
+    public abstract PracticalActionFormsDAO getPracticalActionFormsDAO();
 }
