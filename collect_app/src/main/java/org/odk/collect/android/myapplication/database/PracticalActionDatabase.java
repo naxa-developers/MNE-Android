@@ -3,6 +3,7 @@ package org.odk.collect.android.myapplication.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
@@ -22,6 +23,8 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
                 ActivityGroup.class,
                 PraticalActionForm.class
         }, version = 1)
+
+@TypeConverters({ActivityTypeConverter.class})
 public abstract class PracticalActionDatabase extends RoomDatabase {
 
     private static PracticalActionDatabase INSTANCE;

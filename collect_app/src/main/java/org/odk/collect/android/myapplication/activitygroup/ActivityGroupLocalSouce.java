@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import org.odk.collect.android.application.Collect;
@@ -39,5 +40,9 @@ public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<ActivityGr
     @Override
     public Completable save(List<ActivityGroup> items) {
         return Completable.fromAction(() -> dao.insert(items));
+    }
+
+    public LiveData<List<ActivityGroup>> getById(String clusterId) {
+        return dao.getById();
     }
 }

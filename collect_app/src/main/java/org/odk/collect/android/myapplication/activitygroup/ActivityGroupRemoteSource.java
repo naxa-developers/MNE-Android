@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -27,7 +28,7 @@ public class ActivityGroupRemoteSource {
 
     public Observable<List<ClusterResponse>> getAll() {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
-                .getActivityGroup()
+                .getCluster()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 
@@ -36,9 +37,10 @@ public class ActivityGroupRemoteSource {
 
     public Observable<ArrayList<TitleDesc>> getAllActivitiesGroup() {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
-                .getActivityGroup()
+                .getCluster()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io()).map(new Function<List<ClusterResponse>, ArrayList<TitleDesc>>() {
+                .subscribeOn(Schedulers.io())
+                .map(new Function<List<ClusterResponse>, ArrayList<TitleDesc>>() {
                     @Override
                     public ArrayList<TitleDesc> apply(List<ClusterResponse> clusterResponses) throws Exception {
                         ArrayList<TitleDesc> titleDescs = new ArrayList<>();
@@ -62,7 +64,7 @@ public class ActivityGroupRemoteSource {
 
     public Observable<ArrayList<TitleDesc>> getAllActivity(String activityGroupId) {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
-                .getActivityGroup()
+                .getCluster()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io()).map(new Function<List<ClusterResponse>, ArrayList<TitleDesc>>() {
                     @Override
@@ -84,6 +86,18 @@ public class ActivityGroupRemoteSource {
                     }
                 });
 
+    }
+
+
+    public Observable<Object> getActivityGroups() {
+        return ServiceGenerator.createService(ActivityGroupAPI.class)
+                .getActivityGroup()
+                .flatMap(new Function<List<ActivityGroup>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(List<ActivityGroup> activityGroups) throws Exception {
+                        return ActivityGroupLocalSouce.getINSTANCE().save(activityGroups).toObservable();
+                    }
+                });
     }
 
 }
