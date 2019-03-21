@@ -80,19 +80,19 @@ public class BaseActivity extends CollectAbstractActivity {
     }
 
     protected void showProgress() {
-        try{
+        try {
             findViewById(R.id.fl_toolbar_progress_wrapper).setVisibility(View.VISIBLE);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //unused
             e.printStackTrace();
         }
-     }
+    }
 
 
     protected void hideProgress() {
-        try{
+        try {
             findViewById(R.id.fl_toolbar_progress_wrapper).setVisibility(View.GONE);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //unused
             e.printStackTrace();
         }

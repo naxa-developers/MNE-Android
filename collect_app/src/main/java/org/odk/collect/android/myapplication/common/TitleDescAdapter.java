@@ -41,7 +41,10 @@ public class TitleDescAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder = getViewHolder(parent, inflater);
 
         return viewHolder;
+
+
     }
+
 
     @Override
     public int getItemCount() {

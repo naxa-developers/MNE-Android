@@ -13,6 +13,7 @@ import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
 import org.odk.collect.android.myapplication.onboarding.LoginActivity;
 import org.odk.collect.android.myapplication.onboarding.UserLocalSource;
+import org.odk.collect.android.myapplication.utils.PermissionUtil;
 import org.odk.collect.android.utilities.DialogUtils;
 import org.odk.collect.android.utilities.PermissionUtils;
 import org.odk.collect.android.utilities.ThemeUtils;
@@ -22,17 +23,36 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
     private static final boolean EXIT = true;
     private ThemeUtils themeUtils;
 
+    public static final int REQUEST_CODE_SETTINGS = 234;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         themeUtils = new ThemeUtils(this);
         setTheme(themeUtils.getPraticalActionTheme());
         setContentView(R.layout.activity_screen_splash);
+        showDialogOK();
+    }
 
+<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
 
         new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
             @Override
             public void granted() {
+=======
+    private void showDialogOK() {
+        new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
+            @Override
+            public void granted() {
+                try {
+                    Collect.createODKDirs();
+                } catch (RuntimeException e) {
+                    DialogUtils.showDialog(DialogUtils.createErrorDialog(PracticalActionSplashScreenActivity.this,
+                            e.getMessage(), EXIT), PracticalActionSplashScreenActivity.this);
+                    return;
+                }
+>>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
                 startSplash();
             }
 
@@ -41,6 +61,28 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
 
             }
         });
+<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
+=======
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_SETTINGS:
+                if (!PermissionUtil.areStoragePermissionsGranted(this)) {
+                    finishAffinity();
+                } else {
+                    startSplash();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+>>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
     }
 
 

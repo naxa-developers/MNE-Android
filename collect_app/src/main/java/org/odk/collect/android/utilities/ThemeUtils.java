@@ -41,6 +41,11 @@ public final class ThemeUtils {
     }
 
     @StyleRes
+    public int getPracticalActionTheme(){
+        return R.style.AppTheme_Dark;
+    }
+
+    @StyleRes
     public int getFormEntryActivityTheme() {
         return isDarkTheme() ? R.style.FormEntryActivityDarkTheme : R.style.FormEntryActivityDarkTheme;
     }
