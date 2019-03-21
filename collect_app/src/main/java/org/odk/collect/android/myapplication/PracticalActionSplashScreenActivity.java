@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.activities.SplashScreenActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
@@ -15,20 +16,31 @@ import org.odk.collect.android.myapplication.onboarding.UserLocalSource;
 import org.odk.collect.android.myapplication.utils.PermissionUtil;
 import org.odk.collect.android.utilities.DialogUtils;
 import org.odk.collect.android.utilities.PermissionUtils;
+import org.odk.collect.android.utilities.ThemeUtils;
 
 public class PracticalActionSplashScreenActivity extends AppCompatActivity {
 
     private static final boolean EXIT = true;
+    private ThemeUtils themeUtils;
+
     public static final int REQUEST_CODE_SETTINGS = 234;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        themeUtils = new ThemeUtils(this);
+        setTheme(themeUtils.getPraticalActionTheme());
         setContentView(R.layout.activity_screen_splash);
         showDialogOK();
     }
 
+<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
+
+        new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
+            @Override
+            public void granted() {
+=======
     private void showDialogOK() {
         new PermissionUtils(this).requestStoragePermissions(new PermissionListener() {
             @Override
@@ -40,15 +52,17 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
                             e.getMessage(), EXIT), PracticalActionSplashScreenActivity.this);
                     return;
                 }
+>>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
                 startSplash();
             }
 
             @Override
             public void denied() {
-                // The activity has to finish because ODK Collect cannot function without these permissions.
-                finish();
+
             }
         });
+<<<<<<< collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
+=======
     }
 
     @Override
@@ -68,7 +82,9 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+>>>>>>> collect_app/src/main/java/org/odk/collect/android/myapplication/PracticalActionSplashScreenActivity.java
     }
+
 
     private void startSplash() {
         int SPLASH_TIME = 3000;

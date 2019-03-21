@@ -689,6 +689,8 @@
     <string name="read_details">Read details</string>
     <string name="google_sheets_encrypted_message">Encrypted forms can\'t be submitted to Google Sheets.</string>
     <string name="number_picker_title">Number Picker</string>
+    <string name="action_upload">Upload forms</string>
+
 
     <!--mande strings start-->
     <!-- Strings related to login -->
