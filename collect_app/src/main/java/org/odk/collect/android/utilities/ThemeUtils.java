@@ -37,7 +37,7 @@ public final class ThemeUtils {
 
     @StyleRes
     public int getAppTheme() {
-        return isDarkTheme() ? R.style.DarkAppTheme : R.style.LightAppTheme;
+        return isDarkTheme() ? R.style.DarkAppTheme : R.style.DarkAppTheme;
     }
 
     @StyleRes
@@ -47,22 +47,22 @@ public final class ThemeUtils {
 
     @StyleRes
     public int getFormEntryActivityTheme() {
-        return isDarkTheme() ? R.style.FormEntryActivityDarkTheme : R.style.FormEntryActivityLightTheme;
+        return isDarkTheme() ? R.style.FormEntryActivityDarkTheme : R.style.FormEntryActivityDarkTheme;
     }
 
     @StyleRes
     public int getSettingsTheme() {
-        return isDarkTheme() ? R.style.AppTheme_SettingsTheme_Dark : R.style.AppTheme_SettingsTheme_Light;
+        return isDarkTheme() ? R.style.AppTheme_SettingsTheme_Dark : R.style.AppTheme_SettingsTheme_Dark;
     }
 
     @StyleRes
     public int getBottomDialogTheme() {
-        return isDarkTheme() ? R.style.DarkMaterialDialogSheet : R.style.LightMaterialDialogSheet;
+        return isDarkTheme() ? R.style.DarkMaterialDialogSheet : R.style.DarkMaterialDialogSheet;
     }
 
     @DrawableRes
     public int getDivider() {
-        return isDarkTheme() ? android.R.drawable.divider_horizontal_dark : android.R.drawable.divider_horizontal_bright;
+        return isDarkTheme() ? android.R.drawable.divider_horizontal_dark : android.R.drawable.divider_horizontal_dark;
     }
 
     public boolean isHoloDialogTheme(int theme) {
@@ -130,5 +130,9 @@ public final class ThemeUtils {
     @ColorInt
     public int getRankItemColor() {
         return getAttributeValue(R.attr.rankItemColor);
+    }
+
+    public int getPraticalActionTheme() {
+        return R.style.AppTheme_Dark;
     }
 }

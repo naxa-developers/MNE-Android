@@ -45,9 +45,10 @@ public class ActivityGroupRemoteSource {
                         TitleDesc titleDesc;
                         for (ClusterResponse clusterResponse : clusterResponses) {
                             for (Activitygroup activitygroup : clusterResponse.getActivitygroup()) {
+                                String clusterId = clusterResponse.getId();
                                 String name = activitygroup.getName();
                                 String desc = activitygroup.getDescription();
-                                titleDesc = new TitleDesc(name, desc, "", "");
+                                titleDesc = new TitleDesc(name, desc, "", clusterId);
                                 titleDescs.add(titleDesc);
                             }
                         }
@@ -70,10 +71,10 @@ public class ActivityGroupRemoteSource {
                         TitleDesc titleDesc;
                         for (ClusterResponse clusterResponse : clusterResponses) {
                             for (Activitygroup activitygroup : clusterResponse.getActivitygroup()) {
-                                for (Activity activity : activitygroup.getActivity()){
+                                for (Activity activity : activitygroup.getActivity()) {
                                     String name = activity.getName();
                                     String desc = activity.getDescription();
-                                    titleDesc = new TitleDesc(name, desc, "", "");
+                                    titleDesc = new TitleDesc(name, desc, activity.getForm(), "");
                                     titleDescs.add(titleDesc);
                                 }
                             }

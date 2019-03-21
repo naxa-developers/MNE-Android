@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--mande strings start-->
+    <!-- Strings related to login -->
+    <string name="prompt_email">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="pratical_action_motto">Practical Action is a global innovator, inspiring people to discover and adopt ingenious, practical ways to free themselves from poverty and disadvantage.</string>
+    <string name="msg_no_data_found">No data found</string>
+    <string name="msg_nothing_here">Nothing here</string>
+    <string name="action_check_now">Check Now</string>
+    <string name="msg_please_wait">Please wait. This could take a few minutes.</string>
+    <string name="toolbar_title_activities">Activities</string>
+    <string name="action_download">Download forms</string>
+    <string name="toolbar_title_beneficiaries">Beneficiaries</string>
+
+
+    <string name="action_go_to_settions">Settings</string>
+    <!--mande strings end-->
+
+</resources>

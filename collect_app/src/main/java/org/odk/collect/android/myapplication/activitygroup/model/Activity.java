@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Activity {
-
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("activity_group")
     @Expose
     private Integer activityGroup;
@@ -27,9 +29,9 @@ public class Activity {
     @SerializedName("end_date")
     @Expose
     private String endDate;
-    @SerializedName("form")
+    @SerializedName("id_string")
     @Expose
-    private Integer form;
+    private String form;
     @SerializedName("target_complete")
     @Expose
     private Boolean targetComplete;
@@ -42,6 +44,15 @@ public class Activity {
     @SerializedName("target_met")
     @Expose
     private Boolean targetMet;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Integer getActivityGroup() {
         return activityGroup;
@@ -99,11 +110,11 @@ public class Activity {
         this.endDate = endDate;
     }
 
-    public Integer getForm() {
+    public String getForm() {
         return form;
     }
 
-    public void setForm(Integer form) {
+    public void setForm(String form) {
         this.form = form;
     }
 

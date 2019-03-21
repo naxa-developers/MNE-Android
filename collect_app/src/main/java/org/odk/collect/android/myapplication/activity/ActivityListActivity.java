@@ -112,6 +112,8 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
 
     @Override
     public void onCardClicked(TitleDesc surveyForm) {
-
+        String idString = surveyForm.getId();
+        toast(idString);
+        fillODKForm(idString);
     }
 }
