@@ -541,7 +541,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                         formPath.lastIndexOf('/') + 1,
                         formPath.lastIndexOf('.'))
                         + "_";
-                final String fileSuffix = ".xml.save";
+                final String fileSuffix = ".xml.saveCompletable";
                 File cacheDir = new File(Collect.CACHE_PATH);
                 File[] files = cacheDir.listFiles(pathname -> {
                     String name = pathname.getName();
@@ -614,7 +614,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     }
 
     /**
-     * Create save-points asynchronously in order to not affect swiping performance
+     * Create saveCompletable-points asynchronously in order to not affect swiping performance
      * on larger forms.
      */
     private void nonblockingCreateSavePointData() {
@@ -664,7 +664,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 outState.putString(KEY_XPATH_WAITING_FOR_DATA,
                         formController.getXPath(waiting));
             }
-            // save the instance to a temp path...
+            // saveCompletable the instance to a temp path...
             nonblockingCreateSavePointData();
         }
         outState.putBoolean(NEWFORM, false);
@@ -690,7 +690,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         FormController formController = getFormController();
         if (formController == null) {
             // we must be in the midst of a reload of the FormController.
-            // try to save this callback data to the FormLoaderTask
+            // try to saveCompletable this callback data to the FormLoaderTask
             if (formLoaderTask != null
                     && formLoaderTask.getStatus() != AsyncTask.Status.FINISHED) {
                 formLoaderTask.setActivityResult(requestCode, resultCode, intent);
@@ -1064,7 +1064,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     }
 
     /**
-     * Attempt to save the answer(s) in the current screen to into the data
+     * Attempt to saveCompletable the answer(s) in the current screen to into the data
      * model.
      *
      * @return false if any error occurs while saving (constraint violated,
@@ -1072,9 +1072,9 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
      */
     public boolean saveAnswersForCurrentScreen(boolean evaluateConstraints) {
         FormController formController = getFormController();
-        // only try to save if the current event is a question or a field-list group
+        // only try to saveCompletable if the current event is a question or a field-list group
         // and current view is an ODKView (occasionally we show blank views that do not have any
-        // controls to save data from)
+        // controls to saveCompletable data from)
         if (formController != null && formController.currentPromptIsQuestion()
                 && getCurrentViewIfODKView() != null) {
             HashMap<FormIndex, IAnswerData> answers = getCurrentViewIfODKView()
@@ -1166,7 +1166,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
             return formLoaderTask;
         }
 
-        // if a form is writing to disk, pass the save to disk task
+        // if a form is writing to disk, pass the saveCompletable to disk task
         if (saveToDiskTask != null
                 && saveToDiskTask.getStatus() != AsyncTask.Status.FINISHED) {
             return saveToDiskTask;
@@ -1232,7 +1232,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
                 if (formController.getSubmissionMetadata().instanceName == null) {
                     // no meta/instanceName field in the form -- see if we have a
-                    // name for this instance from a previous save attempt...
+                    // name for this instance from a previous saveCompletable attempt...
                     String uriMimeType = null;
                     Uri instanceUri = getIntent().getData();
                     if (instanceUri != null) {
@@ -1301,7 +1301,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     sa.setVisibility(View.GONE);
                 }
 
-                // Create 'save' button
+                // Create 'saveCompletable' button
                 endView.findViewById(R.id.save_exit_button)
                         .setOnClickListener(new OnClickListener() {
                             @Override
@@ -1448,7 +1448,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                         return;
                     }
 
-                    // otherwise, just save without validating (constraints will be validated on
+                    // otherwise, just saveCompletable without validating (constraints will be validated on
                     // finalize)
                 } else {
                     saveAnswersForCurrentScreen(DO_NOT_EVALUATE_CONSTRAINTS);
@@ -1575,7 +1575,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                         R.anim.push_left_in);
                 outAnimation = AnimationUtils.loadAnimation(this,
                         R.anim.push_left_out);
-                // if animation is left or right then it was a swipe, and we want to re-save on
+                // if animation is left or right then it was a swipe, and we want to re-saveCompletable on
                 // entry
                 autoSaved = false;
                 break;
@@ -1837,19 +1837,19 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
     /**
      * Saves data and writes it to disk. If exit is set, program will exit after
-     * save completes. Complete indicates whether the user has marked the
+     * saveCompletable completes. Complete indicates whether the user has marked the
      * isntancs as complete. If updatedSaveName is non-null, the instances
      * content provider is updated with the new name
      */
-    // by default, save the current screen
+    // by default, saveCompletable the current screen
     private boolean saveDataToDisk(boolean exit, boolean complete, String updatedSaveName) {
         return saveDataToDisk(exit, complete, updatedSaveName, true);
     }
 
-    // but if you want save in the background, can't be current screen
+    // but if you want saveCompletable in the background, can't be current screen
     private boolean saveDataToDisk(boolean exit, boolean complete, String updatedSaveName,
                                    boolean current) {
-        // save current answer
+        // saveCompletable current answer
         if (current) {
             if (!saveAnswersForCurrentScreen(complete)) {
                 ToastUtils.showShortToast(R.string.data_saved_error);
@@ -1871,7 +1871,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
     }
 
     /**
-     * Create a dialog with options to save and exit or quit without
+     * Create a dialog with options to saveCompletable and exit or quit without
      * saving
      */
     private void createQuitDialog() {

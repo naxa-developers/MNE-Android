@@ -278,7 +278,7 @@ public class DrawActivity extends CollectAbstractActivity {
     }
 
     /**
-     * Create a dialog with options to save and exit, save, or quit without
+     * Create a dialog with options to saveCompletable and exit, saveCompletable, or quit without
      * saving
      */
     private void createQuitDrawDialog() {

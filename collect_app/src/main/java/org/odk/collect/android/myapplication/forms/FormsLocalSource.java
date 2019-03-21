@@ -33,12 +33,12 @@ public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionFor
 
 
     @Override
-    public Completable save(PraticalActionForm... items) {
+    public Completable saveCompletable(PraticalActionForm... items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 
     @Override
-    public Completable save(List<PraticalActionForm> items) {
+    public Completable saveCompletable(List<PraticalActionForm> items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 

@@ -46,8 +46,8 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
-    private ArrayList<TitleDesc> titleDescs = new ArrayList<>(0);
-    private BaseRecyclerViewAdapter<TitleDesc, TitleDescVH> adapter;
+    private ArrayList<ActivityGroup> activityGroups = new ArrayList<>(0);
+    private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
 
 
     @Override
@@ -55,7 +55,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initView();
-        setupListAdapter(titleDescs);
+
 
         dis = ActivityGroupRemoteSource.getInstance()
                 .getActivityGroups()
@@ -80,44 +80,10 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
         ActivityGroupLocalSouce.getINSTANCE()
                 .getById("")
-                .observe(this, new Observer<List<ActivityGroup>>() {
-                    @Override
-                    public void onChanged(@Nullable List<ActivityGroup> activityGroups) {
-                        Timber.i("Activities: %d", activityGroups != null ? activityGroups.size() : 0);
-                    }
+                .observe(this, activityGroups -> {
+                    Timber.i("Activities: %d", activityGroups != null ? activityGroups.size() : 0);
+                    setupListAdapter(activityGroups);
                 });
-
-//        dis = ActivityGroupRemoteSource.getInstance()
-//                .getAllActivitiesGroup()
-//                .doOnSubscribe(new Consumer<Disposable>() {
-//                    @Override
-//                    public void accept(Disposable disposable) throws Exception {
-//                        showProgress();
-//                    }
-//                })
-//                .doOnTerminate(new Action() {
-//                    @Override
-//                    public void run() throws Exception {
-//                        hideProgress();
-//                    }
-//                })
-//                .subscribeWith(new DisposableObserver<ArrayList<TitleDesc>>() {
-//                    @Override
-//                    public void onNext(ArrayList<TitleDesc> titleDescs) {
-//                        setupListAdapter(titleDescs);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        toast(e.getMessage());
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
 
         findViewById(R.id.download_forms).setOnClickListener(this);
         findViewById(R.id.upload_forms).setOnClickListener(this);
@@ -132,29 +98,27 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void setupListAdapter(ArrayList<TitleDesc> titleDescs) {
+    private void setupListAdapter(List<ActivityGroup> activityGroups) {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setEmptyView(findViewById(R.id.root_layout_empty_layout), "No data"
-                , new RecyclerViewEmptySupport.OnEmptyLayoutClickListener() {
-                    @Override
-                    public void onRetryButtonClick() {
+                , () -> {
 
-                    }
                 });
 
-        adapter = new BaseRecyclerViewAdapter<TitleDesc, TitleDescVH>(titleDescs, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH>(activityGroups, R.layout.list_item_title_desc) {
             @Override
-            public void viewBinded(TitleDescVH titleDescVH, TitleDesc titleDesc) {
-                titleDescVH.bindView(titleDesc);
+            public void viewBinded(ActivityGroupVH activityGroupVH, ActivityGroup activityGroup) {
+                activityGroupVH.bindView(activityGroup);
             }
 
             @Override
-            public TitleDescVH attachViewHolder(View view) {
-                return new TitleDescVH(view);
+            public ActivityGroupVH attachViewHolder(View view) {
+                return new ActivityGroupVH(view);
             }
+
         };
         recyclerView.setAdapter(adapter);
     }

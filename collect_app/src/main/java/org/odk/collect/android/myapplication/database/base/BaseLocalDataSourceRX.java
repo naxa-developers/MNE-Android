@@ -6,9 +6,9 @@ import io.reactivex.Completable;
 
 public interface BaseLocalDataSourceRX<T> {
 
-    Completable save(T... items);
+    Completable saveCompletable(T... items);
 
-    Completable save(List<T> items);
+    Completable saveCompletable(List<T> items);
 
 
 }

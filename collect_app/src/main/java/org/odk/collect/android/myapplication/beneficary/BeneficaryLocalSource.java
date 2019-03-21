@@ -31,13 +31,13 @@ public class BeneficaryLocalSource implements BaseLocalDataSourceRX<BeneficaryRe
 
 
     @Override
-    public Completable save(BeneficaryResponse... items) {
+    public Completable saveCompletable(BeneficaryResponse... items) {
         return Completable.fromAction(() -> dao.insert(items));
 
     }
 
     @Override
-    public Completable save(List<BeneficaryResponse> items) {
+    public Completable saveCompletable(List<BeneficaryResponse> items) {
         return Completable.fromAction(() -> dao.insert(items));
     }
 

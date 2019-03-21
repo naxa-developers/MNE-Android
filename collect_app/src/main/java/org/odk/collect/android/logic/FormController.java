@@ -345,7 +345,7 @@ public class FormController {
     }
 
     /**
-     * This fires off the jr:preload actions and events to save values like the
+     * This fires off the jr:preload actions and events to saveCompletable values like the
      * end time of a form.
      */
     public boolean postProcessInstance() {
@@ -457,7 +457,7 @@ public class FormController {
     }
 
     /**
-     * Attempts to save answer into the given FormIndex into the data model.
+     * Attempts to saveCompletable answer into the given FormIndex into the data model.
      */
     public int answerQuestion(FormIndex index, IAnswerData data) throws JavaRosaException {
         try {
@@ -488,7 +488,7 @@ public class FormController {
     }
 
     /**
-     * saveAnswer attempts to save the current answer into the data model without doing any
+     * saveAnswer attempts to saveCompletable the current answer into the data model without doing any
      * constraint checking. Only use this if you know what you're doing. For normal form filling
      * you
      * should always use answerQuestion or answerCurrentQuestion.
@@ -749,7 +749,7 @@ public class FormController {
                                                  boolean evaluateConstraints) throws JavaRosaException {
         if (currentPromptIsQuestion()) {
             for (FormIndex index : answers.keySet()) {
-                // Within a group, you can only save for question events
+                // Within a group, you can only saveCompletable for question events
                 if (getEvent(index) == FormEntryController.EVENT_QUESTION) {
                     int saveStatus;
                     IAnswerData answer = answers.get(index);
@@ -762,7 +762,7 @@ public class FormController {
                         saveAnswer(index, answer);
                     }
                 } else {
-                    Timber.w("Attempted to save an index referencing something other than a question: %s",
+                    Timber.w("Attempted to saveCompletable an index referencing something other than a question: %s",
                             index.getReference().toString());
                 }
             }

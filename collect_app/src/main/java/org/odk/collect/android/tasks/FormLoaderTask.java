@@ -303,7 +303,7 @@ public class FormLoaderTask extends AsyncTask<String, String, FormLoaderTask.FEC
         if (instancePath != null) {
             File instanceXml = new File(instancePath);
 
-            // Use the savepoint file only if it's newer than the last manual save
+            // Use the savepoint file only if it's newer than the last manual saveCompletable
             final File savepointFile = SaveToDiskTask.getSavepointFile(instanceXml.getName());
             if (savepointFile.exists()
                     && savepointFile.lastModified() > instanceXml.lastModified()) {

@@ -32,6 +32,7 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobManagerCreateException;
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -264,6 +265,7 @@ public class Collect extends Application implements HasActivityInjector {
             Timber.plant(new CrashReportingTree());
         } else {
             Timber.plant(new Timber.DebugTree());
+            Stetho.initializeWithDefaults(this);
         }
 
         setupLeakCanary();

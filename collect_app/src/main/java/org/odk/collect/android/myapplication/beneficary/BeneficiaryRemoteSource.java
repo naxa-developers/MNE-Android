@@ -25,7 +25,7 @@ public class BeneficiaryRemoteSource {
                 .flatMap(new Function<List<BeneficaryResponse>, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(List<BeneficaryResponse> beneficaryResponses) throws Exception {
-                        return BeneficaryLocalSource.getInstance().save(beneficaryResponses).toObservable();
+                        return BeneficaryLocalSource.getInstance().saveCompletable(beneficaryResponses).toObservable();
 
                     }
                 });

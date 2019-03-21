@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
+import org.odk.collect.android.myapplication.activity.ActivityLocalSource;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.activitygroup.model.ClusterResponse;
@@ -89,14 +90,43 @@ public class ActivityGroupRemoteSource {
     }
 
 
-    public Observable<Object> getActivityGroups() {
+    @Deprecated
+    public Observable<Object> getActivityGroupsOLD() {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
                 .getActivityGroup()
                 .flatMap(new Function<List<ActivityGroup>, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(List<ActivityGroup> activityGroups) throws Exception {
-                        return ActivityGroupLocalSouce.getINSTANCE().save(activityGroups).toObservable();
+                        return Observable.just(activityGroups)
+                                .flatMapIterable((Function<List<ActivityGroup>, Iterable<ActivityGroup>>) activityGroups1 -> activityGroups1)
+                                .flatMap(new Function<ActivityGroup, ObservableSource<?>>() {
+                                    @Override
+                                    public ObservableSource<?> apply(ActivityGroup activityGroup) throws Exception {
+                                        return Observable.just(activityGroup).map(new Function<ActivityGroup, List<Activity>>() {
+                                            @Override
+                                            public List<Activity> apply(ActivityGroup activityGroup) throws Exception {
+                                                ActivityLocalSource.getInstance().saveCompletable(activityGroup.getActivity());
+                                                return activityGroup.getActivity();
+                                            }
+                                        });
+                                    }
+                                });
                     }
+                });
+    }
+
+
+    public Observable<ActivityGroup> getActivityGroups() {
+        return ServiceGenerator.createService(ActivityGroupAPI.class)
+                .getActivityGroup()
+                .map(activityGroups -> {
+                    ActivityGroupLocalSouce.getINSTANCE().save(activityGroups);
+                    return activityGroups;
+                })
+                .flatMapIterable((Function<List<ActivityGroup>, Iterable<ActivityGroup>>) activityGroups -> activityGroups)
+                .map(activityGroup -> {
+                    ActivityLocalSource.getInstance().save(activityGroup.getActivity());
+                    return activityGroup;
                 });
     }
 

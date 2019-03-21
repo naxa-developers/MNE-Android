@@ -141,7 +141,7 @@ public class AuditEventTest {
         auditEvent = new AuditEvent(START_TIME, FORM_SAVE, "");
         assertNotNull(auditEvent);
         assertFalse(auditEvent.isIntervalAuditEventType());
-        assertEquals("form save,,1545392727685,", auditEvent.toString());
+        assertEquals("form saveCompletable,,1545392727685,", auditEvent.toString());
 
         auditEvent = new AuditEvent(START_TIME, FORM_FINALIZE, "");
         assertNotNull(auditEvent);
@@ -156,7 +156,7 @@ public class AuditEventTest {
         auditEvent = new AuditEvent(START_TIME, SAVE_ERROR, "");
         assertNotNull(auditEvent);
         assertFalse(auditEvent.isIntervalAuditEventType());
-        assertEquals("save error,,1545392727685,", auditEvent.toString());
+        assertEquals("saveCompletable error,,1545392727685,", auditEvent.toString());
 
         auditEvent = new AuditEvent(START_TIME, FINALIZE_ERROR, "");
         assertNotNull(auditEvent);

@@ -1,6 +1,7 @@
 package org.odk.collect.android.myapplication.activity;
 
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import org.odk.collect.android.application.Collect;
@@ -32,13 +33,22 @@ public class ActivityLocalSource implements BaseLocalDataSourceRX<Activity> {
 
 
     @Override
-    public Completable save(Activity... items) {
+    public Completable saveCompletable(Activity... items) {
         return Completable.fromAction(() -> dao.insert(items));
 
     }
 
     @Override
-    public Completable save(List<Activity> items) {
+    public Completable saveCompletable(List<Activity> items) {
         return Completable.fromAction(() -> dao.insert(items));
+    }
+
+    public void save(List<Activity> items) {
+        dao.insert(items);
+    }
+
+
+    public LiveData<List<Activity>> getById(String s) {
+        return dao.getById();
     }
 }

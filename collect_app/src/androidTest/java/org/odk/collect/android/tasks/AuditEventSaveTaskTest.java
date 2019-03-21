@@ -75,7 +75,7 @@ public class AuditEventSaveTaskTest {
                 "question,/data/g1[2]/q2,1548106938277,1548106948127\n" +
                 "add repeat,/data/g1[3],1548106948128,1548106949446\n" +
                 "end screen,,1548106949448,1548106953601\n" +
-                "form save,,1548106953600,\n" +
+                "form saveCompletable,,1548106953600,\n" +
                 "form exit,,1548106953601,\n" +
                 "form finalize,,1548106953601,\n";
         assertEquals(expectedData, expectedAuditContent);
@@ -93,7 +93,7 @@ public class AuditEventSaveTaskTest {
                 "question,/data/g1[2]/q2,1548106938277,1548106948127\n" +
                 "add repeat,/data/g1[3],1548106948128,1548106949446\n" +
                 "end screen,,1548106949448,1548106953601\n" +
-                "form save,,1548106953600,\n" +
+                "form saveCompletable,,1548106953600,\n" +
                 "form exit,,1548106953601,\n" +
                 "form finalize,,1548106953601,\n" +
                 "form resume,,1548108900606,,54.4112062,18.5896652,30.716999053955078\n" +
@@ -102,7 +102,7 @@ public class AuditEventSaveTaskTest {
                 "location permissions granted,,548108908255,\n" +
                 "location providers enabled,,548108908259,\n" +
                 "end screen,,1548108908285,1548108909730,54.4112062,18.5896652,30.716999053955078\n" +
-                "form save,,1548108909730,,54.4112062,18.5896652,30.716999053955078\n" +
+                "form saveCompletable,,1548108909730,,54.4112062,18.5896652,30.716999053955078\n" +
                 "form exit,,1548108909730,,54.4112062,18.5896652,30.716999053955078\n" +
                 "form finalize,,1548108909731,,54.4112062,18.5896652,30.716999053955078\n";
         assertEquals(expectedData2, expectedAuditContent);
@@ -125,7 +125,7 @@ public class AuditEventSaveTaskTest {
                 "question,/data/g1[2]/q2,1548106938277,1548106948127,54.4112062,18.5896652,30.716999053955078\n" +
                 "add repeat,/data/g1[3],1548106948128,1548106949446,54.4112062,18.5896652,30.716999053955078\n" +
                 "end screen,,1548106949448,1548106953601,54.4112062,18.5896652,30.716999053955078\n" +
-                "form save,,1548106953600,,54.4112062,18.5896652,30.716999053955078\n" +
+                "form saveCompletable,,1548106953600,,54.4112062,18.5896652,30.716999053955078\n" +
                 "form exit,,1548106953601,,54.4112062,18.5896652,30.716999053955078\n" +
                 "form finalize,,1548106953601,,54.4112062,18.5896652,30.716999053955078\n";
         assertEquals(expectedData, expectedAuditContent);
