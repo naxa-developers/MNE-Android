@@ -12,6 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import timber.log.Timber;
 
 public class RetrofitException extends RuntimeException {
     private final static String SERVER_NON_FIELD_ERROR = "non_field_errors";
@@ -43,8 +44,7 @@ public class RetrofitException extends RuntimeException {
             }
 
         } catch (NullPointerException | IOException | JSONException e) {
-            Log.e("RetrofitException", e.getMessage());
-
+            Timber.e(e);
         }
 
         return message;
@@ -56,7 +56,7 @@ public class RetrofitException extends RuntimeException {
 
 
     static RetrofitException networkError(IOException exception) {
-        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK.setMessage("No internet connection"), exception, null);
+        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK, exception, null);
     }
 
     static RetrofitException unexpectedError(Throwable exception) {
@@ -151,25 +151,5 @@ public class RetrofitException extends RuntimeException {
         Converter<ResponseBody, T> converter = retrofit.responseBodyConverter(type, new Annotation[0]);
         return converter.convert(response.errorBody());
     }
-
-    @Deprecated
-    public static String getMessage(Throwable e) {
-        String[] message = new String[]{e.getMessage(), e.getMessage()};
-
-        if (e instanceof RetrofitException) {
-            RetrofitException retrofitException = ((RetrofitException) e);
-            switch (retrofitException.getKind()) {
-                case NETWORK:
-                    message = new String[]{"Connection lost", String.format("A %s occurred while communicating to the server", retrofitException.getCause().getMessage())};
-                    break;
-                case HTTP:
-                    message = new String[]{"", e.getMessage()};
-                    break;
-                case UNEXPECTED:
-                    break;
-            }
-        }
-        return message[1];
-    }
-}
+ }
 
