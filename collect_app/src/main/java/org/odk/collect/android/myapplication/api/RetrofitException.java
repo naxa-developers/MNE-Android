@@ -28,8 +28,7 @@ public class RetrofitException extends RuntimeException {
                 message = response.code() + " " + response.message();
                 break;
         }
-
-        return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
+        return new RetrofitException(message, url, response, Kind.HTTP.setMessage(message), null, retrofit);
     }
 
 
@@ -57,7 +56,7 @@ public class RetrofitException extends RuntimeException {
 
 
     static RetrofitException networkError(IOException exception) {
-        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK, exception, null);
+        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK.setMessage("No internet connection"), exception, null);
     }
 
     static RetrofitException unexpectedError(Throwable exception) {
@@ -86,6 +85,11 @@ public class RetrofitException extends RuntimeException {
 
         Kind(String message) {
             this.message = message;
+        }
+
+        public Kind setMessage(String message) {
+            this.message = message;
+            return this;
         }
 
         public String getMessage() {
@@ -156,7 +160,6 @@ public class RetrofitException extends RuntimeException {
             RetrofitException retrofitException = ((RetrofitException) e);
             switch (retrofitException.getKind()) {
                 case NETWORK:
-
                     message = new String[]{"Connection lost", String.format("A %s occurred while communicating to the server", retrofitException.getCause().getMessage())};
                     break;
                 case HTTP:
