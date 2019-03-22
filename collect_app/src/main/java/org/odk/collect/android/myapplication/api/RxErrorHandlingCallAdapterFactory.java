@@ -1,6 +1,7 @@
 package org.odk.collect.android.myapplication.api;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

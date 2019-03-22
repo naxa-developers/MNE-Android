@@ -17,6 +17,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -215,13 +216,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         public void onError(Throwable e) {
                             showProgress(false);
                             e.printStackTrace();
-                            String message;
-                            if (e instanceof RetrofitException && ((RetrofitException) e).getResponse().errorBody() == null) {
-                                message = ((RetrofitException) e).getKind().getMessage();
-                            } else {
-                                message = e.getMessage();
-                            }
-                            mPasswordView.setError(message);
+                            RetrofitException re = (RetrofitException)e;
+                            Log.d("LoginActivity", "error message = " + re.getKind().getMessage());
+                            mPasswordView.setError(re.getKind().getMessage());
                             mPasswordView.requestFocus();
                         }
 
