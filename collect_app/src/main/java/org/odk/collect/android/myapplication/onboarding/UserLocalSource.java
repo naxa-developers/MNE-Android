@@ -19,7 +19,7 @@ public class UserLocalSource {
     }
 
     public void saveUserToken(Context context, String token) {
-        SharedPreferenceUtils.saveToPrefs(context, SharedPreferenceUtils.PREF_VALUE_KEY.KEY_TOKEN, token);
+        SharedPreferenceUtils.saveToPrefs(context, SharedPreferenceUtils.PREF_VALUE_KEY.KEY_TOKEN, "TOKEN ".concat(token));
     }
 
     public String getUserToken(Context context) {

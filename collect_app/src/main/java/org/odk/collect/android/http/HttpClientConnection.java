@@ -25,6 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.BuildConfig;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.myapplication.onboarding.UserLocalSource;
 import org.odk.collect.android.utilities.FileUtils;
 import org.opendatakit.httpclientandroidlib.Header;
 import org.opendatakit.httpclientandroidlib.HttpEntity;
@@ -97,6 +98,7 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
     private static final int CONNECTION_TIMEOUT = 30000;
     private static final int UPLOAD_CONNECTION_TIMEOUT = 60000; // it can take up to 27 seconds to spin up an Aggregate
     private static final String HTTP_CONTENT_TYPE_TEXT_XML = "text/xml";
+    private static final String AUTH_HEADER = "Authorization";
 
     // Retain authentication and cookies between requests. Gets mutated on each call to
     // HttpClient.execute).
@@ -110,21 +112,21 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
     }
 
     private enum ContentTypeMapping {
-        XML("xml",  ContentType.TEXT_XML),
+        XML("xml", ContentType.TEXT_XML),
         _3GPP("3gpp", ContentType.create("audio/3gpp")),
-        _3GP("3gp",  ContentType.create("video/3gpp")),
-        AVI("avi",  ContentType.create("video/avi")),
-        AMR("amr",  ContentType.create("audio/amr")),
-        CSV("csv",  ContentType.create("text/csv")),
-        JPG("jpg",  ContentType.create("image/jpeg")),
-        MP3("mp3",  ContentType.create("audio/mp3")),
-        MP4("mp4",  ContentType.create("video/mp4")),
-        OGA("oga",  ContentType.create("audio/ogg")),
-        OGG("ogg",  ContentType.create("audio/ogg")),
-        OGV("ogv",  ContentType.create("video/ogg")),
-        WAV("wav",  ContentType.create("audio/wav")),
+        _3GP("3gp", ContentType.create("video/3gpp")),
+        AVI("avi", ContentType.create("video/avi")),
+        AMR("amr", ContentType.create("audio/amr")),
+        CSV("csv", ContentType.create("text/csv")),
+        JPG("jpg", ContentType.create("image/jpeg")),
+        MP3("mp3", ContentType.create("audio/mp3")),
+        MP4("mp4", ContentType.create("video/mp4")),
+        OGA("oga", ContentType.create("audio/ogg")),
+        OGG("ogg", ContentType.create("audio/ogg")),
+        OGV("ogv", ContentType.create("video/ogg")),
+        WAV("wav", ContentType.create("audio/wav")),
         WEBM("webm", ContentType.create("video/webm")),
-        XLS("xls",  ContentType.create("application/vnd.ms-excel"));
+        XLS("xls", ContentType.create("application/vnd.ms-excel"));
 
         private String extension;
         private ContentType contentType;
@@ -232,7 +234,8 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
     }
 
     @Override
-    public @NonNull HttpHeadResult executeHeadRequest(@NonNull URI uri, @Nullable HttpCredentialsInterface credentials) throws Exception {
+    public @NonNull
+    HttpHeadResult executeHeadRequest(@NonNull URI uri, @Nullable HttpCredentialsInterface credentials) throws Exception {
         addCredentialsForHost(uri, credentials);
         clearCookieStore();
 
@@ -293,11 +296,12 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
     }
 
     @Override
-    public @NonNull HttpPostResult uploadSubmissionFile(@NonNull List<File> fileList,
-                                                        @NonNull File submissionFile,
-                                                        @NonNull URI uri,
-                                                        @Nullable HttpCredentialsInterface credentials,
-                                                        @NonNull long contentLength) throws IOException {
+    public @NonNull
+    HttpPostResult uploadSubmissionFile(@NonNull List<File> fileList,
+                                        @NonNull File submissionFile,
+                                        @NonNull URI uri,
+                                        @Nullable HttpCredentialsInterface credentials,
+                                        @NonNull long contentLength) throws IOException {
         addCredentialsForHost(uri, credentials);
         clearCookieStore();
 
@@ -416,7 +420,8 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
 
     /**
      * HttpPostResult - This is just stubbed out for now, implemented when we move to OkHttpConnection
-     * @param uri of which to post
+     *
+     * @param uri         of which to post
      * @param credentials to use on this post request
      * @return null
      * @throws Exception not used
@@ -541,9 +546,22 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         HttpGet req = new HttpGet();
         setCollectHeaders(req);
         setOpenRosaHeaders(req);
+        setAuthHeader(req);
         req.setURI(uri);
         return req;
     }
+
+    private static void setAuthHeader(HttpGet req) {
+        String token = UserLocalSource.getINSTANCE().getUserToken(Collect.getInstance());
+        req.setHeader(AUTH_HEADER, token);
+    }
+
+    private static void setAuthHeader(HttpRequest req) {
+        String token = UserLocalSource.getINSTANCE().getUserToken(Collect.getInstance());
+        req.setHeader(AUTH_HEADER, token);
+    }
+
+
 
     private static void setCollectHeaders(HttpRequest req) {
         String userAgent = String.format("%s %s/%s",
@@ -602,6 +620,7 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         HttpPost req = new HttpPost(uri);
         setCollectHeaders(req);
         setOpenRosaHeaders(req);
+        setAuthHeader(req);
         return req;
     }
 
