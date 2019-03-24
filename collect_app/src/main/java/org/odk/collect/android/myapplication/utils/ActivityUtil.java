@@ -17,7 +17,7 @@ public class ActivityUtil {
     public static void openActivity(Class className, Context context, HashMap<String, ?> data, boolean skipAnimation) {
         Intent intent = new Intent(context, className);
 
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (skipAnimation) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         }
