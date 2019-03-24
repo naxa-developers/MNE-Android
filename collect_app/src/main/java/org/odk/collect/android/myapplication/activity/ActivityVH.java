@@ -32,11 +32,15 @@ class ActivityVH extends RecyclerView.ViewHolder {
     private View.OnClickListener addClickListener(Activity desc) {
         return v -> {
             boolean hasBeneficiaries = desc.getBeneficiaryLevel();
+            String activityId = desc.getId();
+            String formId = desc.getForm();
             HashMap<String, String> hashMap = new HashMap<>();
-            if (false) {
+            hashMap.put("activity_id",activityId);
+            hashMap.put("form_id",formId);
+            if (hasBeneficiaries) {
                 ActivityUtil.openActivity(BeneficiariesActivity.class, itemView.getContext(), hashMap, false);
             } else {
-                ActivityUtil.openFormEntryActivity(itemView.getContext(), desc.getForm(), desc.getId(), "demo");
+                ActivityUtil.openFormEntryActivity(itemView.getContext(), desc.getForm(), desc.getId(), "");
             }
         };
     }

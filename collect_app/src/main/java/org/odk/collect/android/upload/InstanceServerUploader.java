@@ -25,6 +25,8 @@ import org.odk.collect.android.dto.Instance;
 import org.odk.collect.android.http.HttpHeadResult;
 import org.odk.collect.android.http.HttpPostResult;
 import org.odk.collect.android.http.OpenRosaHttpInterface;
+import org.odk.collect.android.myapplication.forms.FormsLocalSource;
+import org.odk.collect.android.myapplication.forms.PraticalActionForm;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.FileUtils;
 import org.odk.collect.android.utilities.ResponseMessageParser;
@@ -61,7 +63,7 @@ public class InstanceServerUploader extends InstanceUploader {
     /**
      * Uploads all files associated with an instance to the specified URL. Writes fail/success
      * status to database.
-     *
+     * <p>
      * Returns a custom success message if one is provided by the server.
      */
     @Override
@@ -278,7 +280,7 @@ public class InstanceServerUploader extends InstanceUploader {
 
     /**
      * Returns the URL this instance should be submitted to with appended deviceId.
-     *
+     * <p>
      * If the upload was triggered by an external app and specified an override URL, use that one.
      * Otherwise, use the submission URL configured in the form
      * (https://opendatakit.github.io/xforms-spec/#submission-attributes). Finally, default to the
@@ -294,12 +296,12 @@ public class InstanceServerUploader extends InstanceUploader {
         } else if (currentInstance.getSubmissionUri() != null) {
             urlString = currentInstance.getSubmissionUri().trim();
         } else {
-            urlString = getServerSubmissionURL();
+            urlString = getServerSubmissionURL(String.valueOf(currentInstance.getDatabaseId()));
         }
 
         // add deviceID to request
         try {
-            urlString += "?deviceID=" + URLEncoder.encode(deviceId != null ? deviceId : "", "UTF-8");
+            urlString += "&deviceID=" + URLEncoder.encode(deviceId != null ? deviceId : "", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             Timber.i(e, "Error encoding URL for device id : %s", deviceId);
         }
@@ -329,5 +331,43 @@ public class InstanceServerUploader extends InstanceUploader {
         }
 
         return serverBase + submissionPath;
+    }
+
+    private String getServerSubmissionURL(String instanceId) {
+
+        PraticalActionForm form = FormsLocalSource.getInstance().getById(instanceId);
+        Collect app = Collect.getInstance();
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(
+                Collect.getInstance());
+
+        String serverBase = settings.getString(GeneralKeys.KEY_SERVER_URL,
+                app.getString(R.string.default_server_url));
+
+        if (serverBase.endsWith(URL_PATH_SEP)) {
+            serverBase = serverBase.substring(0, serverBase.length() - 1);
+        }
+
+        // NOTE: /submission must not be translated! It is the well-known path on the server.
+        String submissionPath = settings.getString(GeneralKeys.KEY_SUBMISSION_URL,
+                app.getString(R.string.default_odk_submission));
+
+        if (!submissionPath.startsWith(URL_PATH_SEP)) {
+            submissionPath = URL_PATH_SEP + submissionPath;
+        }
+
+        String url = serverBase + submissionPath;
+        url = addParams(Uri.parse(url), form.getActivityId(), form.getBeneficiaryId());
+
+        return url;
+    }
+
+    private String addParams(Uri url, String activityId, String beneficiaryId) {
+        String ACTIVITY_PARAM = "activity";
+        String BENEFICIARY_PARAM = "beneficiary";
+        return url.buildUpon()
+                .appendQueryParameter(ACTIVITY_PARAM, activityId)
+                .appendQueryParameter(BENEFICIARY_PARAM, beneficiaryId)
+                .build()
+                .toString();
     }
 }

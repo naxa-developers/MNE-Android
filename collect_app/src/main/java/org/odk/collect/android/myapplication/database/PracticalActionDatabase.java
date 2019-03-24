@@ -41,6 +41,7 @@ public abstract class PracticalActionDatabase extends RoomDatabase {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         PracticalActionDatabase.class, DB_PATH)
                         .fallbackToDestructiveMigration()//todo: remove this once we are live
+                        .allowMainThreadQueries()//only used in PracticalActionFormsDAO getById(String instanceId)
                         .build();
             }
         }

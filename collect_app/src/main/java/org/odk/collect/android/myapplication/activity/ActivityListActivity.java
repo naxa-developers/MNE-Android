@@ -23,7 +23,7 @@ import java.util.List;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
-public class ActivityListActivity extends BaseActivity implements TitleDescAdapter.OnCardClickListener {
+public class ActivityListActivity extends BaseActivity {
 
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
@@ -97,11 +97,4 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
         }
     }
 
-
-    @Override
-    public void onCardClicked(TitleDesc surveyForm) {
-        String idString = surveyForm.getId();
-        toast(idString);
-
-    }
 }

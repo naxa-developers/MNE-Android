@@ -23,6 +23,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class ActivityUtil {
 
+    public static class KEYS {
+        public static String ACTIVITY_ID = "activity_id";
+        public static String BENEFICIARY_ID = "beneficiary_id";
+        public static String FORM_ID = "form_id";
+    }
+
     public static void openActivity(Class className, Context context, HashMap<String, ?> data, boolean skipAnimation) {
         Intent intent = new Intent(context, className);
 
@@ -54,8 +60,8 @@ public class ActivityUtil {
             long formId = getFormId(idString);
             Uri formUri = ContentUris.withAppendedId(FormsProviderAPI.FormsColumns.CONTENT_URI, formId);
             Intent toFormEntry = new Intent(Intent.ACTION_EDIT, formUri);
-            toFormEntry.putExtra("activity_id", activityId);
-            toFormEntry.putExtra("beneficiary_id", beneficiaryId);
+            toFormEntry.putExtra(KEYS.ACTIVITY_ID, activityId);
+            toFormEntry.putExtra(KEYS.BENEFICIARY_ID, beneficiaryId);
             toFormEntry.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             activity.startActivity(toFormEntry);
         } catch (CursorIndexOutOfBoundsException e) {

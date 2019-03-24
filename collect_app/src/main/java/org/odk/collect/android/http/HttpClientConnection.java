@@ -613,6 +613,7 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         HttpHead req = new HttpHead(uri);
         setCollectHeaders(req);
         setOpenRosaHeaders(req);
+        setAuthHeader(req);
         return req;
     }
 

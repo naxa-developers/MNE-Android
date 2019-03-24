@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class BeneficaryVH extends RecyclerView.ViewHolder {
     final RelativeLayout rootLayout;
     TextView tvTitle, tvDesc, tvIconText;
+    HashMap<String, String> metadata = null;
 
     public BeneficaryVH(View itemView) {
         super(itemView);
@@ -30,10 +31,17 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(addClickListener(desc));
     }
 
+    public void setActivityAndBeneficiaryIds(HashMap<String, String> map) {
+        this.metadata = map;
+    }
+
     View.OnClickListener addClickListener(BeneficaryResponse desc) {
         return v -> {
-            HashMap<String, String> hashMap = new HashMap<>();
-//
+            String activityId = metadata.get(ActivityUtil.KEYS.ACTIVITY_ID);
+            String formId = metadata.get(ActivityUtil.KEYS.FORM_ID);
+            String beneficiaryId = String.valueOf(desc.getId());
+
+            ActivityUtil.openFormEntryActivity(itemView.getContext(), formId, activityId, beneficiaryId);
         };
     }
 }

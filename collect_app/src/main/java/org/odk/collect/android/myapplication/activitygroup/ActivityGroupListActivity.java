@@ -40,7 +40,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener, TitleDescAdapter.OnCardClickListener {
+public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener{
 
     DisposableObserver<Object> dis;
     private Toolbar toolbar;
@@ -178,11 +178,5 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    @Override
-    public void onCardClicked(TitleDesc surveyForm) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("cluster_id", surveyForm.getSecondaryId());
 
-        ActivityUtil.openActivity(BeneficiariesActivity.class, this, hashMap, false);
-    }
 }
