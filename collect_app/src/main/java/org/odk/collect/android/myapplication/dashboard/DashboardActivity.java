@@ -94,7 +94,7 @@ public class DashboardActivity extends BaseActivity {
             for (ActivityGroup activityGroup : activities) {
                 add(new SectionHeader(0, activityGroup.getName()));
                 for (Activity activity : activityGroup.getActivity()) {
-                    add(new SectionItem(activity.getName()));
+                    add(new SectionItem(0));
                 }
             }
         }};

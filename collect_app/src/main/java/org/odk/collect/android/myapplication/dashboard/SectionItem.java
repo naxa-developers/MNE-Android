@@ -4,7 +4,7 @@ public class SectionItem implements Section {
 
     private int section;
 
-    public SectionItem(String section) {
+    public SectionItem(int section) {
         this.section = section;
     }
 
