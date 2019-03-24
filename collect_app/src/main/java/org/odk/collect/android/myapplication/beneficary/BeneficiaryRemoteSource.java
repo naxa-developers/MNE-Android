@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.beneficary;
 
+import org.odk.collect.android.myapplication.activitygroup.model.ClusterResponse;
 import org.odk.collect.android.myapplication.api.ServiceGenerator;
 
 import java.util.List;
@@ -19,6 +20,23 @@ public class BeneficiaryRemoteSource {
         return INSTANCE;
     }
 
+
+    Observable<Object> getBeneficiaryByCluster() {
+        return ServiceGenerator.createService(BenficaryAPI.class)
+                .getCluster()
+                .flatMapIterable(new Function<List<ClusterResponse>, Iterable<ClusterResponse>>() {
+                    @Override
+                    public Iterable<ClusterResponse> apply(List<ClusterResponse> clusterResponses) throws Exception {
+                        return clusterResponses;
+                    }
+                })
+                .flatMap(new Function<ClusterResponse, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(ClusterResponse clusterResponse) throws Exception {
+                        return getBeneficiaryByClusterId(clusterResponse.getId());
+                    }
+                });
+    }
 
     Observable<Object> getBeneficiaryByClusterId(String clusterId) {
         return ServiceGenerator.createService(BenficaryAPI.class).getBenficaryForCluster(clusterId)

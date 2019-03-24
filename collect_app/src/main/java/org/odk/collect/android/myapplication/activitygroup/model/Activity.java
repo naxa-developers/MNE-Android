@@ -4,10 +4,13 @@ package org.odk.collect.android.myapplication.activitygroup.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import org.odk.collect.android.myapplication.dashboard.Section;
 
 
 @Entity(tableName = "activities",
@@ -18,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
                 onDelete = ForeignKey.CASCADE
         ),
         primaryKeys = {"id"})
-public class Activity {
+public class Activity implements Section {
     @SerializedName("id")
     @Expose
     @NonNull
@@ -61,6 +64,8 @@ public class Activity {
     @Expose
     private Boolean targetMet;
 
+    @Ignore
+    private int section = 0;
 
     public String getId() {
         return id;
@@ -167,4 +172,16 @@ public class Activity {
     public void setActivityGroupId(String activityGroupId) {
         this.activityGroupId = activityGroupId;
     }
+
+    @Override
+    public int type() {
+        return ITEM;
+    }
+
+    @Override
+    public int sectionPosition() {
+        return section;
+    }
+
+
 }

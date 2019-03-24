@@ -46,7 +46,7 @@ public class BeneficiariesActivity extends BaseActivity {
                     setupListAdapter(beneficiaries);
                 });
 
-        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByClusterId("2")
+        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByCluster()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Object>() {

@@ -63,6 +63,8 @@ public class ActivityGroupRemoteSource {
     }
 
 
+
+
     public Observable<ArrayList<TitleDesc>> getAllActivity(String activityGroupId) {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
                 .getCluster()

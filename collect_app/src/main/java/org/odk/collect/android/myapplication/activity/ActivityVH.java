@@ -12,11 +12,11 @@ import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.HashMap;
 
-class ActivityVH extends RecyclerView.ViewHolder {
+public class ActivityVH extends RecyclerView.ViewHolder {
     private final RelativeLayout rootLayout;
     private TextView tvTitle, tvDesc, tvIconText;
 
-    ActivityVH(View itemView) {
+    public ActivityVH(View itemView) {
         super(itemView);
         rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
         tvTitle = itemView.findViewById(R.id.tv_list_item_title);
@@ -24,7 +24,7 @@ class ActivityVH extends RecyclerView.ViewHolder {
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
     }
 
-    void bindView(Activity desc) {
+    public void bindView(Activity desc) {
         tvTitle.setText(desc.getName());
         itemView.setOnClickListener(addClickListener(desc));
     }
