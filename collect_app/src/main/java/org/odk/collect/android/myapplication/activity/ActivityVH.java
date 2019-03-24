@@ -1,4 +1,4 @@
-package org.odk.collect.android.myapplication.beneficary;
+package org.odk.collect.android.myapplication.activity;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,17 +6,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.odk.collect.android.R;
-import org.odk.collect.android.myapplication.activity.ActivityListActivity;
+import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.HashMap;
 
-public class BeneficaryVH extends RecyclerView.ViewHolder {
-    final RelativeLayout rootLayout;
-    TextView tvTitle, tvDesc, tvIconText;
+class ActivityVH extends RecyclerView.ViewHolder {
+    private final RelativeLayout rootLayout;
+    private TextView tvTitle, tvDesc, tvIconText;
 
-    public BeneficaryVH(View itemView) {
+    ActivityVH(View itemView) {
         super(itemView);
         rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
         tvTitle = itemView.findViewById(R.id.tv_list_item_title);
@@ -24,16 +24,20 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
     }
 
-    public void bindView(BeneficaryResponse desc) {
+    void bindView(Activity desc) {
         tvTitle.setText(desc.getName());
-        tvDesc.setText(desc.getAddress());
         itemView.setOnClickListener(addClickListener(desc));
     }
 
-    View.OnClickListener addClickListener(BeneficaryResponse desc) {
+    private View.OnClickListener addClickListener(Activity desc) {
         return v -> {
+            boolean hasBeneficiaries = desc.getBeneficiaryLevel();
             HashMap<String, String> hashMap = new HashMap<>();
-//
+            if (false) {
+                ActivityUtil.openActivity(BeneficiariesActivity.class, itemView.getContext(), hashMap, false);
+            } else {
+                ActivityUtil.openFormEntryActivity(itemView.getContext(), desc.getForm(), desc.getId(), "demo");
+            }
         };
     }
 }

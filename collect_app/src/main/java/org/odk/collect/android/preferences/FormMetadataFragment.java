@@ -100,7 +100,7 @@ public class FormMetadataFragment extends BasePreferenceFragment {
     }
 
     /**
-     * Creates a change listener to update the UI, and save new values in shared preferences.
+     * Creates a change listener to update the UI, and saveCompletable new values in shared preferences.
      */
     private Preference.OnPreferenceChangeListener createChangeListener(final SharedPreferences sharedPreferences, final String key) {
         return (preference, newValue) -> {

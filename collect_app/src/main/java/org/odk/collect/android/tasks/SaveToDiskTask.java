@@ -80,7 +80,6 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
     @Override
     protected SaveResult doInBackground(Void... nothing) {
         SaveResult saveResult = new SaveResult();
-
         FormController formController = Collect.getInstance().getFormController();
 
         publishProgress(Collect.getInstance().getString(R.string.survey_saving_validating_message));
@@ -97,7 +96,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
 
             // SCTO-825
             // that means that we have a bad design
-            // save the exception to be used in the error dialog.
+            // saveCompletable the exception to be used in the error dialog.
             saveResult.setSaveErrorMessage(e.getMessage());
             saveResult.setSaveResult(SAVE_ERROR, markCompleted);
             return saveResult;
@@ -140,6 +139,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
             saveResult.setSaveResult(SAVE_ERROR, markCompleted);
         }
 
+        saveResult.setUri(uri);
         return saveResult;
     }
 
@@ -177,7 +177,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
             // If FormEntryActivity was started with a form, then it's likely the first time we're
             // saving.
             // However, it could be a not-first time saving if the user has been using the manual
-            // 'save data' option from the menu. So try to update first, then make a new one if that
+            // 'saveCompletable data' option from the menu. So try to update first, then make a new one if that
             // fails.
             String instancePath = formController.getInstanceFile().getAbsolutePath();
             String where = InstanceColumns.INSTANCE_FILE_PATH + "=?";
@@ -223,6 +223,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
                     }
                 }
                 uri = new InstancesDao().saveInstance(values);
+
             }
         }
     }
@@ -232,7 +233,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
      */
     static File getSavepointFile(String instanceName) {
         File tempDir = new File(Collect.CACHE_PATH);
-        return new File(tempDir, instanceName + ".save");
+        return new File(tempDir, instanceName + ".saveCompletable");
     }
 
     /**
@@ -277,7 +278,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
         // update the uri. We have exported the reloadable instance, so update status...
         // Since we saved a reloadable instance, it is flagged as re-openable so that if any error
         // occurs during the packaging of the data for the server fails (e.g., encryption),
-        // we can still reopen the filled-out form and re-save it at a later time.
+        // we can still reopen the filled-out form and re-saveCompletable it at a later time.
         updateInstanceDatabase(true, true);
 
         if (markCompleted) {

@@ -28,7 +28,7 @@ public class ClusterResponse {
     private String ward;
     @SerializedName("activitygroup")
     @Expose
-    private List<Activitygroup> activitygroup = null;
+    private List<ActivityGroup> activitygroup = null;
 
     public String getId() {
         return id;
@@ -78,11 +78,11 @@ public class ClusterResponse {
         this.ward = ward;
     }
 
-    public List<Activitygroup> getActivitygroup() {
+    public List<ActivityGroup> getActivitygroup() {
         return activitygroup;
     }
 
-    public void setActivitygroup(List<Activitygroup> activitygroup) {
+    public void setActivitygroup(List<ActivityGroup> activitygroup) {
         this.activitygroup = activitygroup;
     }
 

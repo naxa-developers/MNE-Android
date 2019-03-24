@@ -177,7 +177,7 @@ public class InstanceSyncTask extends AsyncTask<Void, String, String> {
                                 values.put(InstanceColumns.STATUS, instanceSyncFlag
                                         ? InstanceProviderAPI.STATUS_COMPLETE : InstanceProviderAPI.STATUS_INCOMPLETE);
                                 values.put(InstanceColumns.CAN_EDIT_WHEN_COMPLETE, Boolean.toString(true));
-                                // save the new instance object
+                                // saveCompletable the new instance object
 
                                 instancesDao.saveInstance(values);
                                 counter++;

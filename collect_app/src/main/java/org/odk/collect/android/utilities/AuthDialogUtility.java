@@ -81,7 +81,7 @@ public class AuthDialogUtility {
 
                 // If custom username, password were passed via intent extras, only keep them for
                 // the current submission. If the URL and credentials were set from user preferences,
-                // save the credentials provided in the dialog to user preferences.
+                // saveCompletable the credentials provided in the dialog to user preferences.
                 if (customUsername != null && customPassword != null) {
                     webCredentialsUtils.saveCredentials(finalOverriddenUrl != null ? finalOverriddenUrl : webCredentialsUtils.getServerUrlFromPreferences(), userNameValue, passwordValue);
                 } else if (finalOverriddenUrl == null) {

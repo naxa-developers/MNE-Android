@@ -167,7 +167,7 @@ public class ExternalSQLiteOpenHelper extends SQLiteOpenHelper {
             db.execSQL(sql);
 
             // create the indexes.
-            // save the sql for later because inserts will be much faster if we don't have
+            // saveCompletable the sql for later because inserts will be much faster if we don't have
             // indexes already.
             List<String> createIndexesCommands = new ArrayList<String>();
             for (String header : headerRow) {

@@ -18,6 +18,8 @@
 
 package org.odk.collect.android.tasks;
 
+import android.net.Uri;
+
 /**
  * Author: Meletis Margaritis
  * Date: 15/3/2013
@@ -28,6 +30,7 @@ public class SaveResult {
     private int saveResult;
     private boolean complete;
     private String saveErrorMessage;
+    private Uri uri;
 
     public int getSaveResult() {
         return saveResult;
@@ -48,5 +51,13 @@ public class SaveResult {
 
     public String getSaveErrorMessage() {
         return saveErrorMessage;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 }

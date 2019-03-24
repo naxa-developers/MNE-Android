@@ -75,7 +75,7 @@ public class AutoSendPreferenceMigrator {
             autoSend = "cellular_only";
         }
 
-        //save to shared preferences
+        //saveCompletable to shared preferences
         GeneralSharedPreferences.getInstance().save(KEY_AUTOSEND, autoSend);
     }
 }

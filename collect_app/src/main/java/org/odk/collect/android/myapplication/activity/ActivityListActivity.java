@@ -1,24 +1,27 @@
 package org.odk.collect.android.myapplication.activity;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
-import org.odk.collect.android.myapplication.activitygroup.ActivityGroupRemoteSource;
+import org.odk.collect.android.myapplication.activitygroup.model.Activity;
+import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
+import timber.log.Timber;
 
 public class ActivityListActivity extends BaseActivity implements TitleDescAdapter.OnCardClickListener {
 
@@ -26,43 +29,22 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
     private TitleDescAdapter listAdapter;
     private DisposableObserver<ArrayList<TitleDesc>> dis;
     private Toolbar toolbar;
+    private BaseRecyclerViewAdapter<Activity, ActivityVH> adapter;
+    private String activityGroupId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_acitivity);
         initView();
-        setupListAdapter();
 
-        dis = ActivityGroupRemoteSource.getInstance().getAllActivity("")
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showProgress();
-                    }
-                })
-                .doOnTerminate(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        hideProgress();
-                    }
-                })
-                .subscribeWith(new DisposableObserver<ArrayList<TitleDesc>>() {
-                    @Override
-                    public void onNext(ArrayList<TitleDesc> titleDescs) {
-                        listAdapter.addAll(titleDescs);
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        toast(e.getMessage());
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
+        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+        activityGroupId = hashMap.get("activity_group_id");
+        ActivityLocalSource.getInstance().getById(activityGroupId)
+                .observe(this, activityList -> {
+                    Timber.i("activity: %d", activityList != null ? activityList.size() : 0);
+                    setupListAdapter(activityList);
                 });
     }
 
@@ -77,21 +59,27 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
 
     }
 
-    private void setupListAdapter() {
+    private void setupListAdapter(List<Activity> activities) {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setEmptyView(findViewById(R.id.root_layout_empty_layout), "No data"
-                , new RecyclerViewEmptySupport.OnEmptyLayoutClickListener() {
-                    @Override
-                    public void onRetryButtonClick() {
+                , () -> {
 
-                    }
                 });
-        listAdapter = new TitleDescAdapter();
-        listAdapter.setOnCardClickListener(this);
-        recyclerView.setAdapter(listAdapter);
+        adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_title_desc) {
+            @Override
+            public void viewBinded(ActivityVH activityVH, Activity activity) {
+                activityVH.bindView(activity);
+            }
+
+            @Override
+            public ActivityVH attachViewHolder(View view) {
+                return new ActivityVH(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -114,6 +102,6 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
     public void onCardClicked(TitleDesc surveyForm) {
         String idString = surveyForm.getId();
         toast(idString);
-        fillODKForm(idString);
+
     }
 }

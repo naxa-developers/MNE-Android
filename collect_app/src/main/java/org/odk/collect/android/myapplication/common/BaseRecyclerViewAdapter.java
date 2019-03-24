@@ -2,25 +2,27 @@ package org.odk.collect.android.myapplication.common;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//
-//import com.rillmark.royalworldcup.MainApplication;
 
 import org.odk.collect.android.application.Collect;
 
 import java.util.List;
 
-public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-    List<L> l;
-    int layout;
+import timber.log.Timber;
 
-    public BaseRecyclerViewAdapter(List<L> l, int layout) {
+
+//import com.rillmark.royalworldcup.MainApplication;
+
+public abstract class BaseRecyclerViewAdapter<L, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+    private List<L> l;
+    private int layout;
+
+    protected BaseRecyclerViewAdapter(List<L> l, int layout) {
         this.l = l;
         this.layout = layout;
-        Log.d("BaseRecyclerViewAdapter", "listSize = " + l.size());
+        Timber.d("listSize = %s", l.size());
     }
 
     @NonNull

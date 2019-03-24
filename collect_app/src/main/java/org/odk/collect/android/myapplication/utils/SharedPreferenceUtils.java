@@ -16,11 +16,11 @@ public class SharedPreferenceUtils {
 
 
     /**
-     * Called to save supplied value in shared preferences against given key.
+     * Called to saveCompletable supplied value in shared preferences against given key.
      *
      * @param context Context of caller activity
-     * @param key     Key of value to save against
-     * @param value   Value to save
+     * @param key     Key of value to saveCompletable against
+     * @param value   Value to saveCompletable
      */
     public static void saveToPrefs(Context context, String key, String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

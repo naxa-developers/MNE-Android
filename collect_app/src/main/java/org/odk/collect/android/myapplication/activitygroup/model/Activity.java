@@ -1,16 +1,32 @@
 
 package org.odk.collect.android.myapplication.activitygroup.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+@Entity(tableName = "activities",
+        foreignKeys = @ForeignKey(
+                entity = ActivityGroup.class,
+                parentColumns = "id",
+                childColumns = "activity_group_id",
+                onDelete = ForeignKey.CASCADE
+        ),
+        primaryKeys = {"id"})
 public class Activity {
     @SerializedName("id")
     @Expose
+    @NonNull
     private String id;
-    @SerializedName("activity_group")
-    @Expose
-    private Integer activityGroup;
+
+    @ColumnInfo(name = "activity_group_id")
+    private String activityGroupId;
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -54,13 +70,7 @@ public class Activity {
         this.id = id;
     }
 
-    public Integer getActivityGroup() {
-        return activityGroup;
-    }
 
-    public void setActivityGroup(Integer activityGroup) {
-        this.activityGroup = activityGroup;
-    }
 
     public String getName() {
         return name;
@@ -150,4 +160,11 @@ public class Activity {
         this.targetMet = targetMet;
     }
 
+    public String getActivityGroupId() {
+        return activityGroupId;
+    }
+
+    public void setActivityGroupId(String activityGroupId) {
+        this.activityGroupId = activityGroupId;
+    }
 }

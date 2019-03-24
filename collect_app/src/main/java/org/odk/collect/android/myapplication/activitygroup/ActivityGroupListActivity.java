@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import org.odk.collect.android.activities.GoogleDriveActivity;
 import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
+import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
@@ -28,20 +30,24 @@ import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener, TitleDescAdapter.OnCardClickListener {
 
-    DisposableObserver<ArrayList<TitleDesc>> dis;
+    DisposableObserver<Object> dis;
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
-    private ArrayList<TitleDesc> titleDescs = new ArrayList<>(0);
-    private BaseRecyclerViewAdapter<TitleDesc, TitleDescVH> adapter;
+    private ArrayList<ActivityGroup> activityGroups = new ArrayList<>(0);
+    private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
 
 
     @Override
@@ -49,38 +55,34 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initView();
-        setupListAdapter(titleDescs);
+
 
         dis = ActivityGroupRemoteSource.getInstance()
-                .getAllActivitiesGroup()
-                .doOnSubscribe(new Consumer<Disposable>() {
+                .getActivityGroups()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Object>() {
                     @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showProgress();
-                    }
-                })
-                .doOnTerminate(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        hideProgress();
-                    }
-                })
-                .subscribeWith(new DisposableObserver<ArrayList<TitleDesc>>() {
-                    @Override
-                    public void onNext(ArrayList<TitleDesc> titleDescs) {
-                        setupListAdapter(titleDescs);
+                    public void onNext(Object o) {
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        toast(e.getMessage());
-                        e.printStackTrace();
+                        Timber.e(e);
                     }
 
                     @Override
                     public void onComplete() {
 
                     }
+                });
+
+        ActivityGroupLocalSouce.getINSTANCE()
+                .getById("")
+                .observe(this, activityGroups -> {
+                    Timber.i("Activities: %d", activityGroups != null ? activityGroups.size() : 0);
+                    setupListAdapter(activityGroups);
                 });
 
         findViewById(R.id.download_forms).setOnClickListener(this);
@@ -96,29 +98,27 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void setupListAdapter(ArrayList<TitleDesc> titleDescs) {
+    private void setupListAdapter(List<ActivityGroup> activityGroups) {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setEmptyView(findViewById(R.id.root_layout_empty_layout), "No data"
-                , new RecyclerViewEmptySupport.OnEmptyLayoutClickListener() {
-                    @Override
-                    public void onRetryButtonClick() {
+                , () -> {
 
-                    }
                 });
 
-        adapter = new BaseRecyclerViewAdapter<TitleDesc, TitleDescVH>(titleDescs, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH>(activityGroups, R.layout.list_item_title_desc) {
             @Override
-            public void viewBinded(TitleDescVH titleDescVH, TitleDesc titleDesc) {
-                titleDescVH.bindView(titleDesc);
+            public void viewBinded(ActivityGroupVH activityGroupVH, ActivityGroup activityGroup) {
+                activityGroupVH.bindView(activityGroup);
             }
 
             @Override
-            public TitleDescVH attachViewHolder(View view) {
-                return new TitleDescVH(view);
+            public ActivityGroupVH attachViewHolder(View view) {
+                return new ActivityGroupVH(view);
             }
+
         };
         recyclerView.setAdapter(adapter);
     }

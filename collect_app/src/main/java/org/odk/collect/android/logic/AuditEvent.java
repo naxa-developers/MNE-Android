@@ -32,12 +32,12 @@ public class AuditEvent {
         FORM_START("form start"),                                                   // Start filling in the form
         FORM_EXIT("form exit"),                                                     // Exit the form
         FORM_RESUME("form resume"),                                                 // Resume filling in the form after previously exiting
-        FORM_SAVE("form save"),                                                     // Save the form
+        FORM_SAVE("form saveCompletable"),                                                     // Save the form
         FORM_FINALIZE("form finalize"),                                             // Finalize the form
         HIERARCHY("jump"),                                                          // Jump to a question
-        SAVE_ERROR("save error"),                                                   // Error in save
+        SAVE_ERROR("saveCompletable error"),                                                   // Error in saveCompletable
         FINALIZE_ERROR("finalize error"),                                           // Error in finalize
-        CONSTRAINT_ERROR("constraint error"),                                       // Constraint or missing answer error on save
+        CONSTRAINT_ERROR("constraint error"),                                       // Constraint or missing answer error on saveCompletable
         DELETE_REPEAT("delete repeat"),                                             // Delete a repeat group
         GOOGLE_PLAY_SERVICES_NOT_AVAILABLE("google play services not available"),   // Google Play Services are not available
         LOCATION_PERMISSIONS_GRANTED("location permissions granted"),               // Location permissions are granted

@@ -365,7 +365,7 @@ public class FormDownloader {
     }
 
     /**
-     * Common routine to download a document from the downloadUrl and save the contents in the file
+     * Common routine to download a document from the downloadUrl and saveCompletable the contents in the file
      * 'file'. Shared by media file download and form file download.
      * <p>
      * SurveyCTO: The file is saved into a temp folder and is moved to the final place if everything
