@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.shuhart.stickyheader.StickyAdapter;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.myapplication.activitygroup.model.Activity;
+import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +33,25 @@ public class SectionAdapter extends StickyAdapter<RecyclerView.ViewHolder, Recyc
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = items.get(position).type();
-        int section = items.get(position).sectionPosition();
-        if (type == Section.HEADER) {
-            ((HeaderViewholder) holder).textView.setText("Header " + section);
-        } else if (type == Section.ITEM){
-            ((ItemViewHolder) holder).textView.setText("Item " + section);
-        } else {
-            ((HeaderViewholder) holder).textView.setText("Custom header");
+
+        Section obj = items.get(position);
+        if (obj instanceof ActivityGroup && type == Section.HEADER) {
+            ActivityGroup group = ((ActivityGroup) obj);
+            ((HeaderViewholder) holder).textView.setText(group.getName());
+        } else if (obj instanceof Activity && type == Section.ITEM) {
+            Activity activity = ((Activity) obj);
+            ((ItemViewHolder) holder).textView.setText(activity.getName());
         }
+
+
+//        int section = items.get(position).sectionPosition();
+//        if (type == Section.HEADER) {
+//            ((HeaderViewholder) holder).textView.setText("Header " + section);
+//        } else if (type == Section.ITEM){
+//            ((ItemViewHolder) holder).textView.setText("Item " + section);
+//        } else {
+//            ((HeaderViewholder) holder).textView.setText("Custom header");
+//        }
     }
 
     @Override
@@ -59,7 +72,9 @@ public class SectionAdapter extends StickyAdapter<RecyclerView.ViewHolder, Recyc
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int headerPosition) {
-        ((HeaderViewholder) holder).textView.setText("Header " + headerPosition);
+        Section obj = items.get(headerPosition);
+        ActivityGroup group = ((ActivityGroup) obj);
+        ((HeaderViewholder) holder).textView.setText(group.getName());
     }
 
     @Override

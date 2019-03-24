@@ -5,6 +5,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -20,8 +22,11 @@ import org.odk.collect.android.myapplication.dashboard.Section;
                 childColumns = "activity_group_id",
                 onDelete = ForeignKey.CASCADE
         ),
-        primaryKeys = {"id"})
+        indices={
+                @Index(value="activity_group_id")
+        })
 public class Activity implements Section {
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     @NonNull
@@ -74,7 +79,6 @@ public class Activity implements Section {
     public void setId(String id) {
         this.id = id;
     }
-
 
 
     public String getName() {

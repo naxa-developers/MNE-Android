@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,17 +16,17 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activity.ActivityLocalSource;
 import org.odk.collect.android.myapplication.activity.ActivityVH;
+import org.odk.collect.android.myapplication.activitygroup.ActivityGroupLocalSouce;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
-import org.odk.collect.android.myapplication.beneficary.BeneficaryVH;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
-import org.odk.collect.android.myapplication.common.BaseSectionedRecyclerViewAdapter;
+import org.odk.collect.android.myapplication.database.dao.ActivityGroupAndActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class DashboardActivity extends BaseActivity {
 
@@ -52,6 +51,16 @@ public class DashboardActivity extends BaseActivity {
         });
 
         initView();
+        ActivityGroupLocalSouce.getINSTANCE().getActGroupAndActById("")
+                .observe(this, new Observer<List<ActivityGroupAndActivity>>() {
+                    @Override
+                    public void onChanged(@Nullable List<ActivityGroupAndActivity> activityGroupAndActivities) {
+                        if (activityGroupAndActivities != null) {
+                            setupListAdapter(activityGroupAndActivities);
+                        }
+                    }
+                });
+
         ActivityLocalSource.getInstance().getById("1")
                 .observe(this, new Observer<List<Activity>>() {
                     @Override
@@ -60,15 +69,8 @@ public class DashboardActivity extends BaseActivity {
                     }
                 });
 
-        ActivityGroup activityGroup = new ActivityGroup();
-        activityGroup.setId("1");
 
-        Activity activity = new Activity();
-        activity.setId("1.1");
-        activityGroup.setActivity(Collections.singletonList(activity));
 
-        List<ActivityGroup> list = Collections.singletonList(activityGroup);
-        setupListAdapter(list);
     }
 
     private void initView() {
@@ -81,7 +83,7 @@ public class DashboardActivity extends BaseActivity {
     }
 
 
-    private void setupListAdapter(List<ActivityGroup> activities) {
+    private void setupListAdapter(List<ActivityGroupAndActivity> activities) {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SectionAdapter adapter = new SectionAdapter();
@@ -91,11 +93,10 @@ public class DashboardActivity extends BaseActivity {
 
 
         adapter.items = new ArrayList<Section>() {{
-            for (ActivityGroup activityGroup : activities) {
-                add(new SectionHeader(0, activityGroup.getName()));
-                for (Activity activity : activityGroup.getActivity()) {
-                    add(new SectionItem(0));
-                }
+            for (int i = 0; i < activities.size(); i++) {
+                ActivityGroupAndActivity activityGroup = activities.get(i);
+                add(activityGroup.getGroup());
+                this.addAll(activityGroup.getActivities());
             }
         }};
 

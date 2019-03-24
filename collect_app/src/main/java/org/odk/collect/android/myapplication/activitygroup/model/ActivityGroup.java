@@ -3,18 +3,21 @@ package org.odk.collect.android.myapplication.activitygroup.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.odk.collect.android.myapplication.dashboard.Section;
+
 import java.util.List;
 
 
-@Entity(tableName = "activity_groups",
-        primaryKeys = {"id"})
-public class ActivityGroup {
+@Entity(tableName = "activity_groups")
+public class ActivityGroup implements Section {
 
+    @PrimaryKey
     @NonNull
     @SerializedName("id")
     @Expose
@@ -35,6 +38,10 @@ public class ActivityGroup {
     @SerializedName("cluster")
     @Expose
     private Integer cluster;
+
+    @Ignore
+    private int section = 0;
+
 
     public String getId() {
         return id;
@@ -82,6 +89,16 @@ public class ActivityGroup {
 
     public void setCluster(Integer cluster) {
         this.cluster = cluster;
+    }
+
+    @Override
+    public int type() {
+        return HEADER;
+    }
+
+    @Override
+    public int sectionPosition() {
+        return section;
     }
 
 }
