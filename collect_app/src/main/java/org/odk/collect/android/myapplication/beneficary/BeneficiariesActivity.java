@@ -105,7 +105,7 @@ public class BeneficiariesActivity extends BaseActivity {
             @Override
             public void viewBinded(BeneficaryVH titleDescVH, BeneficaryResponse BeneficaryResponse) {
                 titleDescVH.setActivityAndBeneficiaryIds(hashMap);
-                titleDescVH.bindView(BeneficaryResponse);
+                titleDescVH.bindView(BeneficaryResponse,hashMap.get("form_id"));
             }
 
             @Override

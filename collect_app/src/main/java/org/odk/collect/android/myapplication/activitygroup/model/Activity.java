@@ -4,15 +4,12 @@ package org.odk.collect.android.myapplication.activitygroup.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import org.odk.collect.android.myapplication.dashboard.Section;
 
 
 @Entity(tableName = "activities",
@@ -25,7 +22,7 @@ import org.odk.collect.android.myapplication.dashboard.Section;
         indices={
                 @Index(value="activity_group_id")
         })
-public class Activity implements Section {
+public class Activity {
     @PrimaryKey
     @SerializedName("id")
     @Expose
@@ -69,8 +66,7 @@ public class Activity implements Section {
     @Expose
     private Boolean targetMet;
 
-    @Ignore
-    private int section = 0;
+
 
     public String getId() {
         return id;
@@ -177,15 +173,6 @@ public class Activity implements Section {
         this.activityGroupId = activityGroupId;
     }
 
-    @Override
-    public int type() {
-        return ITEM;
-    }
-
-    @Override
-    public int sectionPosition() {
-        return section;
-    }
 
 
 }

@@ -691,6 +691,8 @@
     <string name="number_picker_title">Number Picker</string>
     <string name="action_upload">Upload forms</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="toolbar_title_dashboard">Dashboard</string>
+    <string name="msg_monitoring_and_evaluation">Monitoring and Evaluation</string>
 
 
 </resources>

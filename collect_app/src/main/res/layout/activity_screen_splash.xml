@@ -6,10 +6,20 @@
     android:orientation="vertical">
 
     <ImageView
-
+        android:id="@+id/iv_logo"
         android:layout_width="240dp"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
         android:layout_centerInParent="true"
         android:src="@drawable/pratical_action_logo" />
+
+    <TextView
+        android:textColor="@color/orange"
+        style="@style/Base.TextAppearance.AppCompat.Headline"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_logo"
+        android:text="@string/msg_monitoring_and_evaluation" />
+
 
 </RelativeLayout>

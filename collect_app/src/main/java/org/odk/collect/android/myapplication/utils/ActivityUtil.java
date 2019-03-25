@@ -62,6 +62,7 @@ public class ActivityUtil {
             Intent toFormEntry = new Intent(Intent.ACTION_EDIT, formUri);
             toFormEntry.putExtra(KEYS.ACTIVITY_ID, activityId);
             toFormEntry.putExtra(KEYS.BENEFICIARY_ID, beneficiaryId);
+            toFormEntry.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             toFormEntry.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             activity.startActivity(toFormEntry);
         } catch (CursorIndexOutOfBoundsException e) {

@@ -29,6 +29,7 @@ public class ActivityVH extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(addClickListener(desc));
     }
 
+
     private View.OnClickListener addClickListener(Activity desc) {
         return v -> {
             boolean hasBeneficiaries = desc.getBeneficiaryLevel();

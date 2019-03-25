@@ -2,10 +2,13 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_extra_large"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/pratical_action_toolbar"/>
+    <include
+        android:visibility="gone"
+        layout="@layout/pratical_action_toolbar"/>
 
     <org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

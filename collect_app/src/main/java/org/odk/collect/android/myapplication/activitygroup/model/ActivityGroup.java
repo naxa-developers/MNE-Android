@@ -9,13 +9,11 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.odk.collect.android.myapplication.dashboard.Section;
-
 import java.util.List;
 
 
 @Entity(tableName = "activity_groups")
-public class ActivityGroup implements Section {
+public class ActivityGroup   {
 
     @PrimaryKey
     @NonNull
@@ -24,23 +22,20 @@ public class ActivityGroup implements Section {
     private String id;
     @SerializedName("output")
     @Expose
-    private Integer output;
+    private String output;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("activity")
+    @SerializedName("ca")
     @Expose
     @Ignore
     private List<Activity> activity = null;
     @SerializedName("cluster")
     @Expose
     private Integer cluster;
-
-    @Ignore
-    private int section = 0;
 
 
     public String getId() {
@@ -51,11 +46,11 @@ public class ActivityGroup implements Section {
         this.id = id;
     }
 
-    public Integer getOutput() {
+    public String getOutput() {
         return output;
     }
 
-    public void setOutput(Integer output) {
+    public void setOutput(String output) {
         this.output = output;
     }
 
@@ -91,14 +86,5 @@ public class ActivityGroup implements Section {
         this.cluster = cluster;
     }
 
-    @Override
-    public int type() {
-        return HEADER;
-    }
-
-    @Override
-    public int sectionPosition() {
-        return section;
-    }
 
 }

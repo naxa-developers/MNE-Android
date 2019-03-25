@@ -47,6 +47,10 @@ public class ActivityLocalSource implements BaseLocalDataSourceRX<Activity> {
         dao.insert(items);
     }
 
+    public void save(Activity...items) {
+        dao.insert(items);
+    }
+
 
     public LiveData<List<Activity>> getById(String activityGroupId) {
         return dao.getById(activityGroupId);
