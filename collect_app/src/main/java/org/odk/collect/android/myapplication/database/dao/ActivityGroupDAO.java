@@ -13,4 +13,7 @@ import java.util.List;
 public abstract class ActivityGroupDAO implements BaseDAO<ActivityGroup> {
     @Query("SELECT * from activity_groups")
     public abstract LiveData<List<ActivityGroup>> getById();
+
+    @Query("SELECT * from activity_groups")
+    public abstract LiveData<List<ActivityGroupAndActivity>> getActGrpAndActById();
 }

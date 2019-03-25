@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class BeneficaryVH extends RecyclerView.ViewHolder {
     final RelativeLayout rootLayout;
     TextView tvTitle, tvDesc, tvIconText;
+    HashMap<String, String> metadata = null;
 
     public BeneficaryVH(View itemView) {
         super(itemView);
@@ -24,16 +25,21 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
     }
 
-    public void bindView(BeneficaryResponse desc) {
+    public void bindView(BeneficaryResponse desc,String formId) {
         tvTitle.setText(desc.getName());
         tvDesc.setText(desc.getAddress());
-        itemView.setOnClickListener(addClickListener(desc));
+        itemView.setOnClickListener(addClickListener(desc,formId));
     }
 
-    View.OnClickListener addClickListener(BeneficaryResponse desc) {
+    public void setActivityAndBeneficiaryIds(HashMap<String, String> map) {
+        this.metadata = map;
+    }
+
+    View.OnClickListener addClickListener(BeneficaryResponse desc, String formId) {
         return v -> {
-            HashMap<String, String> hashMap = new HashMap<>();
-//
+            String activityId = metadata.get(ActivityUtil.KEYS.ACTIVITY_ID);
+            String beneficiaryId = String.valueOf(desc.getId());
+            ActivityUtil.openFormEntryActivity(itemView.getContext(), formId, activityId, beneficiaryId);
         };
     }
 }

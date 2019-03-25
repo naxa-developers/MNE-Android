@@ -46,4 +46,5 @@
 
     <!-- corner radius -->
     <dimen name="corner_radius">2dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

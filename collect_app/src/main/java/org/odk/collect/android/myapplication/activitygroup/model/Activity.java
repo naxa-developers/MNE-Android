@@ -4,6 +4,8 @@ package org.odk.collect.android.myapplication.activitygroup.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -17,8 +19,11 @@ import com.google.gson.annotations.SerializedName;
                 childColumns = "activity_group_id",
                 onDelete = ForeignKey.CASCADE
         ),
-        primaryKeys = {"id"})
+        indices={
+                @Index(value="activity_group_id")
+        })
 public class Activity {
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     @NonNull
@@ -62,6 +67,7 @@ public class Activity {
     private Boolean targetMet;
 
 
+
     public String getId() {
         return id;
     }
@@ -69,7 +75,6 @@ public class Activity {
     public void setId(String id) {
         this.id = id;
     }
-
 
 
     public String getName() {
@@ -167,4 +172,7 @@ public class Activity {
     public void setActivityGroupId(String activityGroupId) {
         this.activityGroupId = activityGroupId;
     }
+
+
+
 }

@@ -29,6 +29,7 @@ public class BeneficiariesActivity extends BaseActivity {
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
     private BaseRecyclerViewAdapter<BeneficaryResponse, BeneficaryVH> adapter;
+    private HashMap<String, String> hashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,8 @@ public class BeneficiariesActivity extends BaseActivity {
         setContentView(R.layout.activity_beneficiaries_acitivity);
         initView();
 
-//        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
-//        String clusterId = hashMap.get("cluster_id");
+        hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+
 
         BeneficaryLocalSource.getInstance().getById("")
                 .observe(this, beneficiaries -> {
@@ -45,7 +46,7 @@ public class BeneficiariesActivity extends BaseActivity {
                     setupListAdapter(beneficiaries);
                 });
 
-        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByClusterId("2")
+        dis = BeneficiaryRemoteSource.getInstance().getBeneficiaryByCluster()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Object>() {
@@ -98,10 +99,13 @@ public class BeneficiariesActivity extends BaseActivity {
                     }
                 });
 
+
+
         adapter = new BaseRecyclerViewAdapter<BeneficaryResponse, BeneficaryVH>(beneficaryResponses, R.layout.list_item_beneficary) {
             @Override
             public void viewBinded(BeneficaryVH titleDescVH, BeneficaryResponse BeneficaryResponse) {
-                titleDescVH.bindView(BeneficaryResponse);
+                titleDescVH.setActivityAndBeneficiaryIds(hashMap);
+                titleDescVH.bindView(BeneficaryResponse,hashMap.get("form_id"));
             }
 
             @Override
@@ -109,6 +113,8 @@ public class BeneficiariesActivity extends BaseActivity {
                 return new BeneficaryVH(view);
             }
         };
+
+
         recyclerView.setAdapter(adapter);
     }
 

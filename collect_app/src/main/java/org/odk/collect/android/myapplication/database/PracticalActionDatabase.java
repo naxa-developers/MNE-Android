@@ -22,7 +22,7 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
                 Activity.class,
                 ActivityGroup.class,
                 PraticalActionForm.class
-        }, version = 2)
+        }, version = 4)
 
 @TypeConverters({ActivityTypeConverter.class})
 public abstract class PracticalActionDatabase extends RoomDatabase {
@@ -41,6 +41,7 @@ public abstract class PracticalActionDatabase extends RoomDatabase {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         PracticalActionDatabase.class, DB_PATH)
                         .fallbackToDestructiveMigration()//todo: remove this once we are live
+                        .allowMainThreadQueries()//only used in PracticalActionFormsDAO getById(String instanceId)
                         .build();
             }
         }

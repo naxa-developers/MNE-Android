@@ -4,10 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.database.PracticalActionDatabase;
 import org.odk.collect.android.myapplication.database.base.BaseLocalDataSourceRX;
+import org.odk.collect.android.myapplication.database.dao.ActivityGroupAndActivity;
 import org.odk.collect.android.myapplication.database.dao.ActivityGroupDAO;
 
 import java.util.List;
@@ -45,6 +45,10 @@ public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<ActivityGr
 
     public LiveData<List<ActivityGroup>> getById(String clusterId) {
         return dao.getById();
+    }
+
+    public LiveData<List<ActivityGroupAndActivity>> getActGroupAndActById(String clusterId) {
+        return dao.getActGrpAndActById();
     }
 
     public void save(List<ActivityGroup> items) {

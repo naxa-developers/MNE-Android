@@ -3,6 +3,7 @@ package org.odk.collect.android.myapplication.activitygroup.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
@@ -11,30 +12,31 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
-@Entity(tableName = "activity_groups",
-        primaryKeys = {"id"})
-public class ActivityGroup {
+@Entity(tableName = "activity_groups")
+public class ActivityGroup   {
 
+    @PrimaryKey
     @NonNull
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("output")
     @Expose
-    private Integer output;
+    private String output;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("activity")
+    @SerializedName("ca")
     @Expose
     @Ignore
     private List<Activity> activity = null;
     @SerializedName("cluster")
     @Expose
     private Integer cluster;
+
 
     public String getId() {
         return id;
@@ -44,11 +46,11 @@ public class ActivityGroup {
         this.id = id;
     }
 
-    public Integer getOutput() {
+    public String getOutput() {
         return output;
     }
 
-    public void setOutput(Integer output) {
+    public void setOutput(String output) {
         this.output = output;
     }
 
@@ -83,5 +85,6 @@ public class ActivityGroup {
     public void setCluster(Integer cluster) {
         this.cluster = cluster;
     }
+
 
 }

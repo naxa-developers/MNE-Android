@@ -1,6 +1,5 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,35 +17,24 @@ import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
-import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
+import org.odk.collect.android.myapplication.cluster.ClusterRemoteSource;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
-import org.odk.collect.android.myapplication.common.TitleDesc;
-import org.odk.collect.android.myapplication.common.TitleDescAdapter;
-import org.odk.collect.android.myapplication.common.TitleDescVH;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
-import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener, TitleDescAdapter.OnCardClickListener {
+public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener {
 
     DisposableObserver<Object> dis;
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
-    private TitleDescAdapter listAdapter;
-    private ArrayList<ActivityGroup> activityGroups = new ArrayList<>(0);
     private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
 
 
@@ -56,9 +44,8 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         setContentView(R.layout.activity_dashboard);
         initView();
 
-
-        dis = ActivityGroupRemoteSource.getInstance()
-                .getActivityGroups()
+        dis = ClusterRemoteSource.getInstance()
+                .getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Object>() {
@@ -85,16 +72,15 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                     setupListAdapter(activityGroups);
                 });
 
-        findViewById(R.id.download_forms).setOnClickListener(this);
-        findViewById(R.id.upload_forms).setOnClickListener(this);
     }
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
-
         recyclerView = findViewById(R.id.rv_activity_group);
+        findViewById(R.id.download_forms).setOnClickListener(this);
+        findViewById(R.id.upload_forms).setOnClickListener(this);
 
     }
 
@@ -103,11 +89,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setEmptyView(findViewById(R.id.root_layout_empty_layout), "No data"
-                , () -> {
-
-                });
-
         adapter = new BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH>(activityGroups, R.layout.list_item_title_desc) {
             @Override
             public void viewBinded(ActivityGroupVH activityGroupVH, ActivityGroup activityGroup) {
@@ -139,9 +120,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_retry:
-                // TODO 19/03/17
-                break;
             case R.id.download_forms:
                 if (Collect.allowClick(getClass().getName())) {
                     SharedPreferences sharedPreferences = PreferenceManager
@@ -171,18 +149,10 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                     startActivity(i);
                 }
                 break;
-
-
             default:
                 break;
         }
     }
 
-    @Override
-    public void onCardClicked(TitleDesc surveyForm) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("cluster_id", surveyForm.getSecondaryId());
 
-        ActivityUtil.openActivity(BeneficiariesActivity.class, this, hashMap, false);
-    }
 }

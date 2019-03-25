@@ -32,6 +32,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
 import org.odk.collect.android.myapplication.api.RetrofitException;
+import org.odk.collect.android.myapplication.api.ServiceGenerator;
 import org.odk.collect.android.myapplication.api.model.AuthResponse;
 
 import java.util.ArrayList;
@@ -209,6 +210,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             Intent intent = new Intent(LoginActivity.this, ActivityGroupListActivity.class);
                             startActivity(intent);
                             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                            ServiceGenerator.clear();
 
                         }
 
@@ -220,6 +222,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             Log.d("LoginActivity", "error message = " + re.getKind().getMessage());
                             mPasswordView.setError(re.getKind().getMessage());
                             mPasswordView.requestFocus();
+                            ServiceGenerator.clear();
                         }
 
                         @Override

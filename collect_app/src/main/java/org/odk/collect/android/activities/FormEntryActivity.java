@@ -111,6 +111,7 @@ import org.odk.collect.android.logic.FormController.FailedConstraint;
 import org.odk.collect.android.logic.FormInfo;
 import org.odk.collect.android.myapplication.forms.FormsLocalSource;
 import org.odk.collect.android.myapplication.forms.PraticalActionForm;
+import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.preferences.AdminKeys;
 import org.odk.collect.android.preferences.AdminSharedPreferences;
 import org.odk.collect.android.preferences.GeneralKeys;
@@ -461,9 +462,12 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
             Intent intent = getIntent();
             if (intent != null) {
                 loadFromIntent(intent);
-                if (intent.hasExtra("activity_id")) {
-                    activityId = intent.getStringExtra("activity_id");
-                    beneficiaryId = intent.getStringExtra("beneficiary_id");
+                if (intent.hasExtra(ActivityUtil.KEYS.ACTIVITY_ID)) {
+                    activityId = intent.getStringExtra(ActivityUtil.KEYS.ACTIVITY_ID);
+                }
+
+                if (intent.hasExtra(ActivityUtil.KEYS.BENEFICIARY_ID)) {
+                    beneficiaryId = intent.getStringExtra(ActivityUtil.KEYS.BENEFICIARY_ID);
                 }
             }
         }

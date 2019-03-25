@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -34,6 +35,10 @@ public class ServiceGenerator {
         };
     }
 
+    public static void clear() {
+        retrofit = null;
+    }
+
     private static OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         String token = UserLocalSource.getINSTANCE().getUserToken(Collect.getInstance().getApplicationContext());
@@ -44,7 +49,7 @@ public class ServiceGenerator {
             okHttpClientBuilder.addInterceptor(createAuthInterceptor(token));
         }
 
-
+        okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
         return okHttpClientBuilder
                 .build();
     }

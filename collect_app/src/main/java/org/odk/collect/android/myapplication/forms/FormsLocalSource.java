@@ -43,4 +43,7 @@ public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionFor
         dao.insert(items);
     }
 
+    public PraticalActionForm getById(String instanceId) {
+        return dao.getById(instanceId);
+    }
 }

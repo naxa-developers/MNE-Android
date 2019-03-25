@@ -15,6 +15,7 @@ import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
+import org.odk.collect.android.myapplication.utils.DialogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.List;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
-public class ActivityListActivity extends BaseActivity implements TitleDescAdapter.OnCardClickListener {
+public class ActivityListActivity extends BaseActivity {
 
     private RecyclerViewEmptySupport recyclerView;
     private TitleDescAdapter listAdapter;
@@ -31,13 +32,14 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
     private Toolbar toolbar;
     private BaseRecyclerViewAdapter<Activity, ActivityVH> adapter;
     private String activityGroupId;
+    private DialogUtil dialogUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_acitivity);
         initView();
-
+        dialogUtil = new DialogUtil();
 
         HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         activityGroupId = hashMap.get("activity_group_id");
@@ -64,10 +66,6 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setEmptyView(findViewById(R.id.root_layout_empty_layout), "No data"
-                , () -> {
-
-                });
         adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_title_desc) {
             @Override
             public void viewBinded(ActivityVH activityVH, Activity activity) {
@@ -84,12 +82,6 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         if (dis != null) {
@@ -97,11 +89,4 @@ public class ActivityListActivity extends BaseActivity implements TitleDescAdapt
         }
     }
 
-
-    @Override
-    public void onCardClicked(TitleDesc surveyForm) {
-        String idString = surveyForm.getId();
-        toast(idString);
-
-    }
 }
