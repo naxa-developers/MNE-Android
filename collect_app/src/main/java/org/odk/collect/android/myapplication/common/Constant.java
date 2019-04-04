@@ -6,6 +6,19 @@ public class Constant {
 
     public static class URLs {
         public static final String GET_CLUSTER = "/core/cluster";
-        public static final String GET_ACT_GROUP = "/core/actgroup";
+        public static final String GET_ACT_GROUP = "/core/activitygroup/{id}";
     }
+
+    public static class SERVICE {
+        static String SERVICE_AUTHORITY = "org.odk.collect.android.myapplication.sync.DataSyncService";
+        public static String STARTFOREGROUND_SYNC = SERVICE_AUTHORITY + "start";
+        public static String STOPFOREGROUND_SYNC = SERVICE_AUTHORITY + "stop";
+    }
+
+    public interface NOTIFICATION_ID {
+        int FOREGROUND_DATA_SYNC_SERVICE = 101;
+        int DATA_UPTO_DATE = 102;
+        int DATA_SYNC_ERROR = 103;
+    }
+
 }

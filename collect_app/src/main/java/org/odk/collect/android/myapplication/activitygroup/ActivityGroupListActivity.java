@@ -2,12 +2,15 @@ package org.odk.collect.android.myapplication.activitygroup;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import org.odk.collect.android.R;
@@ -19,7 +22,9 @@ import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.cluster.ClusterRemoteSource;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
+import org.odk.collect.android.myapplication.common.Constant;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
+import org.odk.collect.android.myapplication.sync.DataSyncService;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
@@ -102,6 +107,29 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
         };
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                Intent startIntent = new Intent(this, DataSyncService.class);
+                startIntent.setAction(Constant.SERVICE.STARTFOREGROUND_SYNC);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(startIntent);
+                } else {
+                    startService(startIntent);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
