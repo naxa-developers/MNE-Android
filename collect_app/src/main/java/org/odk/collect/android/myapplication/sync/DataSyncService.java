@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
@@ -16,15 +15,21 @@ import org.odk.collect.android.myapplication.activitygroup.ActivityGroupRemoteSo
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.api.RetrofitException;
+import org.odk.collect.android.myapplication.beneficary.BeneficaryResponse;
+import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
+import org.odk.collect.android.myapplication.beneficary.BeneficiaryRemoteSource;
 import org.odk.collect.android.myapplication.cluster.ClusterRemoteSource;
 import org.odk.collect.android.myapplication.common.Constant;
 import org.odk.collect.android.utilities.ToastUtils;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -35,7 +40,7 @@ import static org.odk.collect.android.utilities.NotificationUtils.showNotificati
 
 public class DataSyncService extends Service {
     boolean isAlreadyUptoDate = false;
-    private DisposableObserver<Object> dis;
+    private DisposableObserver<String> dis;
 
 
     @Override
@@ -70,20 +75,23 @@ public class DataSyncService extends Service {
         super.onCreate();
         Timber.i("OnCreate()");
         if (InternetUtil.checkConnectedToNetwork()) {
-            dis = ClusterRemoteSource.getInstance()
+
+            Observable<List<Activity>> actObservable = ClusterRemoteSource.getInstance()
                     .getAll()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .delay(5, TimeUnit.SECONDS)
                     .flatMapIterable((Function<List<ActivityGroup>, Iterable<ActivityGroup>>) activityGroups -> activityGroups)
                     .flatMap((Function<ActivityGroup, ObservableSource<List<Activity>>>) activityGroup -> {
                         String actGroupId = activityGroup.getId();
                         return ActivityGroupRemoteSource.getInstance().getActivityGroup(actGroupId);
-                    })
-                    .subscribeWith(new DisposableObserver<Object>() {
-                        @Override
-                        public void onNext(Object o) {
+                    });
 
+            Observable<List<BeneficaryResponse>> beneficiaryObservable = BeneficiaryRemoteSource.getInstance().getAll();
+
+            dis = Observable.zip(actObservable, beneficiaryObservable, (activityList, o) -> String.format(Locale.getDefault(), " %d and %d", activityList.size(), o.size()))
+                    .subscribeWith(new DisposableObserver<String>() {
+                        @Override
+                        public void onNext(String message) {
                         }
 
                         @Override
@@ -94,6 +102,7 @@ public class DataSyncService extends Service {
                             }
                             showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
                             stopSafely();
+                            Timber.e(e);
                         }
 
                         @Override

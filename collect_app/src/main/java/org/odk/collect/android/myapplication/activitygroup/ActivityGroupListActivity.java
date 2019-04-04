@@ -20,7 +20,6 @@ import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
-import org.odk.collect.android.myapplication.cluster.ClusterRemoteSource;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.Constant;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
@@ -30,14 +29,10 @@ import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener {
 
-    DisposableObserver<Object> dis;
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
@@ -49,26 +44,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         setContentView(R.layout.activity_dashboard);
         initView();
 
-        dis = ClusterRemoteSource.getInstance()
-                .getAll()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Object>() {
-                    @Override
-                    public void onNext(Object o) {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
 
         ActivityGroupLocalSouce.getINSTANCE()
                 .getById("")
@@ -130,19 +106,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (dis != null) {
-            dis.dispose();
-        }
     }
 
     @Override

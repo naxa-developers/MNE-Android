@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface BenficaryAPI {
 
     @GET("/core/beneficiary/")
-    Observable<List<BeneficaryResponse>> getBenficaryForCluster(@Query("cluster") String cluster);
+    Observable<List<BeneficaryResponse>> getBenficaryForCluster(@Query("cluster") Integer cluster);
 
     @Deprecated
     @GET(Constant.URLs.GET_CLUSTER)
