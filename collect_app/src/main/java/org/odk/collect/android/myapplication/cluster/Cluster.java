@@ -1,6 +1,10 @@
 
 package org.odk.collect.android.myapplication.cluster;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,8 +12,11 @@ import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 
 import java.util.List;
 
+
+@Entity(tableName = "clusters")
 public class Cluster {
 
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -27,6 +34,7 @@ public class Cluster {
     private String ward;
     @SerializedName("clusterag")
     @Expose
+    @Ignore
     private List<ActivityGroup> clusterag = null;
 
     public Integer getId() {

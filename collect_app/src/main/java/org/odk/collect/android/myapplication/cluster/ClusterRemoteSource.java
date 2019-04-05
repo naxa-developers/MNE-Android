@@ -1,12 +1,14 @@
 package org.odk.collect.android.myapplication.cluster;
 
-import org.odk.collect.android.myapplication.activity.ActivityLocalSource;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupLocalSouce;
-import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.api.ServiceGenerator;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 public class ClusterRemoteSource {
 
@@ -19,24 +21,16 @@ public class ClusterRemoteSource {
         return INSTANCE;
     }
 
-    public Observable<Object> getAll() {
+    public Observable<List<ActivityGroup>> getAll() {
         return ServiceGenerator.createService(ClusterAPI.class)
                 .getCluster()
-                .map(ducks -> {
-
-                    for (Cluster d : ducks) {
-                        ActivityGroupLocalSouce.getINSTANCE().save(d.getClusterag());
-                        for (ActivityGroup activityGroup : d.getClusterag()) {
-                            for (Activity activity : activityGroup.getActivity()) {
-                                activity.setActivityGroupId(activityGroup.getId());
-                                ActivityLocalSource.getInstance().save(activity);
-                            }
-
-
-                        }
-                    }
-
-                    return ducks;
+                .flatMapIterable((Function<List<Cluster>, Iterable<Cluster>>) clusters -> {
+                    ClusterLocalSource.getInstance().save(clusters);
+                    return clusters;
+                })
+                .map(cluster -> {
+                    ActivityGroupLocalSouce.getINSTANCE().save(cluster.getClusterag());
+                    return cluster.getClusterag();
                 });
     }
 

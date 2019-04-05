@@ -9,6 +9,8 @@ import android.content.Context;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.beneficary.BeneficaryResponse;
+import org.odk.collect.android.myapplication.cluster.Cluster;
+import org.odk.collect.android.myapplication.cluster.ClusterDAO;
 import org.odk.collect.android.myapplication.database.dao.ActivityDAO;
 import org.odk.collect.android.myapplication.database.dao.ActivityGroupDAO;
 import org.odk.collect.android.myapplication.database.dao.BeneficiaryDAO;
@@ -21,8 +23,9 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
                 BeneficaryResponse.class,
                 Activity.class,
                 ActivityGroup.class,
-                PraticalActionForm.class
-        }, version = 4)
+                PraticalActionForm.class,
+                Cluster.class
+        }, version = 5)
 
 @TypeConverters({ActivityTypeConverter.class})
 public abstract class PracticalActionDatabase extends RoomDatabase {
@@ -56,4 +59,6 @@ public abstract class PracticalActionDatabase extends RoomDatabase {
     public abstract ActivityGroupDAO getActivityGroupDAO();
 
     public abstract PracticalActionFormsDAO getPracticalActionFormsDAO();
+
+    public abstract ClusterDAO getClusterDAO();
 }

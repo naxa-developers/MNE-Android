@@ -7,7 +7,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
-interface ClusterAPI {
+public interface ClusterAPI {
 
     @GET(Constant.URLs.GET_CLUSTER)
     Observable<List<Cluster>> getCluster();

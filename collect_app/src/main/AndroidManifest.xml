@@ -73,6 +73,11 @@
         android:largeHeap="true"
         android:supportsRtl="true">
         <activity
+            android:exported="true"
+            android:name=".myapplication.cluster.ClusterListActivity"
+            android:label="@string/title_activity_cluster_list_activty"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".myapplication.dashboard.DashboardActivity"
             android:exported="true"
             android:label="@string/title_activity_dashboard" />
@@ -272,7 +277,6 @@
         <activity
             android:name=".myapplication.activity.ActivityListActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>
