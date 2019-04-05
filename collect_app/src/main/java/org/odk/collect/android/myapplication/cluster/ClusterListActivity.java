@@ -1,5 +1,7 @@
 package org.odk.collect.android.myapplication.cluster;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +19,8 @@ import android.view.View;
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
+import org.odk.collect.android.myapplication.common.Constant;
+import org.odk.collect.android.myapplication.sync.DataSyncService;
 
 import java.util.List;
 
@@ -80,7 +84,14 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
+        Intent startIntent = new Intent(this, DataSyncService.class);
+        startIntent.setAction(Constant.SERVICE.STARTFOREGROUND_SYNC);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(startIntent);
+        } else {
+            startService(startIntent);
+        }
     }
 
     @Override

@@ -24,7 +24,6 @@ public class ClusterRemoteSource {
     public Observable<List<ActivityGroup>> getAll() {
         return ServiceGenerator.createService(ClusterAPI.class)
                 .getCluster()
-
                 .flatMapIterable((Function<List<Cluster>, Iterable<Cluster>>) clusters -> {
                     ClusterLocalSource.getInstance().save(clusters);
                     return clusters;

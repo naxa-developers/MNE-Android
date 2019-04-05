@@ -11,6 +11,7 @@ import org.odk.collect.android.activities.SplashScreenActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.PermissionListener;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
+import org.odk.collect.android.myapplication.cluster.ClusterListActivity;
 import org.odk.collect.android.myapplication.onboarding.LoginActivity;
 import org.odk.collect.android.myapplication.onboarding.UserLocalSource;
 import org.odk.collect.android.myapplication.utils.PermissionUtil;
@@ -86,7 +87,7 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
         Intent intent;
 
         if (UserLocalSource.getINSTANCE().isLoggedIn(this)) {
-            intent = new Intent(PracticalActionSplashScreenActivity.this, ActivityGroupListActivity.class);
+            intent = new Intent(PracticalActionSplashScreenActivity.this, ClusterListActivity.class);
         } else {
             intent = new Intent(PracticalActionSplashScreenActivity.this, LoginActivity.class);
         }
