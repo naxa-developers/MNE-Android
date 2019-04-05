@@ -7,7 +7,7 @@ import org.odk.collect.android.myapplication.api.ServiceGenerator;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+
 import io.reactivex.functions.Function;
 
 public class ClusterRemoteSource {
@@ -24,6 +24,7 @@ public class ClusterRemoteSource {
     public Observable<List<ActivityGroup>> getAll() {
         return ServiceGenerator.createService(ClusterAPI.class)
                 .getCluster()
+
                 .flatMapIterable((Function<List<Cluster>, Iterable<Cluster>>) clusters -> {
                     ClusterLocalSource.getInstance().save(clusters);
                     return clusters;
@@ -31,7 +32,9 @@ public class ClusterRemoteSource {
                 .map(cluster -> {
                     ActivityGroupLocalSouce.getINSTANCE().save(cluster.getClusterag());
                     return cluster.getClusterag();
+
                 });
+
     }
 
 }
