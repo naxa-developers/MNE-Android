@@ -27,6 +27,7 @@ class ActivityGroupVH extends RecyclerView.ViewHolder {
 
     void bindView(ActivityGroup desc) {
         tvTitle.setText(desc.getName());
+        tvDesc.setText(desc.getDescription());
         itemView.setOnClickListener(addClickListener(desc));
     }
 

@@ -1,11 +1,15 @@
 package org.odk.collect.android.myapplication.cluster;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +21,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.activities.FormDownloadList;
+import org.odk.collect.android.activities.GoogleDriveActivity;
+import org.odk.collect.android.activities.InstanceUploaderList;
+import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
+import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.Constant;
 import org.odk.collect.android.myapplication.sync.DataSyncService;
+import org.odk.collect.android.preferences.GeneralKeys;
+import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.List;
 
@@ -58,7 +69,7 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvCluster.setLayoutManager(manager);
         rvCluster.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<Cluster, ClusterVH>(clusters, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<Cluster, ClusterVH>(clusters, R.layout.list_item_cluster) {
             @Override
             public void viewBinded(ClusterVH clusterVH, Cluster cluster) {
                 clusterVH.bindView(cluster);
@@ -78,6 +89,8 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
         drawerlayout.addDrawerListener(actionBarToggle);
         actionBarToggle.syncState();
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
+        getSupportActionBar().setTitle("Cluster(s)");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -96,7 +109,31 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        toggleNavDrawer();
+        final int selectedItemId = menuItem.getItemId();
+
+        new Handler().postDelayed(() -> handleNavDrawerClicks(selectedItemId), 250);
+
         return false;
+    }
+
+    private void handleNavDrawerClicks(int selectedItemId) {
+
+        switch (selectedItemId) {
+            case R.id.nav_download_form:
+
+                break;
+            case R.id.nav_edit_form:
+                break;
+            case R.id.nav_upload_form:
+                if (Collect.allowClick(getClass().getName())) {
+                    Intent i = new Intent(getApplicationContext(),
+                            InstanceUploaderList.class);
+                    startActivity(i);
+                }
+                break;
+        }
     }
 
     @Override
@@ -106,5 +143,14 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleNavDrawer() {
+        if (drawerlayout.isDrawerOpen(GravityCompat.START)) {
+            drawerlayout.closeDrawer(GravityCompat.START);
+        } else {
+            drawerlayout.openDrawer(GravityCompat.START);
+        }
+
     }
 }

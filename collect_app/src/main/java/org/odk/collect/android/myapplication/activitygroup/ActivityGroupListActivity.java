@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +28,7 @@ import org.odk.collect.android.myapplication.sync.DataSyncService;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 import timber.log.Timber;
@@ -36,6 +38,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
+    private String clusterId;
 
 
     @Override
@@ -43,11 +46,14 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initView();
+        setupToolbar("Activities Group(s)");
 
 
+        HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+        clusterId = hashMap.get("cluster_id");
 
         ActivityGroupLocalSouce.getINSTANCE()
-                .getById("")
+                .getById(clusterId)
                 .observe(this, activityGroups -> {
                     Timber.i("Activities: %d", activityGroups != null ? activityGroups.size() : 0);
                     setupListAdapter(activityGroups);
@@ -70,7 +76,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH>(activityGroups, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH>(activityGroups, R.layout.list_item_activity_group) {
             @Override
             public void viewBinded(ActivityGroupVH activityGroupVH, ActivityGroup activityGroup) {
                 activityGroupVH.bindView(activityGroup);
@@ -85,31 +91,12 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                Intent startIntent = new Intent(this, DataSyncService.class);
-                startIntent.setAction(Constant.SERVICE.STARTFOREGROUND_SYNC);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(startIntent);
-                } else {
-                    startService(startIntent);
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View v) {
+
+
+
         switch (v.getId()) {
             case R.id.download_forms:
                 if (Collect.allowClick(getClass().getName())) {
@@ -144,6 +131,10 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
+
+
+
+
 
 
 }

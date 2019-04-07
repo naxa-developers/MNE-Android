@@ -2,16 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/account"
-        android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="Upload" />
+        android:id="@+id/nav_upload_form"
+        android:title="Upload Form(s)" />
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="Edit" />
+        android:id="@+id/nav_edit_form"
+        android:title="Edit Forms(s)" />
     <item
-        android:id="@+id/mycart"
-        android:icon="@drawable/ic_info_outline_white_24dp"
-        android:title="Download" />
+        android:visible="false"
+        android:id="@+id/nav_download_form"
+        android:title="Download Form(s)" />
 
 </menu>

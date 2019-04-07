@@ -27,8 +27,11 @@
     <string name="msg_download_new_data">Downloading new information</string>
     <string name="action_stop_download">Stop Download</string>
     <string name="noti_title_already_upto_date">Already up to date</string>
+    <string name="noti_title_downloading_forms">Forms</string>
+    <string name="noti_title_download_complete">Forms</string>
+    <string name="noti_title_activity_cluters">Activities And Clusters</string>
     <string name="noti_desc_already_upto_date">Your data is already up-to date</string>
-    <string name="msg_download_sucess">Synced Successfully</string>
+    <string name="msg_download_sucess">Download Complete</string>
 
     <!--mande strings end-->
 

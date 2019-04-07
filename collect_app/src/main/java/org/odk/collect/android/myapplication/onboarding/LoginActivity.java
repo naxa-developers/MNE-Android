@@ -34,6 +34,7 @@ import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActi
 import org.odk.collect.android.myapplication.api.RetrofitException;
 import org.odk.collect.android.myapplication.api.ServiceGenerator;
 import org.odk.collect.android.myapplication.api.model.AuthResponse;
+import org.odk.collect.android.myapplication.cluster.ClusterListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,7 +208,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         public void onNext(AuthResponse authResponse) {
                             showProgress(false);
                             UserLocalSource.getINSTANCE().saveUserToken(getApplicationContext(), authResponse.getToken());
-                            Intent intent = new Intent(LoginActivity.this, ActivityGroupListActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, ClusterListActivity.class);
                             startActivity(intent);
                             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                             ServiceGenerator.clear();

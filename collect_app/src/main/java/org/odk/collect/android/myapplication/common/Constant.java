@@ -19,6 +19,7 @@ public class Constant {
         int FOREGROUND_DATA_SYNC_SERVICE = 101;
         int DATA_UPTO_DATE = 102;
         int DATA_SYNC_ERROR = 103;
+        int ODK_FORM_SYNC = 104;
     }
 
 }

@@ -44,7 +44,7 @@ public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<ActivityGr
     }
 
     public LiveData<List<ActivityGroup>> getById(String clusterId) {
-        return dao.getById();
+        return dao.getById(clusterId);
     }
 
     public LiveData<List<ActivityGroupAndActivity>> getActGroupAndActById(String clusterId) {
