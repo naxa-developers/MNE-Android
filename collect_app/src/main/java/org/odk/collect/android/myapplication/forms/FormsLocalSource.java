@@ -9,6 +9,8 @@ import org.odk.collect.android.myapplication.database.dao.PracticalActionFormsDA
 
 import java.util.List;
 import io.reactivex.Completable;
+import io.reactivex.Single;
+
 public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionForm> {
 
     private static FormsLocalSource INSTANCE = null;
@@ -45,5 +47,11 @@ public class FormsLocalSource implements BaseLocalDataSourceRX<PraticalActionFor
 
     public PraticalActionForm getById(String instanceId) {
         return dao.getById(instanceId);
+    }
+
+
+
+    public Single<Integer> getCountByActivityIdAsSingle(String id) {
+        return dao.getCountByActivityIdAsSingle(id);
     }
 }

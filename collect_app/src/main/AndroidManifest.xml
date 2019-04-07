@@ -84,7 +84,9 @@
             android:name=".myapplication.dashboard.DashboardActivity"
             android:exported="true"
             android:label="@string/title_activity_dashboard" />
-        <activity android:name=".myapplication.beneficary.BeneficiariesActivity" />
+        <activity
+            android:exported="true"
+            android:name=".myapplication.beneficary.BeneficiariesActivity" />
 
         <provider
             android:name=".provider.FormsProvider"

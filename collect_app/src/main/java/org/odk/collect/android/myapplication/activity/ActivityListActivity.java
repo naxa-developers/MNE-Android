@@ -66,7 +66,7 @@ public class ActivityListActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_activity) {
             @Override
             public void viewBinded(ActivityVH activityVH, Activity activity) {
                 activityVH.bindView(activity);

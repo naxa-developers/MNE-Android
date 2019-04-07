@@ -1,5 +1,6 @@
 package org.odk.collect.android.myapplication.activitygroup;
 
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,20 +15,36 @@ import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import java.util.HashMap;
 
 class ActivityGroupVH extends RecyclerView.ViewHolder {
-    private final RelativeLayout rootLayout;
-    private TextView tvTitle, tvDesc, tvIconText;
+
+    private TextView tvTitle, tvDesc, tvOutput;
+    AppCompatImageButton btnExpand;
 
     ActivityGroupVH(View itemView) {
         super(itemView);
-        rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
-        tvTitle = itemView.findViewById(R.id.tv_list_item_title);
-        tvDesc = itemView.findViewById(R.id.tv_list_item_desc);
-        tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
+
+        tvTitle = itemView.findViewById(R.id.primary_text);
+        tvDesc = itemView.findViewById(R.id.sub_text);
+        tvOutput = itemView.findViewById(R.id.supporting_text);
+        btnExpand = itemView.findViewById(R.id.expand_button);
+
     }
 
     void bindView(ActivityGroup desc) {
         tvTitle.setText(desc.getName());
         tvDesc.setText(desc.getDescription());
+        tvOutput.setText(desc.getOutput());
+        btnExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvOutput.getVisibility() == View.VISIBLE) {
+                    btnExpand.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+                    tvOutput.setVisibility(View.GONE);
+                } else {
+                    btnExpand.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+                    tvOutput.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         itemView.setOnClickListener(addClickListener(desc));
     }
 

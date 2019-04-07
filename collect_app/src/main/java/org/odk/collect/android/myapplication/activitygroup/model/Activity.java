@@ -2,8 +2,10 @@
 package org.odk.collect.android.myapplication.activitygroup.model;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -19,8 +21,8 @@ import com.google.gson.annotations.SerializedName;
                 childColumns = "activity_group_id",
                 onDelete = ForeignKey.CASCADE
         ),
-        indices={
-                @Index(value="activity_group_id")
+        indices = {
+                @Index(value = "activity_group_id")
         })
 public class Activity {
     @PrimaryKey
@@ -66,7 +68,29 @@ public class Activity {
     @Expose
     private Boolean targetMet;
 
+    @ColumnInfo(name = "filled_forms_count")
+    private String filledFormsCount;
 
+    @Ignore
+    private int totalCompleted;
+    @Ignore
+    private int progress;
+
+    public int getTotalCompleted() {
+        return totalCompleted;
+    }
+
+    public void setTotalCompleted(int totalCompleted) {
+        this.totalCompleted = totalCompleted;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
 
     public String getId() {
         return id;
@@ -173,6 +197,11 @@ public class Activity {
         this.activityGroupId = activityGroupId;
     }
 
+    public String getFilledFormsCount() {
+        return filledFormsCount;
+    }
 
-
+    public void setFilledFormsCount(String filledFormsCount) {
+        this.filledFormsCount = filledFormsCount;
+    }
 }

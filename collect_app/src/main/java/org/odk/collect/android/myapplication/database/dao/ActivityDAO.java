@@ -9,8 +9,25 @@ import org.odk.collect.android.myapplication.database.base.BaseDAO;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 @Dao
 public abstract class ActivityDAO implements BaseDAO<Activity> {
     @Query("SELECT * from activities WHERE activity_group_id=:activityGroupId")
     public abstract LiveData<List<Activity>> getById(String activityGroupId);
+
+    @Query("SELECT * from activities WHERE activity_group_id=:activityGroupId")
+    public abstract Single<List<Activity>> getByIdAsSingle(String activityGroupId);
+
+
+    @Query("select *,(" +
+            "select count(activityId)" +
+            "from practical_action_forms " +
+            "WHERE activities.id = practical_action_forms.activityId " +
+            "GROUP BY activityId " +
+            ")" +
+            "filled_forms_count " +
+            "from activities " +
+            "WHERE  activity_group_id=:activityGroupId")
+    public abstract LiveData<List<Activity>> getByGroupId(String activityGroupId);
 }

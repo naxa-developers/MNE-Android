@@ -13,19 +13,28 @@ import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import java.util.HashMap;
 
 public class ActivityVH extends RecyclerView.ViewHolder {
-    private final RelativeLayout rootLayout;
-    private TextView tvTitle, tvDesc, tvIconText;
+
+    private TextView tvTitle, tvDesc, tvOutput, tvIconText;
+    private TextView tvTargetNumber, tvStartDate, tvEndDate, tvTargetUnit;
 
     public ActivityVH(View itemView) {
         super(itemView);
-        rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
-        tvTitle = itemView.findViewById(R.id.tv_list_item_title);
-        tvDesc = itemView.findViewById(R.id.tv_list_item_desc);
-        tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
+        tvTitle = itemView.findViewById(R.id.primary_text);
+        tvDesc = itemView.findViewById(R.id.sub_text);
+        tvTargetNumber = itemView.findViewById(R.id.target);
+        tvStartDate = itemView.findViewById(R.id.start_date);
+        tvEndDate = itemView.findViewById(R.id.end_date);
+        tvTargetUnit = itemView.findViewById(R.id.target_unit);
+
     }
 
     public void bindView(Activity desc) {
         tvTitle.setText(desc.getName());
+        tvDesc.setText(desc.getDescription());
+        tvStartDate.setText(desc.getStartDate());
+        tvEndDate.setText(desc.getEndDate());
+        String formattedUnit = desc.getTargetNumber() + " " + desc.getTargetUnit();
+        tvTargetNumber.setText(formattedUnit);
         itemView.setOnClickListener(addClickListener(desc));
     }
 
@@ -36,8 +45,8 @@ public class ActivityVH extends RecyclerView.ViewHolder {
             String activityId = desc.getId();
             String formId = desc.getForm();
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("activity_id",activityId);
-            hashMap.put("form_id",formId);
+            hashMap.put("activity_id", activityId);
+            hashMap.put("form_id", formId);
             if (hasBeneficiaries) {
                 ActivityUtil.openActivity(BeneficiariesActivity.class, itemView.getContext(), hashMap, false);
             } else {
