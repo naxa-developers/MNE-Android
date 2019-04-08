@@ -49,5 +49,6 @@
     <string name="start_date">Start Date %s</string>
     <string name="target">Target %s</string>
     <string name="target_unit">Target Unit %s</string>
+    <string name="action_search">Search</string>
 
 </resources>
