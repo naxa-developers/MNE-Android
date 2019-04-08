@@ -7,10 +7,7 @@
         android:title="Pratical Action 2.6.2" />
     <PreferenceCategory android:title="App">
         <Preference
-            android:key="notification_time_daily"
-            android:title="Reset" />
-        <Preference
-            android:key="notification_time_daily"
+            android:key="logout"
             android:title="Logout" />
     </PreferenceCategory>
 </PreferenceScreen>

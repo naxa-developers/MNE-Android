@@ -5,6 +5,10 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.listeners.DeleteFormsListener;
+import org.odk.collect.android.myapplication.onboarding.LoginActivity;
+import org.odk.collect.android.myapplication.utils.ActivityUtil;
+import org.odk.collect.android.utilities.ToastUtils;
 
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
@@ -30,7 +34,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
                 break;
             case SettingsKeys.KEY_LOGOUT:
-
+                ToastUtils.showLongToast(getString(R.string.please_wait));
+                PraticalActionUserSession.getInstance().logout(deletedForms -> {
+                    ActivityUtil.openActivity(LoginActivity.class, getActivity());
+                    getActivity().finishAffinity();
+                });
                 break;
 
         }

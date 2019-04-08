@@ -30,4 +30,8 @@ public class UserLocalSource {
         String token = getUserToken(context);
         return !TextUtils.isEmpty(token);
     }
+
+    public void clearAll() {
+
+    }
 }
