@@ -9,7 +9,6 @@
     android:layout_marginRight="@dimen/margin_small"
     android:background="@android:color/white"
     app:cardUseCompatPadding="true"
-    style="@style/CardViewStyleDark"
     card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
     card_view:cardElevation="@dimen/card_recycler_elevation">
 
@@ -21,9 +20,10 @@
 
 
         <RelativeLayout
+            android:background="@drawable/circle"
             android:id="@+id/rela_round"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginRight="@dimen/margin_large">
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text=""
+                android:text="T"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_medium" />
 
@@ -49,7 +49,8 @@
             android:layout_toEndOf="@id/rela_round"
             android:layout_toRightOf="@id/rela_round"
             android:text="Title"
-            android:textColor="@color/textColor" />
+            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
+          />
 
         <TextView
             android:id="@+id/tv_list_item_desc"
@@ -63,6 +64,13 @@
             android:textColor="@color/textColor"/>
 
 
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:text="Filled 2 times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </RelativeLayout>
