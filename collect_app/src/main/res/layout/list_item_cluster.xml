@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    style="@style/CardViewStyleDark"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_small"
@@ -15,18 +13,18 @@
 
 
         <android.support.v7.widget.AppCompatImageView
-            android:visibility="gone"
+
             android:id="@+id/card_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_extra_large"
-            android:layout_marginLeft="@dimen/margin_extra_large"
-            android:layout_marginEnd="@dimen/margin_extra_large"
-            android:layout_marginRight="@dimen/margin_extra_large"
-            app:srcCompat="@drawable/ic_notes_white" />
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginRight="@dimen/margin_small"
+            app:srcCompat="@drawable/ic_place_black" />
 
         <View
             android:id="@+id/style_line"
@@ -51,7 +49,7 @@
             android:maxLines="2"
             android:minLines="1"
             android:text="Title"
-            android:textColor="@color/textColor" />
+            android:textColor="@color/colorPrimaryTextDefaultMaterialLight" />
 
         <TextView
             android:id="@+id/tv_list_item_desc"

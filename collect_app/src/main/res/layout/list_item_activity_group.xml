@@ -19,7 +19,7 @@
             android:id="@+id/determinate_progress_bar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_small"
+            android:layout_height="@dimen/progressbar_height"
             android:layout_below="@id/tv_list_item_desc"
             android:progress="60"
             android:progressDrawable="@drawable/greenprogressbarbg"

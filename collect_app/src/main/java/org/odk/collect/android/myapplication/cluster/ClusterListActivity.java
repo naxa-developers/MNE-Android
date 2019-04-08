@@ -69,7 +69,7 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvCluster.setLayoutManager(manager);
         rvCluster.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<Cluster, ClusterVH>(clusters, R.layout.list_item_title_desc) {
+        adapter = new BaseRecyclerViewAdapter<Cluster, ClusterVH>(clusters, R.layout.list_item_cluster) {
             @Override
             public void viewBinded(ClusterVH clusterVH, Cluster cluster) {
                 clusterVH.bindView(cluster);
