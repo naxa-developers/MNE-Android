@@ -26,7 +26,6 @@ class PraticalActionUserSession {
     }
 
     private PraticalActionUserSession() {
-
     }
 
     public void logout(DeleteFormsListener listener) {

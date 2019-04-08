@@ -4,11 +4,13 @@
     android:id="@+id/root_layout_fragment_host"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/pratical_action_toolbar" />
 
     <fragment
+
         android:name="org.odk.collect.android.myapplication.preferences.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -51,4 +51,20 @@
     <string name="target_unit">Target Unit %s</string>
     <string name="action_search">Search</string>
 
+
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_error_title">Unexpected Error Occurred.</string>
+    <string name="dialog_error_title_sync_failed">Data Sync Failed (Code: %1$s)</string>
+    <string name="dialog_title_warning_logout"> Caution</string>
+    <string name="dialog_warning_logout_pos">Delete and logout</string>
+    <string name="dialog_warning_logout_neg">Dismiss</string>
+    <string name="dialog_title_error_register">Error Registering.</string>
+    <string name="dialog_error_register">Could not register to sever.\n • Try again in a few minutes \n • If error persists reinstall app</string>
+    <string name="dialog_title_delete_sites">Delete %1$d sites</string>
+    <string name="dialog_msg_delete_site">%s will be permanently deleted</string>
+    <string name="dialog_action_delete">Delete</string>
+    <string name="dialog_action_hide">Hide</string>
+    <string name="dialog_unexpected_error_title">An unexpected error occurred.</string>
+    <string name="dialog_action_dismiss">Cancel</string>
+
 </resources>
