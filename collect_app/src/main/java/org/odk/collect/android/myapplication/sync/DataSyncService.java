@@ -180,38 +180,6 @@ public class DataSyncService extends Service {
                             stopSafely();
                         }
                     });
-
-
-            if (true) return;
-            dis = Observable.zip(actObservable, beneficiaryObservable, formsObservable, (activityList, beneficaryResponses, forms)
-                    -> String.format(Locale.getDefault(), " %d and %d and %s", activityList.size(), beneficaryResponses.size(), forms))
-                    .subscribeWith(new DisposableObserver<String>() {
-                        @Override
-                        public void onNext(String s) {
-                            Timber.i(s);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            String message = e.getMessage();
-                            if (e instanceof RetrofitException) {
-                                message = ((RetrofitException) e).getKind().getMessage();
-                            }
-                            showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
-                            stopSafely();
-                            Timber.e(e);
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
-
-                            cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
-                            stopSafely();
-                        }
-                    });
-
         }
     }
 
