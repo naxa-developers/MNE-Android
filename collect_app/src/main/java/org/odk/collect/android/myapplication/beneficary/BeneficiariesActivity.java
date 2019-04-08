@@ -17,6 +17,7 @@ import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.common.BaseFilterableRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -134,6 +135,7 @@ public class BeneficiariesActivity extends BaseActivity {
                             beneficiaryFiltered = beneficaryResponses;
                         } else {
                             List<BeneficaryResponse> filteredList = new ArrayList<>();
+
                             for (BeneficaryResponse row : getData()) {
 
                                 if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
