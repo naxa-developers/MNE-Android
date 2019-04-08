@@ -46,6 +46,11 @@ public class ActivityUtil {
         context.startActivity(intent);
     }
 
+
+    public static void openActivity(Class className, Context context) {
+         openActivity(className, context, null, false);
+    }
+
     public static void openSettings(Activity activity) {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);

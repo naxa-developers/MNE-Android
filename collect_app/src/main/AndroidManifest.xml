@@ -282,6 +282,7 @@
         <activity
             android:name=".myapplication.activity.ActivityListActivity"
             android:exported="true" />
+        <activity android:name=".myapplication.preferences.PreferencesActivity" />
     </application>
 
 </manifest>

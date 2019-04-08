@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/pratical_action_logo"
+        android:key="app_update"
+        android:summary="Check for update"
+        android:title="Pratical Action 2.6.2" />
+    <PreferenceCategory android:title="App">
+        <Preference
+            android:key="logout"
+            android:title="Logout" />
+    </PreferenceCategory>
+</PreferenceScreen>
