@@ -52,6 +52,7 @@ class ActivityGroupVH extends RecyclerView.ViewHolder {
         return v -> {
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("activity_group_id", activityGroup.getId());
+            hashMap.put("cluster_id", String.valueOf(activityGroup.getCluster()));
             ActivityUtil.openActivity(ActivityListActivity.class, itemView.getContext(), hashMap, false);
         };
     }

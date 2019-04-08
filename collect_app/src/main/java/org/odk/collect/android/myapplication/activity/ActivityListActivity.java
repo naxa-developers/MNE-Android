@@ -1,6 +1,5 @@
 package org.odk.collect.android.myapplication.activity;
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,10 +10,12 @@ import android.view.View;
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
+import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.TitleDesc;
 import org.odk.collect.android.myapplication.common.TitleDescAdapter;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
+import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.myapplication.utils.DialogUtil;
 
 import java.util.ArrayList;
@@ -27,22 +28,19 @@ import timber.log.Timber;
 public class ActivityListActivity extends BaseActivity {
 
     private RecyclerViewEmptySupport recyclerView;
-    private TitleDescAdapter listAdapter;
-    private DisposableObserver<ArrayList<TitleDesc>> dis;
-    private Toolbar toolbar;
-    private BaseRecyclerViewAdapter<Activity, ActivityVH> adapter;
-    private String activityGroupId;
-    private DialogUtil dialogUtil;
+    private String clusterId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_acitivity);
         initView();
-        dialogUtil = new DialogUtil();
+
 
         HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
-        activityGroupId = hashMap.get("activity_group_id");
+        String activityGroupId = hashMap.get("activity_group_id");
+        clusterId = hashMap.get("cluster_id");
+
         ActivityLocalSource.getInstance().getById(activityGroupId)
                 .observe(this, activityList -> {
                     Timber.i("activity: %d", activityList != null ? activityList.size() : 0);
@@ -52,7 +50,7 @@ public class ActivityListActivity extends BaseActivity {
 
     private void initView() {
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.toolbar_title_activities));
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_add_white);
@@ -66,7 +64,7 @@ public class ActivityListActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_activity) {
+        BaseRecyclerViewAdapter<Activity, ActivityVH> adapter = new BaseRecyclerViewAdapter<Activity, ActivityVH>(activities, R.layout.list_item_activity) {
             @Override
             public void viewBinded(ActivityVH activityVH, Activity activity) {
                 activityVH.bindView(activity);
@@ -74,19 +72,26 @@ public class ActivityListActivity extends BaseActivity {
 
             @Override
             public ActivityVH attachViewHolder(View view) {
-                return new ActivityVH(view);
+                return new ActivityVH(view, activity -> {
+                    boolean hasBeneficiaries = activity.getBeneficiaryLevel();
+                    String activityId = activity.getId();
+                    String formId = activity.getForm();
+
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("activity_id", activityId);
+                    hashMap.put("form_id", formId);
+                    hashMap.put("cluster_id", clusterId);
+
+
+                    if (hasBeneficiaries) {
+                        ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
+                    } else {
+                        ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                    }
+                });
             }
         };
         recyclerView.setAdapter(adapter);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (dis != null) {
-            dis.dispose();
-        }
     }
 
 }
