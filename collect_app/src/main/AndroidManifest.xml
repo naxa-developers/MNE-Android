@@ -90,11 +90,11 @@
 
         <provider
             android:name=".provider.FormsProvider"
-            android:authorities="org.odk.collect.android.provider.odk.forms"
+            android:authorities="np.com.naxa.mande.forms"
             android:exported="true" />
         <provider
             android:name=".provider.InstanceProvider"
-            android:authorities="org.odk.collect.android.provider.odk.instances"
+            android:authorities="np.com.naxa.mande.instances"
             android:exported="true" />
         <provider
             android:name="android.support.v4.content.FileProvider"
