@@ -61,6 +61,7 @@ public class DataSyncService extends Service {
     private DisposableObserver<String> dis;
     private DownloadFormListTask downloadFormListTask;
     private DownloadFormsTask downloadFormsTask;
+    private DisposableObserver<Object> disposable;
 
 
     @Override
@@ -119,7 +120,25 @@ public class DataSyncService extends Service {
                     startFormsDownload(filesToDownload, new DownloadFormsTaskListener() {
                         @Override
                         public void formsDownloadingComplete(HashMap<FormDetails, String> result) {
-                            emitter.onComplete();
+                            if (emitter.isDisposed()) {
+                                return;
+                            }
+                            Iterator<Map.Entry<FormDetails, String>> iterator = result.entrySet().iterator();
+                            ArrayList<FormDetails> failedFormsDetails = new ArrayList<>();
+                            while (iterator.hasNext()) {
+                                Map.Entry pair = iterator.next();
+                                boolean downloadSucess = TextUtils.equals("Success", pair.getValue().toString());
+                                if (!downloadSucess) {
+                                    failedFormsDetails.add((FormDetails) pair.getKey());
+                                }
+                            }
+                            int totalFailedForms = failedFormsDetails.size();
+                            if (totalFailedForms > 0) {
+                                emitter.onError(new RuntimeException("Failed to download " + totalFailedForms + " forms"));
+                            } else {
+                                emitter.onComplete();
+                            }
+
                         }
 
                         @Override
@@ -135,32 +154,63 @@ public class DataSyncService extends Service {
                 });
             });
 
-            dis = Observable.zip(actObservable, beneficiaryObservable, formsObservable, (activityList, beneficaryResponses, s) -> String.format(Locale.getDefault(), " %d and %d", activityList.size(), beneficaryResponses.size())).subscribeWith(new DisposableObserver<String>() {
-                @Override
-                public void onNext(String s) {
+            disposable = Observable.concat(actObservable, beneficiaryObservable, formsObservable, beneficiaryObservable)
+                    .subscribeWith(new DisposableObserver<Object>() {
+                        @Override
+                        public void onNext(Object o) {
+                            Timber.i("");
+                        }
 
-                }
+                        @Override
+                        public void onError(Throwable e) {
+                            String message = e.getMessage();
+                            if (e instanceof RetrofitException) {
+                                message = ((RetrofitException) e).getKind().getMessage();
+                            }
+                            showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
+                            stopSafely();
+                            Timber.e(e);
+                        }
 
-                @Override
-                public void onError(Throwable e) {
-                    String message = e.getMessage();
-                    if (e instanceof RetrofitException) {
-                        message = ((RetrofitException) e).getKind().getMessage();
-                    }
-                    showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
-                    stopSafely();
-                    Timber.e(e);
+                        @Override
+                        public void onComplete() {
+                            showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
 
-                }
+                            cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
+                            stopSafely();
+                        }
+                    });
 
-                @Override
-                public void onComplete() {
-                    showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
 
-                    cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
-                    stopSafely();
-                }
-            });
+            if (true) return;
+            dis = Observable.zip(actObservable, beneficiaryObservable, formsObservable, (activityList, beneficaryResponses, forms)
+                    -> String.format(Locale.getDefault(), " %d and %d and %s", activityList.size(), beneficaryResponses.size(), forms))
+                    .subscribeWith(new DisposableObserver<String>() {
+                        @Override
+                        public void onNext(String s) {
+                            Timber.i(s);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            String message = e.getMessage();
+                            if (e instanceof RetrofitException) {
+                                message = ((RetrofitException) e).getKind().getMessage();
+                            }
+                            showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
+                            stopSafely();
+                            Timber.e(e);
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
+
+                            cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
+                            stopSafely();
+                        }
+                    });
 
         }
     }
@@ -228,8 +278,8 @@ public class DataSyncService extends Service {
     }
 
     private void disposeTasks() {
-        if (dis != null) {
-            dis.dispose();
+        if (disposable != null) {
+            disposable.dispose();
         }
     }
 
