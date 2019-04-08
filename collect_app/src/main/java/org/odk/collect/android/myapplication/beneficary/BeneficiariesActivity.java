@@ -38,6 +38,7 @@ public class BeneficiariesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beneficiaries_acitivity);
         initView();
+        setupToolbar("Beneficiaries");
 
 
         hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
@@ -101,7 +102,6 @@ public class BeneficiariesActivity extends BaseActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         beneficiaryFiltered = beneficaryResponses;
 
         adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryResponse, BeneficaryVH>(beneficaryResponses, R.layout.list_item_beneficary) {

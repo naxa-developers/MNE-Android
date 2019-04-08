@@ -11,6 +11,6 @@ import java.util.List;
 
 @Dao
 public abstract class BeneficiaryDAO implements BaseDAO<BeneficaryResponse> {
-    @Query("SELECT * from beneficiaries")
+    @Query("SELECT * from beneficiaries ORDER by name ASC")
     public abstract LiveData<List<BeneficaryResponse>> getById();
 }

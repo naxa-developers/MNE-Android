@@ -12,6 +12,8 @@ import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.HashMap;
 
+import timber.log.Timber;
+
 public class BeneficaryVH extends RecyclerView.ViewHolder {
     final RelativeLayout rootLayout;
     TextView tvTitle, tvDesc, tvIconText;
@@ -23,12 +25,19 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
         tvTitle = itemView.findViewById(R.id.tv_list_item_title);
         tvDesc = itemView.findViewById(R.id.tv_list_item_desc);
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
+
     }
 
-    public void bindView(BeneficaryResponse desc,String formId) {
-        tvTitle.setText(desc.getName());
-        tvDesc.setText(desc.getAddress());
-        itemView.setOnClickListener(addClickListener(desc,formId));
+    public void bindView(BeneficaryResponse desc, String formId) {
+        try {
+            tvTitle.setText(desc.getName());
+            tvDesc.setText(desc.getAddress());
+            itemView.setOnClickListener(addClickListener(desc, formId));
+            tvIconText.setText(desc.getName().substring(0, 1));
+        } catch (NullPointerException e) {
+            Timber.e(e);
+        }
+
     }
 
     public void setActivityAndBeneficiaryIds(HashMap<String, String> map) {
