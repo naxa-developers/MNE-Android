@@ -29,7 +29,9 @@ import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupListActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.myapplication.common.Constant;
+import org.odk.collect.android.myapplication.preferences.PreferencesActivity;
 import org.odk.collect.android.myapplication.sync.DataSyncService;
+import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
@@ -132,6 +134,9 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
                             InstanceUploaderList.class);
                     startActivity(i);
                 }
+                break;
+            case R.id.nav_app_settings:
+                ActivityUtil.openActivity(PreferencesActivity.class,this);
                 break;
         }
     }

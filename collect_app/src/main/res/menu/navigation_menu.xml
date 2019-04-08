@@ -11,5 +11,10 @@
         android:visible="false"
         android:id="@+id/nav_download_form"
         android:title="Download Form(s)" />
+    <item
+
+        android:id="@+id/nav_app_settings"
+        android:title="Settings" />
+
 
 </menu>
