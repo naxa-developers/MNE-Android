@@ -123,11 +123,15 @@ public class BeneficiariesActivity extends BaseActivity {
 
             @Override
             public BeneficaryVH attachViewHolder(View view) {
-                return new BeneficaryVH(view, beneficaryResponse -> {
+                return new BeneficaryVH(view) {
+                    @Override
+                    public void viewItemClicked(BeneficaryResponse beneficaryResponse) {
 
-                    String beneficiaryId = String.valueOf(beneficaryResponse.getId());
-                    ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
-                });
+                        String beneficiaryId = String.valueOf(beneficaryResponse.getId());
+                        ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
+                    }
+                };
+
             }
 
 
@@ -168,6 +172,8 @@ public class BeneficiariesActivity extends BaseActivity {
             public int getItemCount() {
                 return beneficiaryFiltered.size();
             }
+
+
         };
 
 

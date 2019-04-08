@@ -72,23 +72,26 @@ public class ActivityListActivity extends BaseActivity {
 
             @Override
             public ActivityVH attachViewHolder(View view) {
-                return new ActivityVH(view, activity -> {
-                    boolean hasBeneficiaries = activity.getBeneficiaryLevel();
-                    String activityId = activity.getId();
-                    String formId = activity.getForm();
+                return new ActivityVH(view) {
+                    @Override
+                    void viewItemClicked(Activity activity) {
+                        boolean hasBeneficiaries = activity.getBeneficiaryLevel();
+                        String activityId = activity.getId();
+                        String formId = activity.getForm();
 
-                    HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("activity_id", activityId);
-                    hashMap.put("form_id", formId);
-                    hashMap.put("cluster_id", clusterId);
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("activity_id", activityId);
+                        hashMap.put("form_id", formId);
+                        hashMap.put("cluster_id", clusterId);
 
 
-                    if (hasBeneficiaries) {
-                        ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
-                    } else {
-                        ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                        if (hasBeneficiaries) {
+                            ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
+                        } else {
+                            ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                        }
                     }
-                });
+                };
             }
         };
         recyclerView.setAdapter(adapter);

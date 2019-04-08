@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.PracticalActionSplashScreenActivity;
 import org.odk.collect.android.provider.FormsProviderAPI;
+import org.odk.collect.android.utilities.ToastUtils;
 
 import java.util.HashMap;
 
@@ -66,7 +67,7 @@ public class ActivityUtil {
             toFormEntry.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             activity.startActivity(toFormEntry);
         } catch (CursorIndexOutOfBoundsException e) {
-
+            ToastUtils.showLongToast("Failed to load form");
             Timber.e("Failed to load xml form  %s", e.getMessage());
         } catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
