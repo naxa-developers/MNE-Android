@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
+import org.odk.collect.android.myapplication.beneficary.BeneficaryResponse;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
@@ -17,7 +18,7 @@ public class ActivityVH extends RecyclerView.ViewHolder {
     private TextView tvTitle, tvDesc, tvOutput, tvIconText;
     private TextView tvTargetNumber, tvStartDate, tvEndDate, tvTargetUnit;
 
-    public ActivityVH(View itemView) {
+    ActivityVH(View itemView) {
         super(itemView);
         tvTitle = itemView.findViewById(R.id.primary_text);
         tvDesc = itemView.findViewById(R.id.sub_text);
@@ -25,6 +26,7 @@ public class ActivityVH extends RecyclerView.ViewHolder {
         tvStartDate = itemView.findViewById(R.id.start_date);
         tvEndDate = itemView.findViewById(R.id.end_date);
         tvTargetUnit = itemView.findViewById(R.id.target_unit);
+
 
     }
 
@@ -35,23 +37,14 @@ public class ActivityVH extends RecyclerView.ViewHolder {
         tvEndDate.setText(desc.getEndDate());
         String formattedUnit = desc.getTargetNumber() + " " + desc.getTargetUnit();
         tvTargetNumber.setText(formattedUnit);
-        itemView.setOnClickListener(addClickListener(desc));
+        itemView.setOnClickListener(v -> {
+           viewItemClicked(desc);
+        });
+    }
+
+    void viewItemClicked(Activity activity) {
+
     }
 
 
-    private View.OnClickListener addClickListener(Activity desc) {
-        return v -> {
-            boolean hasBeneficiaries = desc.getBeneficiaryLevel();
-            String activityId = desc.getId();
-            String formId = desc.getForm();
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("activity_id", activityId);
-            hashMap.put("form_id", formId);
-            if (hasBeneficiaries) {
-                ActivityUtil.openActivity(BeneficiariesActivity.class, itemView.getContext(), hashMap, false);
-            } else {
-                ActivityUtil.openFormEntryActivity(itemView.getContext(), desc.getForm(), desc.getId(), "");
-            }
-        };
-    }
 }

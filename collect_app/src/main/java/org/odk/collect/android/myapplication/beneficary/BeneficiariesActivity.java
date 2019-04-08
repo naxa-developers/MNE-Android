@@ -15,6 +15,7 @@ import android.widget.Filter;
 import org.odk.collect.android.R;
 import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.common.BaseFilterableRecyclerViewAdapter;
+import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,9 @@ public class BeneficiariesActivity extends BaseActivity {
 
     private HashMap<String, String> hashMap;
     private List<BeneficaryResponse> beneficiaryFiltered;
+    String formId;
+    String activityId;
+    String clusterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +50,15 @@ public class BeneficiariesActivity extends BaseActivity {
 
 
         hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+        formId = hashMap.get("form_id");
+        activityId = hashMap.get("activity_id");
+        clusterId = hashMap.get("cluster_id");
 
-
-        BeneficaryLocalSource.getInstance().getById("")
+        BeneficaryLocalSource.getInstance().getById(clusterId)
                 .observe(this, beneficiaries -> {
                     Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
                     setupListAdapter(beneficiaries);
                 });
-
-
     }
 
     private void initView() {
@@ -120,7 +124,15 @@ public class BeneficiariesActivity extends BaseActivity {
 
             @Override
             public BeneficaryVH attachViewHolder(View view) {
-                return new BeneficaryVH(view);
+                return new BeneficaryVH(view) {
+                    @Override
+                    public void viewItemClicked(BeneficaryResponse beneficaryResponse) {
+
+                        String beneficiaryId = String.valueOf(beneficaryResponse.getId());
+                        ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
+                    }
+                };
+
             }
 
 
@@ -162,6 +174,8 @@ public class BeneficiariesActivity extends BaseActivity {
             public int getItemCount() {
                 return beneficiaryFiltered.size();
             }
+
+
         };
 
 
