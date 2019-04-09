@@ -53,7 +53,6 @@ public class ActivityListActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.toolbar_title_activities));
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_add_white);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = findViewById(R.id.rv_activity_group);
 
