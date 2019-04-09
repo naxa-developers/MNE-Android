@@ -45,6 +45,9 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
@@ -108,7 +111,6 @@ public class DataSyncService extends Service {
 
             Observable<List<BeneficaryResponse>> beneficiaryObservable = BeneficiaryRemoteSource.getInstance().getAll();
 
-
             Observable<String> formsObservable = Observable.create(emitter -> {
                 downloadFormList(value -> {
                     ArrayList<FormDetails> filesToDownload = new ArrayList<FormDetails>();
@@ -125,10 +127,11 @@ public class DataSyncService extends Service {
                             }
                             Iterator<Map.Entry<FormDetails, String>> iterator = result.entrySet().iterator();
                             ArrayList<FormDetails> failedFormsDetails = new ArrayList<>();
+
                             while (iterator.hasNext()) {
                                 Map.Entry pair = iterator.next();
-                                boolean downloadSucess = TextUtils.equals("Success", pair.getValue().toString());
-                                if (!downloadSucess) {
+                                boolean downloadSuccess = TextUtils.equals("Success", pair.getValue().toString());
+                                if (!downloadSuccess) {
                                     failedFormsDetails.add((FormDetails) pair.getKey());
                                 }
                             }
@@ -136,6 +139,7 @@ public class DataSyncService extends Service {
                             if (totalFailedForms > 0) {
                                 emitter.onError(new RuntimeException("Failed to download " + totalFailedForms + " forms"));
                             } else {
+                                emitter.onNext(String.format(Locale.getDefault(), "%d forms", result.size()));
                                 emitter.onComplete();
                             }
 
@@ -143,7 +147,7 @@ public class DataSyncService extends Service {
 
                         @Override
                         public void progressUpdate(String currentFile, int progress, int total) {
-                            emitter.onNext(currentFile);
+                            //unused
                         }
 
                         @Override
@@ -154,38 +158,48 @@ public class DataSyncService extends Service {
                 });
             });
 
-            disposable = Observable.concat(actObservable, beneficiaryObservable, formsObservable, beneficiaryObservable)
-                    .subscribeWith(new DisposableObserver<Object>() {
-                        @Override
-                        public void onNext(Object o) {
-                            Timber.i("");
-                        }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            String message = e.getMessage();
-                            if (e instanceof RetrofitException) {
-                                message = ((RetrofitException) e).getKind().getMessage();
-                            }
-                            showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
-                            stopSafely();
-                            Timber.e(e);
-                        }
+            dis = Observable.zip(actObservable, beneficiaryObservable, formsObservable, new Function3<List<Activity>, List<BeneficaryResponse>, String, String>() {
+                @Override
+                public String apply(List<Activity> activityList, List<BeneficaryResponse> beneficaryResponses, String formResultMessage) throws Exception {
+                    String title_activities = String.format("Downloaded %s activities", activityList.size());
+                    String title_beneficiaries = String.format("%s beneficiaries", beneficaryResponses.size());
+                    return title_activities.concat(",").concat(title_beneficiaries).concat(" and ").concat(formResultMessage);
+                }
+            }).subscribeWith(new DisposableObserver<String>() {
+                @Override
+                public void onNext(String s) {
+                    Timber.i(s);
+                    showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, s);
 
-                        @Override
-                        public void onComplete() {
-                            showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
+                }
 
-                            cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
-                            stopSafely();
-                        }
-                    });
+                @Override
+                public void onError(Throwable e) {
+                    String message = e.getMessage();
+                    if (e instanceof RetrofitException) {
+                        message = ((RetrofitException) e).getKind().getMessage();
+                    }
+                    showNotification(null, Constant.NOTIFICATION_ID.DATA_SYNC_ERROR, R.string.error_occured, message);
+                    stopSafely();
+                    Timber.e(e);
+                }
+
+                @Override
+                public void onComplete() {
+                    showNotification(null, Constant.NOTIFICATION_ID.DATA_UPTO_DATE, R.string.noti_title_download_complete, "Download complete");
+
+                    cancelNotification(DataSyncService.this, Constant.NOTIFICATION_ID.FOREGROUND_DATA_SYNC_SERVICE);
+                    stopSafely();
+                }
+            });
         }
     }
 
 
     @SuppressWarnings("unchecked")
-    private void startFormsDownload(@NonNull ArrayList<FormDetails> filesToDownload, DownloadFormsTaskListener listener) {
+    private void startFormsDownload
+            (@NonNull ArrayList<FormDetails> filesToDownload, DownloadFormsTaskListener listener) {
         int totalCount = filesToDownload.size();
         if (totalCount > 0) {
             // show dialog box
