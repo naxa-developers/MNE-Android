@@ -66,17 +66,21 @@ if (secretsFile.exists()) {
 
 android {
     compileSdkVersion(28)
+    def versionMajor = 0
+    def versionMinor = 0
+    def versionPatch = 1
+
 
     defaultConfig {
         applicationId('np.com.naxa.mande')
         minSdkVersion(16)
         targetSdkVersion(26)
-        versionCode LEGACY_BUILD_NUMBER_OFFSET + getMasterCommitCount()
-        versionName getVersionName()
+        versionCode versionMajor*100+versionMinor*10+versionPatch
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}-beta"
         testInstrumentationRunner('android.support.test.runner.AndroidJUnitRunner')
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        archivesBaseName = 'collect'
+        archivesBaseName = 'mne-collect'
     }
 
     signingConfigs {
