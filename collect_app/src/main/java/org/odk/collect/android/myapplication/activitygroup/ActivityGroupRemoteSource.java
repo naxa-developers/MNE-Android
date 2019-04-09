@@ -27,27 +27,14 @@ public class ActivityGroupRemoteSource {
         return ServiceGenerator.createService(ActivityGroupAPI.class)
                 .getActivityGroup(id)
                 .subscribeOn(Schedulers.io())
-                .flatMap((Function<List<Activity>, ObservableSource<List<Activity>>>) activityList -> {
+                .map(activityList -> {
                     for (Activity activity : activityList) {
                         activity.setActivityGroupId(id);
                     }
-                    return ActivityLocalSource.getInstance().saveCompletable(activityList).toObservable();
+                    ActivityLocalSource.getInstance().save(activityList);
+
+                    return activityList;
                 });
-//                .map(new Function<List<ActivityGroup>, List<ActivityGroup>>() {
-//                    @Override
-//                    public List<ActivityGroup> apply(List<ActivityGroup> activityGroups) throws Exception {
-//                        ActivityGroupLocalSouce.getINSTANCE().save(activityGroups);
-//
-//                        for (ActivityGroup activityGroup : activityGroups) {
-//                            for (Activity activity : activityGroup.getActivity()) {
-//                                activity.setActivityGroupId(activityGroup.getId());
-//                            }
-//                            ActivityLocalSource.getInstance().save(activityGroup.getActivity());
-//                        }
-//
-//                        return activityGroups;
-//                    }
-//                });
     }
 
 }
