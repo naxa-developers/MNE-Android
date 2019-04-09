@@ -3,6 +3,7 @@ package org.odk.collect.android.myapplication.api;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.common.Constant;
@@ -49,7 +50,7 @@ public class ServiceGenerator {
             okHttpClientBuilder.addInterceptor(createAuthInterceptor(token));
         }
 
-        okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
+        okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor()).addInterceptor(new ChuckInterceptor(Collect.getInstance().getApplicationContext()));
         return okHttpClientBuilder
                 .build();
     }

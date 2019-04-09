@@ -200,9 +200,10 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$room_version"
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
-    implementation 'com.shuhart.stickyheader:stickyheader:1.0.5'
 
 
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 
     implementation "com.android.support:support-v13:${rootProject.supportLibraryVersion}"
     implementation "com.android.support:customtabs:${rootProject.supportLibraryVersion}"
