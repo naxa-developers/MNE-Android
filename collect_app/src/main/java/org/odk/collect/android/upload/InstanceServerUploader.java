@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
@@ -364,10 +365,11 @@ public class InstanceServerUploader extends InstanceUploader {
     private String addParams(Uri url, String activityId, String beneficiaryId) {
         String ACTIVITY_PARAM = "activity";
         String BENEFICIARY_PARAM = "beneficiary";
-        return url.buildUpon()
-                .appendQueryParameter(ACTIVITY_PARAM, activityId)
-                .appendQueryParameter(BENEFICIARY_PARAM, beneficiaryId)
-                .build()
-                .toString();
+        Uri.Builder builder = url.buildUpon();
+        builder.appendQueryParameter(ACTIVITY_PARAM, activityId);
+        if (!TextUtils.isEmpty(beneficiaryId)) {
+            builder.appendQueryParameter(BENEFICIARY_PARAM, beneficiaryId);
+        }
+        return builder.build().toString();
     }
 }
