@@ -124,8 +124,8 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.item/vnd.odk.form" />
-                <data android:mimeType="vnd.android.cursor.item/vnd.odk.instance" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.mne.form" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.mne.instance" />
             </intent-filter>
         </activity>
         <activity
