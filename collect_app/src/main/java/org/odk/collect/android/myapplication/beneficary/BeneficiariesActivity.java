@@ -33,10 +33,10 @@ public class BeneficiariesActivity extends BaseActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
 
-    private BaseFilterableRecyclerViewAdapter<BeneficaryResponse, BeneficaryVH> adapter;
+    private BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH> adapter;
 
     private HashMap<String, String> hashMap;
-    private List<BeneficaryResponse> beneficiaryFiltered;
+    private List<BeneficaryStats> beneficiaryFiltered;
     String formId;
     String activityId;
     String clusterId;
@@ -54,7 +54,7 @@ public class BeneficiariesActivity extends BaseActivity {
         activityId = hashMap.get("activity_id");
         clusterId = hashMap.get("cluster_id");
 
-        BeneficaryLocalSource.getInstance().getById(clusterId)
+        BeneficaryLocalSource.getInstance().getById(clusterId, activityId)
                 .observe(this, beneficiaries -> {
                     Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
                     setupListAdapter(beneficiaries);
@@ -107,26 +107,25 @@ public class BeneficiariesActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupListAdapter(List<BeneficaryResponse> beneficaryResponses) {
+    private void setupListAdapter(List<BeneficaryStats> beneficaryResponses) {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         beneficiaryFiltered = beneficaryResponses;
 
 
-        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryResponse, BeneficaryVH>(beneficaryResponses, R.layout.list_item_beneficary) {
+        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH>(beneficaryResponses, R.layout.list_item_beneficary) {
             @Override
-            public void viewBinded(BeneficaryVH titleDescVH, BeneficaryResponse BeneficaryResponse) {
+            public void viewBinded(BeneficaryVH titleDescVH, BeneficaryStats beneficaryStats) {
                 titleDescVH.setActivityAndBeneficiaryIds(hashMap);
-                titleDescVH.bindView(BeneficaryResponse, hashMap.get("form_id"));
-                titleDescVH.bindView(BeneficaryResponse, "");
+                titleDescVH.bindView(beneficaryStats, hashMap.get("form_id"));
             }
 
             @Override
             public BeneficaryVH attachViewHolder(View view) {
                 return new BeneficaryVH(view) {
                     @Override
-                    public void viewItemClicked(BeneficaryResponse beneficaryResponse) {
+                    public void viewItemClicked(BeneficaryStats beneficaryResponse) {
 
                         String beneficiaryId = String.valueOf(beneficaryResponse.getId());
                         ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
@@ -146,9 +145,9 @@ public class BeneficiariesActivity extends BaseActivity {
                         if (charString.isEmpty()) {
                             beneficiaryFiltered = beneficaryResponses;
                         } else {
-                            List<BeneficaryResponse> filteredList = new ArrayList<>();
+                            List<BeneficaryStats> filteredList = new ArrayList<>();
 
-                            for (BeneficaryResponse row : getData()) {
+                            for (BeneficaryStats row : getData()) {
 
                                 if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
                                     filteredList.add(row);
@@ -164,7 +163,7 @@ public class BeneficiariesActivity extends BaseActivity {
 
                     @Override
                     protected void publishResults(CharSequence constraint, FilterResults results) {
-                        beneficiaryFiltered = (ArrayList<BeneficaryResponse>) results.values;
+                        beneficiaryFiltered = (ArrayList<BeneficaryStats>) results.values;
                         adapter.notifyDataSetChanged();
                     }
                 };

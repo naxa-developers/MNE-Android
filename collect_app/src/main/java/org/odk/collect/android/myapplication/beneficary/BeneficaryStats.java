@@ -1,37 +1,25 @@
 package org.odk.collect.android.myapplication.beneficary;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
+public class BeneficaryStats {
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-
-@Entity(tableName = "beneficiaries",
-        primaryKeys = {"id"})
-public class BeneficaryResponse {
-
-    @SerializedName("id")
-    @Expose
     private Integer id;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("address")
-    @Expose
     private String address;
-    @SerializedName("ward_no")
-    @Expose
     private Integer wardNo;
-    @SerializedName("cluster")
-    @Expose
     private Integer cluster;
-    @SerializedName("Type")
-    @Expose
     private String type;
+    private Integer count;
 
     public Integer getId() {
         return id;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public void setId(Integer id) {

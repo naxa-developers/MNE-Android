@@ -20,13 +20,13 @@
 
 
         <RelativeLayout
-            android:background="@drawable/circle"
             android:id="@+id/rela_round"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginRight="@dimen/margin_large">
+            android:layout_marginRight="@dimen/margin_large"
+            android:background="@drawable/circle">
 
 
             <TextView
@@ -42,15 +42,14 @@
 
 
         <TextView
-            style="@style/Base.TextAppearance.AppCompat.Title"
             android:id="@+id/tv_list_item_title"
+            style="@style/Base.TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/rela_round"
             android:layout_toRightOf="@id/rela_round"
             android:text="Title"
-            android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
-          />
+            android:textColor="@color/colorPrimaryTextDefaultMaterialLight" />
 
         <TextView
             android:id="@+id/tv_list_item_desc"
@@ -61,16 +60,18 @@
             android:layout_toEndOf="@id/rela_round"
             android:layout_toRightOf="@id/rela_round"
             android:text="Subtitle"
-            android:textColor="@color/textColor"/>
+            android:textColor="@color/textColor" />
 
 
         <TextView
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:text="Filled 2 times"
+            android:id="@+id/tv_total_filled"
+            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_list_item_desc"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_toRightOf="@id/rela_round"
+            android:text="Filled 2 times" />
 
 
     </RelativeLayout>

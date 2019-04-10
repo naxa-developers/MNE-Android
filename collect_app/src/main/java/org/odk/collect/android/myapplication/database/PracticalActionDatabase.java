@@ -25,7 +25,7 @@ import org.odk.collect.android.myapplication.forms.PraticalActionForm;
                 ActivityGroup.class,
                 PraticalActionForm.class,
                 Cluster.class
-        }, version = 6)
+        }, version = 8)
 
 @TypeConverters({ActivityTypeConverter.class})
 public abstract class PracticalActionDatabase extends RoomDatabase {

@@ -13,9 +13,8 @@ import timber.log.Timber;
 
 public class BeneficaryVH extends RecyclerView.ViewHolder {
     final RelativeLayout rootLayout;
-    TextView tvTitle, tvDesc, tvIconText;
+    TextView tvTitle, tvDesc, tvIconText, tvTotalFilled;
     HashMap<String, String> metadata = null;
-
 
 
     public BeneficaryVH(View itemView) {
@@ -23,36 +22,50 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
         rootLayout = itemView.findViewById(R.id.card_view_list_item_title_desc);
         tvTitle = itemView.findViewById(R.id.tv_list_item_title);
         tvDesc = itemView.findViewById(R.id.tv_list_item_desc);
+        tvTotalFilled = itemView.findViewById(R.id.tv_total_filled);
         tvIconText = itemView.findViewById(R.id.title_desc_tv_icon_text);
 
 
     }
 
-    public void bindView(BeneficaryResponse beneficaryResponse, String formId) {
+    public void bindView(BeneficaryStats beneficaryStats, String formId) {
         try {
-            tvTitle.setText(beneficaryResponse.getName());
-            tvDesc.setText(beneficaryResponse.getAddress());
+            tvTitle.setText(beneficaryStats.getName());
+            tvDesc.setText(beneficaryStats.getAddress());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewItemClicked(beneficaryResponse);
+                    viewItemClicked(beneficaryStats);
                 }
             });
-            tvIconText.setText(beneficaryResponse.getName().substring(0, 1));
+            tvIconText.setText(beneficaryStats.getName().substring(0, 1));
+            tvTotalFilled.setText(getFormStatus(beneficaryStats.getCluster()));
+            tvTotalFilled.setText(getFormStatus(beneficaryStats.getCount()));
+
         } catch (NullPointerException e) {
             Timber.e(e);
         }
 
     }
 
-    public void viewItemClicked(BeneficaryResponse beneficaryResponse) {
+    private String getFormStatus(Integer totalFilled) {
+        switch (totalFilled) {
+            case 0:
+                return "Pending";
+            case 1:
+                return "Filled once";
+            default:
+                return "Filled " + totalFilled + " times";
+        }
+    }
+
+    public void viewItemClicked(BeneficaryStats beneficaryResponse) {
 
     }
 
     public void setActivityAndBeneficiaryIds(HashMap<String, String> map) {
         this.metadata = map;
     }
-
 
 
 }
