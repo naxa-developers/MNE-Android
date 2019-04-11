@@ -158,19 +158,13 @@
 
             <TextView
                 android:drawablePadding="@dimen/margin_extra_large"
-                android:id="@+id/start_date"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/circle"
                 android:drawableLeft="@drawable/circle" />
 
-            <TextView
-                android:id="@+id/end_date"
-                android:drawablePadding="@dimen/margin_extra_large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/circle"
-                android:drawableLeft="@drawable/circle" />
+
 
         </LinearLayout>
 
