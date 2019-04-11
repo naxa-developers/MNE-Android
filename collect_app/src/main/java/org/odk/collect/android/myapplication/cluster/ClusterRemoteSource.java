@@ -28,17 +28,12 @@ public class ClusterRemoteSource {
                     ClusterLocalSource.getInstance().save(clusters);
                     return clusters;
                 })
-
                 .map(cluster -> {
-
-
-
                     for (ActivityGroup activityGroup : cluster.getClusterag()) {
                         activityGroup.setCluster(cluster.getId());
                     }
                     ActivityGroupLocalSouce.getINSTANCE().save(cluster.getClusterag());
                     return cluster.getClusterag();
-
                 });
 
     }

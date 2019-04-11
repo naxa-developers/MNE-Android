@@ -99,7 +99,6 @@ public class DataSyncService extends Service {
         super.onCreate();
         Timber.i("OnCreate()");
         if (InternetUtil.checkConnectedToNetwork()) {
-
             Observable<List<Activity>> actObservable = ClusterRemoteSource.getInstance()
                     .getAll()
                     .subscribeOn(Schedulers.io())
@@ -266,7 +265,6 @@ public class DataSyncService extends Service {
     }
 
     private void stopSafely() {
-
         stopForeground(true);
         stopSelf();
     }

@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import org.odk.collect.android.myapplication.common.BaseFilterableRecyclerViewAd
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -28,15 +31,10 @@ import timber.log.Timber;
 
 public class BeneficiariesActivity extends BaseActivity {
 
-
-    DisposableObserver<Object> dis;
-    private Toolbar toolbar;
     private RecyclerView recyclerView;
-
     private BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH> adapter;
-
     private HashMap<String, String> hashMap;
-    private List<BeneficaryStats> beneficiaryFiltered;
+    private List<BeneficaryStats> beneficiaryList, filteredList;
     String formId;
     String activityId;
     String clusterId;
@@ -47,18 +45,24 @@ public class BeneficiariesActivity extends BaseActivity {
         setContentView(R.layout.activity_beneficiaries_acitivity);
         initView();
         setupToolbar("Beneficiaries");
-
-
         hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         formId = hashMap.get("form_id");
         activityId = hashMap.get("activity_id");
         clusterId = hashMap.get("cluster_id");
+        beneficiaryList = new ArrayList<>();
+        filteredList = new ArrayList<>();
 
         BeneficaryLocalSource.getInstance().getById(clusterId, activityId)
                 .observe(this, beneficiaries -> {
                     Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
-                    setupListAdapter(beneficiaries);
+                    beneficiaryList.addAll(beneficiaries);
+                    filteredList.addAll(beneficiaries);
+                    adapter.notifyItemRangeInserted(0, filteredList.size());
                 });
+        setupAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
     }
 
     private void initView() {
@@ -66,7 +70,6 @@ public class BeneficiariesActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.toolbar_title_beneficiaries);
         recyclerView = findViewById(R.id.rv_activity_group);
-
     }
 
     @Override
@@ -77,25 +80,24 @@ public class BeneficiariesActivity extends BaseActivity {
     }
 
     private void setupSearchView(Menu menu) {
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getComponentName()));
+//        searchView.setSearchableInfo(searchManager
+//                .getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
+//                adapter.getFilter().filter(query);
                 return false;
             }
-
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
 
@@ -107,14 +109,8 @@ public class BeneficiariesActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupListAdapter(List<BeneficaryStats> beneficaryResponses) {
-
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        beneficiaryFiltered = beneficaryResponses;
-
-
-        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH>(beneficaryResponses, R.layout.list_item_beneficary) {
+    private void setupAdapter() {
+        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH>(filteredList, R.layout.list_item_beneficary) {
             @Override
             public void viewBinded(BeneficaryVH titleDescVH, BeneficaryStats beneficaryStats) {
                 titleDescVH.setActivityAndBeneficiaryIds(hashMap);
@@ -126,7 +122,6 @@ public class BeneficiariesActivity extends BaseActivity {
                 return new BeneficaryVH(view) {
                     @Override
                     public void viewItemClicked(BeneficaryStats beneficaryResponse) {
-
                         String beneficiaryId = String.valueOf(beneficaryResponse.getId());
                         ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
                     }
@@ -134,52 +129,43 @@ public class BeneficiariesActivity extends BaseActivity {
 
             }
 
-
             @Override
             public Filter getFilter() {
                 return new Filter() {
                     @Override
                     protected FilterResults performFiltering(CharSequence charSequence) {
-                        String charString = charSequence.toString();
-                        Timber.i(charString);
-                        if (charString.isEmpty()) {
-                            beneficiaryFiltered = beneficaryResponses;
+                        FilterResults filterResults = new FilterResults();
+                        ArrayList<BeneficaryStats> searchFoundList = new ArrayList<>();
+                        String searchString = charSequence.toString();
+                        Timber.i(searchString);
+                        if (searchString.isEmpty()) {
+                            filterResults.values = beneficiaryList;
                         } else {
-                            List<BeneficaryStats> filteredList = new ArrayList<>();
-
-                            for (BeneficaryStats row : getData()) {
-
-                                if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
-                                    filteredList.add(row);
+                            for (BeneficaryStats row : beneficiaryList) {
+                                if (row.getName().toLowerCase().contains(searchString.toLowerCase())) {
+                                    searchFoundList.add(row);
                                 }
                             }
-                            beneficiaryFiltered = filteredList;
+                            filterResults.values = searchFoundList;
                         }
-
-                        FilterResults filterResults = new FilterResults();
-                        filterResults.values = beneficiaryFiltered;
                         return filterResults;
                     }
 
                     @Override
                     protected void publishResults(CharSequence constraint, FilterResults results) {
-                        beneficiaryFiltered = (ArrayList<BeneficaryStats>) results.values;
-                        adapter.notifyDataSetChanged();
+                        List<BeneficaryStats> list = (List<BeneficaryStats>) results.values;
+                        filteredList.clear();
+                        filteredList.addAll(list);
+                        notifyDataSetChanged();
                     }
                 };
             }
 
             @Override
             public int getItemCount() {
-                return beneficiaryFiltered.size();
+                return filteredList.size();
             }
-
-
         };
-
-
-        recyclerView.setAdapter(adapter);
     }
-
 
 }
