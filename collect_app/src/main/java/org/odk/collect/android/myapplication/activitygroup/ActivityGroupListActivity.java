@@ -94,9 +94,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-
-
-
         switch (v.getId()) {
             case R.id.download_forms:
                 if (Collect.allowClick(getClass().getName())) {
