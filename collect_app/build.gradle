@@ -68,15 +68,14 @@ android {
     compileSdkVersion(28)
     def versionMajor = 0
     def versionMinor = 0
-    def versionPatch = 1
-
+    def versionPatch = 2
 
     defaultConfig {
         applicationId('np.com.naxa.mande')
         minSdkVersion(16)
         targetSdkVersion(26)
         versionCode versionMajor*100+versionMinor*10+versionPatch
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}-beta"
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}-rc.2"
         testInstrumentationRunner('android.support.test.runner.AndroidJUnitRunner')
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
