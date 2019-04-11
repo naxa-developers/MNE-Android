@@ -26,8 +26,6 @@ public class ActivityVH extends RecyclerView.ViewHolder {
         tvStartDate = itemView.findViewById(R.id.start_date);
         tvEndDate = itemView.findViewById(R.id.end_date);
         tvTargetUnit = itemView.findViewById(R.id.target_unit);
-
-
     }
 
     public void bindView(Activity desc) {

@@ -696,6 +696,7 @@
     <string name="title_activity_cluster_list_activty">ClusterListActivty</string>
     <string name="action_close">close</string>
     <string name="action_open">open</string>
+    <string name="action_continue_anyway">Continue anyway</string>
 
 
 </resources>
