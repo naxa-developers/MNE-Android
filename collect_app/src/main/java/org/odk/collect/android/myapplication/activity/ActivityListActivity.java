@@ -12,17 +12,14 @@ import org.odk.collect.android.myapplication.BaseActivity;
 import org.odk.collect.android.myapplication.activitygroup.model.Activity;
 import org.odk.collect.android.myapplication.beneficary.BeneficiariesActivity;
 import org.odk.collect.android.myapplication.common.BaseRecyclerViewAdapter;
-import org.odk.collect.android.myapplication.common.TitleDesc;
-import org.odk.collect.android.myapplication.common.TitleDescAdapter;
+import org.odk.collect.android.myapplication.common.DateUtils;
+import org.odk.collect.android.myapplication.common.DialogFactory;
 import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySupport;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
-import org.odk.collect.android.myapplication.utils.DialogUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
 public class ActivityListActivity extends BaseActivity {
@@ -74,23 +71,43 @@ public class ActivityListActivity extends BaseActivity {
                 return new ActivityVH(view) {
                     @Override
                     void viewItemClicked(Activity activity) {
-                        boolean hasBeneficiaries = activity.getBeneficiaryLevel();
-                        String activityId = activity.getId();
-                        String formId = activity.getForm();
 
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("activity_id", activityId);
-                        hashMap.put("form_id", formId);
-                        hashMap.put("cluster_id", clusterId);
-
-
-                        if (hasBeneficiaries) {
-                            ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
+                        boolean isExpired = DateUtils.hasEndDatePassed(activity.getEndDate());
+                        if (isExpired) {
+                            showExpiredDialog(activity);
                         } else {
-                            ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                            loadForm(activity);
                         }
                     }
                 };
+            }
+
+            private void showExpiredDialog(Activity activity) {
+                DialogFactory.createActionDialog(ActivityListActivity.this, "Expired Activity", "This activity has passed it's end date.Hence,should not be filled")
+                        .setPositiveButton(R.string.action_continue_anyway, (dialog, which) -> {
+                            loadForm(activity);
+                        })
+                        .setNegativeButton(R.string.dialog_action_dismiss, null)
+                        .show();
+
+            }
+
+            private void loadForm(Activity activity) {
+
+                boolean hasBeneficiaries = activity.getBeneficiaryLevel();
+                String activityId = activity.getId();
+                String formId = activity.getForm();
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("activity_id", activityId);
+                hashMap.put("form_id", formId);
+                hashMap.put("cluster_id", clusterId);
+
+                if (hasBeneficiaries) {
+                    ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
+                } else {
+                    ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                }
             }
         };
         recyclerView.setAdapter(adapter);

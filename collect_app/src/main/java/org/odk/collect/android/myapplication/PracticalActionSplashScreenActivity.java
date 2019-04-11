@@ -73,7 +73,7 @@ public class PracticalActionSplashScreenActivity extends AppCompatActivity {
     }
 
     private void startSplash() {
-        int SPLASH_TIME = 3000;
+        int SPLASH_TIME = 2000;
 
         new Handler().postDelayed(new Runnable() {
             @Override
