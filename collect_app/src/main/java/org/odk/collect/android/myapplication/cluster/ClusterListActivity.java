@@ -23,6 +23,7 @@ import android.view.View;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormDownloadList;
 import org.odk.collect.android.activities.GoogleDriveActivity;
+import org.odk.collect.android.activities.InstanceChooserList;
 import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.myapplication.BaseActivity;
@@ -33,6 +34,7 @@ import org.odk.collect.android.myapplication.preferences.PreferencesActivity;
 import org.odk.collect.android.myapplication.sync.DataSyncService;
 import org.odk.collect.android.myapplication.utils.ActivityUtil;
 import org.odk.collect.android.preferences.GeneralKeys;
+import org.odk.collect.android.utilities.ApplicationConstants;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.List;
@@ -127,6 +129,12 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
 
                 break;
             case R.id.nav_edit_form:
+                if (Collect.allowClick(getClass().getName())) {
+                    Intent i = new Intent(getApplicationContext(), InstanceChooserList.class);
+                    i.putExtra(ApplicationConstants.BundleKeys.FORM_MODE,
+                            ApplicationConstants.FormModes.EDIT_SAVED);
+                    startActivity(i);
+                }
                 break;
             case R.id.nav_upload_form:
                 if (Collect.allowClick(getClass().getName())) {
