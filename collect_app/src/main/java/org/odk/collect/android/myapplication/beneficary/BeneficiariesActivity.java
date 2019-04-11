@@ -84,17 +84,13 @@ public class BeneficiariesActivity extends BaseActivity {
     }
 
     private void setupSearchView(Menu menu) {
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
-//        searchView.setSearchableInfo(searchManager
-//                .getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                adapter.getFilter().filter(query);
                 return false;
             }
 
