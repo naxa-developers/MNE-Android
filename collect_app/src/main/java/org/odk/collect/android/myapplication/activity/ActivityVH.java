@@ -30,10 +30,6 @@ public class ActivityVH extends RecyclerView.ViewHolder {
 
         String formatedDate = "From" + " " + DateUtils.formatDate(desc.getStartDate()) + " " + "to" + " " + DateUtils.formatDate(desc.getEndDate());
         tvDate.setText(formatedDate);
-        String formattedUnit = desc.getTargetNumber() + " " + desc.getTargetUnit();
-
-
-        tvTargetNumber.setText(formattedUnit);
 
         itemView.setOnClickListener(v -> {
             viewItemClicked(desc);
