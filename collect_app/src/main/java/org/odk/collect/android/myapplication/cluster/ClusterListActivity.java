@@ -136,7 +136,7 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
                 }
                 break;
             case R.id.nav_app_settings:
-                ActivityUtil.openActivity(PreferencesActivity.class,this);
+                ActivityUtil.openActivity(PreferencesActivity.class, this);
                 break;
         }
     }
@@ -156,6 +156,14 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
         } else {
             drawerlayout.openDrawer(GravityCompat.START);
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerlayout.isDrawerOpen(GravityCompat.START)) {
+            toggleNavDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
