@@ -57,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/media_image" />
 
         <TextView
+            android:layout_marginBottom="@dimen/margin_large"
             android:id="@+id/sub_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -118,11 +119,11 @@
             app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/supporting_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:lineSpacingExtra="8dp"

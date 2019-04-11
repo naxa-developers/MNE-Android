@@ -27,16 +27,27 @@ public class ActivityVH extends RecyclerView.ViewHolder {
         tvTitle.setText(desc.getName());
         tvDesc.setText(desc.getDescription());
 
+
         String formatedDate = "From" + " " + DateUtils.formatDate(desc.getStartDate()) + " " + "to" + " " + DateUtils.formatDate(desc.getEndDate());
         tvDate.setText(formatedDate);
         String formattedUnit = desc.getTargetNumber() + " " + desc.getTargetUnit();
 
 
         tvTargetNumber.setText(formattedUnit);
+
         itemView.setOnClickListener(v -> {
             viewItemClicked(desc);
         });
+
+        if (desc.getBeneficiaryLevel()) {
+            tvTargetNumber.setVisibility(View.GONE);
+        } else {
+            String formattedUnit = desc.getTargetNumber() + " " + desc.getTargetUnit();
+            tvTargetNumber.setText(formattedUnit);
+            tvTargetNumber.setVisibility(View.VISIBLE);
+        }
     }
+
 
     void viewItemClicked(Activity activity) {
 
