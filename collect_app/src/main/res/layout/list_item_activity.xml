@@ -149,6 +149,7 @@
                 android:drawableLeft="@drawable/circle" />
 
             <TextView
+                android:textColor="@color/textColor"
                 android:id="@+id/target"
                 android:drawablePadding="@dimen/margin_extra_large"
                 android:layout_width="wrap_content"
@@ -157,6 +158,7 @@
                 android:drawableLeft="@drawable/circle" />
 
             <TextView
+                android:textColor="@color/textColor"
                 android:drawablePadding="@dimen/margin_extra_large"
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
