@@ -55,9 +55,13 @@ public class BeneficiariesActivity extends BaseActivity {
         BeneficaryLocalSource.getInstance().getById(clusterId, activityId)
                 .observe(this, beneficiaries -> {
                     Timber.i("Beneficiaries: %d", beneficiaries != null ? beneficiaries.size() : 0);
+                    if (adapter != null && adapter.getItemCount() > 0) {
+                        beneficiaryList.clear();
+                        filteredList.clear();
+                    }
                     beneficiaryList.addAll(beneficiaries);
                     filteredList.addAll(beneficiaries);
-                    adapter.notifyItemRangeInserted(0, filteredList.size());
+                    adapter.notifyDataSetChanged();
                 });
         setupAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
