@@ -37,6 +37,13 @@ public class BeneficiaryRemoteSource {
                 .map(new Function<List<BeneficaryResponse>, List<BeneficaryResponse>>() {
                     @Override
                     public List<BeneficaryResponse> apply(List<BeneficaryResponse> beneficaryResponses) throws Exception {
+                        BeneficaryLocalSource.getInstance().deleteByClusterId(clusterId);
+                        return beneficaryResponses;
+                    }
+                })
+                .map(new Function<List<BeneficaryResponse>, List<BeneficaryResponse>>() {
+                    @Override
+                    public List<BeneficaryResponse> apply(List<BeneficaryResponse> beneficaryResponses) throws Exception {
                         BeneficaryLocalSource.getInstance().save(beneficaryResponses);
                         return beneficaryResponses;
                     }

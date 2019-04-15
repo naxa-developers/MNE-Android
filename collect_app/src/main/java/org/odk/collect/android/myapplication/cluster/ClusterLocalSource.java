@@ -43,4 +43,9 @@ public class ClusterLocalSource implements BaseLocalDataSourceRX<Cluster> {
     public LiveData<List<Cluster>> getAll() {
         return dao.getAll();
     }
+
+
+    void deleteAll() {
+        dao.deleteAll();
+    }
 }

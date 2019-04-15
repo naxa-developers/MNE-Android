@@ -16,4 +16,7 @@ public abstract class ActivityGroupDAO implements BaseDAO<ActivityGroup> {
 
     @Query("SELECT * from activity_groups")
     public abstract LiveData<List<ActivityGroupAndActivity>> getActGrpAndActById();
+
+    @Query("DELETE FROM activity_groups")
+    public abstract void deleteAll();
 }

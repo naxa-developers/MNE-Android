@@ -54,4 +54,9 @@ public class ActivityGroupLocalSouce implements BaseLocalDataSourceRX<ActivityGr
     public void save(List<ActivityGroup> items) {
         dao.insert(items);
     }
+
+
+    public void deleteAll() {
+        dao.deleteAll();
+    }
 }
