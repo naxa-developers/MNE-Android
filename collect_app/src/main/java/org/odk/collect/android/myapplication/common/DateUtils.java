@@ -21,7 +21,7 @@ public class DateUtils {
             String formattedDate = dateTime.toString(DateTimeFormat.longDate());
             Timber.i("Formatted %s to %s", endate, formattedDate);
             return formattedDate;
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             Timber.e(e);
             return endate;
         }
