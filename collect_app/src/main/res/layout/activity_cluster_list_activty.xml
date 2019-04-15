@@ -24,9 +24,9 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-
     <android.support.design.widget.NavigationView
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/textColor"
+        app:itemTextColor="@color/textColor"
         android:background="@color/bg_light"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"

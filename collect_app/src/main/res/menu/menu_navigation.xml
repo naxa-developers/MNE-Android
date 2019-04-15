@@ -17,16 +17,19 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:icon="@drawable/ic_edit_24dp"
         android:id="@+id/menu_edit"
         android:title="Edit Form(s)"
         app:showAsAction="never"/>
 
     <item
+        android:icon="@drawable/ic_cloud_24dp"
         android:id="@+id/menu_upload"
         android:title="Upload Form(s)"
         app:showAsAction="never"/>
 
     <item
+        android:icon="@drawable/ic_settings_24dp"
         android:id="@+id/menu_download"
         android:title="Download Form(s)"
         app:showAsAction="never"/>
