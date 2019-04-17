@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -27,18 +28,19 @@ import org.odk.collect.android.myapplication.common.view.RecyclerViewEmptySuppor
 import org.odk.collect.android.myapplication.sync.DataSyncService;
 import org.odk.collect.android.preferences.GeneralKeys;
 import org.odk.collect.android.utilities.PlayServicesUtil;
+import org.odk.collect.android.utilities.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
 public class ActivityGroupListActivity extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar toolbar;
     private RecyclerViewEmptySupport recyclerView;
     private BaseRecyclerViewAdapter<ActivityGroup, ActivityGroupVH> adapter;
-    private String clusterId;
+
 
 
     @Override
@@ -50,7 +52,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
 
 
         HashMap<String, String> hashMap = (HashMap<String, String>) getIntent().getSerializableExtra("map");
-        clusterId = hashMap.get("cluster_id");
+        String clusterId = hashMap.get("cluster_id");
 
         ActivityGroupLocalSouce.getINSTANCE()
                 .getById(clusterId)
@@ -62,7 +64,7 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
     }
 
     private void initView() {
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
         recyclerView = findViewById(R.id.rv_activity_group);
@@ -128,10 +130,6 @@ public class ActivityGroupListActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
-
-
-
-
 
 
 }

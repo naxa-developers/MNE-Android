@@ -38,6 +38,7 @@ import org.odk.collect.android.utilities.ApplicationConstants;
 import org.odk.collect.android.utilities.PlayServicesUtil;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +58,10 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
     DrawerLayout drawerlayout;
     private ActionBarDrawerToggle actionBarToggle;
     private BaseRecyclerViewAdapter<Cluster, ClusterVH> adapter;
+
+    private boolean exitOnBackPress = false;
+    private Handler backPressHandler = new Handler();
+    private Runnable runnable = () -> exitOnBackPress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,8 +175,16 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
     public void onBackPressed() {
         if (drawerlayout.isDrawerOpen(GravityCompat.START)) {
             toggleNavDrawer();
-        } else {
-            super.onBackPressed();
+            return;
         }
+
+        if (exitOnBackPress) {
+            finish();
+            return;
+        }
+
+        exitOnBackPress = true;
+        toast(getString(R.string.msg_double_tap_to_exit));
+        backPressHandler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(2));
     }
 }
