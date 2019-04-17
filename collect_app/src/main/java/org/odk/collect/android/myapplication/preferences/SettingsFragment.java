@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
@@ -19,6 +20,7 @@ import org.odk.collect.android.utilities.ToastUtils;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
+import static org.odk.collect.android.preferences.GeneralKeys.KEY_NAVIGATION;
 
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
@@ -28,8 +30,23 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        initNavigationPrefs();
 
 
+    }
+
+    private void initNavigationPrefs() {
+        final ListPreference pref = (ListPreference) findPreference(KEY_NAVIGATION);
+
+        if (pref != null) {
+            pref.setSummary(pref.getEntry());
+            pref.setOnPreferenceChangeListener((preference, newValue) -> {
+                int index = ((ListPreference) preference).findIndexOfValue(newValue.toString());
+                String entry = (String) ((ListPreference) preference).getEntries()[index];
+                preference.setSummary(entry);
+                return true;
+            });
+        }
     }
 
     private void init() {
