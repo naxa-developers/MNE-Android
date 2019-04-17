@@ -48,4 +48,8 @@ public class BeneficaryLocalSource implements BaseLocalDataSourceRX<BeneficaryRe
     public LiveData<List<BeneficaryStats>> getById(String clusterID, String activityId) {
         return dao.getById(clusterID, activityId);
     }
+
+    public void deleteByClusterId(Integer clusterId) {
+         dao.deleteByClusterId(clusterId);
+    }
 }

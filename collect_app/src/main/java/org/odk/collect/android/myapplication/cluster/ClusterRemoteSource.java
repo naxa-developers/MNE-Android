@@ -1,6 +1,7 @@
 package org.odk.collect.android.myapplication.cluster;
 
 import org.odk.collect.android.myapplication.activitygroup.ActivityGroupLocalSouce;
+import org.odk.collect.android.myapplication.activitygroup.ActivityGroupRemoteSource;
 import org.odk.collect.android.myapplication.activitygroup.model.ActivityGroup;
 import org.odk.collect.android.myapplication.api.ServiceGenerator;
 
@@ -24,6 +25,14 @@ public class ClusterRemoteSource {
     public Observable<List<ActivityGroup>> getAll() {
         return ServiceGenerator.createService(ClusterAPI.class)
                 .getCluster()
+                .map(new Function<List<Cluster>, List<Cluster>>() {
+                    @Override
+                    public List<Cluster> apply(List<Cluster> clusters) throws Exception {
+                        ActivityGroupLocalSouce.getINSTANCE().deleteAll();
+                        ClusterLocalSource.getInstance().deleteAll();
+                        return clusters;
+                    }
+                })
                 .flatMapIterable((Function<List<Cluster>, Iterable<Cluster>>) clusters -> {
                     ClusterLocalSource.getInstance().save(clusters);
                     return clusters;

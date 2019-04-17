@@ -21,7 +21,7 @@ public abstract class BeneficiaryDAO implements BaseDAO<BeneficaryResponse> {
             "WHERE beneficiaries.id = beneficiaryId " +
             "AND activityId=:activityId" +
             ")" +
-            "AS "+
+            "AS " +
             "count " +
             "from beneficiaries " +
             "WHERE cluster=:clusterId " +
@@ -29,6 +29,10 @@ public abstract class BeneficiaryDAO implements BaseDAO<BeneficaryResponse> {
     )
 
     public abstract LiveData<List<BeneficaryStats>> getById(String clusterId, String activityId);
+
+
+    @Query("DELETE FROM beneficiaries WHERE cluster=:clusterId")
+    public abstract void deleteByClusterId(Integer clusterId);
 }
 
 
