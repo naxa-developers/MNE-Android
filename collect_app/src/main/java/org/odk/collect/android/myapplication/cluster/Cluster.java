@@ -26,12 +26,7 @@ public class Cluster {
     @SerializedName("district")
     @Expose
     private String district;
-    @SerializedName("municipality")
-    @Expose
-    private String municipality;
-    @SerializedName("ward")
-    @Expose
-    private String ward;
+
     @SerializedName("clusterag")
     @Expose
     @Ignore
@@ -61,21 +56,6 @@ public class Cluster {
         this.district = district;
     }
 
-    public String getMunicipality() {
-        return municipality;
-    }
-
-    public void setMunicipality(String municipality) {
-        this.municipality = municipality;
-    }
-
-    public String getWard() {
-        return ward;
-    }
-
-    public void setWard(String ward) {
-        this.ward = ward;
-    }
 
     public List<ActivityGroup> getClusterag() {
         return clusterag;

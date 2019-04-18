@@ -259,8 +259,8 @@ public class DataSyncService extends Service {
     }
 
     private void disposeTasks() {
-        if (disposable != null) {
-            disposable.dispose();
+        if (dis != null) {
+            dis.dispose();
         }
     }
 
