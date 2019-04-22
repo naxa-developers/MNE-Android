@@ -14,6 +14,19 @@
 
     </style>
 
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/grey</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/greenDark</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="buttonStyle">@style/PracticalAction.Widget.Button</item>
+
+    </style>
+
     <style name="PracticalAction.Widget.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -82,6 +95,10 @@
 
 
 
-
-
+    <color name="grey">#f4f4f4</color>
+    <color name="green">#45b559</color>
+    <color name="greenDark">#43A047</color>
+    <color name="blue">#40a1c7</color>
+    <color name="orange">#ffa600</color>
+    <color name="pink">#f0638c</color>
 </resources>

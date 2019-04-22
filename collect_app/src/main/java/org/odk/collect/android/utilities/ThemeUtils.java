@@ -37,17 +37,12 @@ public final class ThemeUtils {
 
     @StyleRes
     public int getAppTheme() {
-        return isDarkTheme() ? R.style.DarkAppTheme : R.style.DarkAppTheme;
-    }
-
-    @StyleRes
-    public int getPracticalActionTheme(){
-        return R.style.AppTheme_Dark;
+        return isDarkTheme() ? R.style.LightAppTheme : R.style.LightAppTheme;
     }
 
     @StyleRes
     public int getFormEntryActivityTheme() {
-        return isDarkTheme() ? R.style.FormEntryActivityDarkTheme : R.style.FormEntryActivityDarkTheme;
+        return isDarkTheme() ? R.style.FormEntryActivityLightTheme : R.style.FormEntryActivityLightTheme;
     }
 
     @StyleRes
@@ -132,7 +127,8 @@ public final class ThemeUtils {
         return getAttributeValue(R.attr.rankItemColor);
     }
 
+    @StyleRes
     public int getPraticalActionTheme() {
-        return R.style.AppTheme_Dark;
+        return R.style.AppTheme_Light;
     }
 }

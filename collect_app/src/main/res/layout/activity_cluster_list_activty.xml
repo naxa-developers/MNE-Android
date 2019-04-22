@@ -27,7 +27,7 @@
     <android.support.design.widget.NavigationView
         app:itemIconTint="@color/textColor"
         app:itemTextColor="@color/textColor"
-        android:background="@color/bg_light"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
         android:id="@+id/nv"
