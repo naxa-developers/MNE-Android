@@ -84,6 +84,9 @@ public class ActivityUtil {
 
     }
 
+    public static void openFormEntryActivity(Context activity, String idString, String activityId) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
+        openFormEntryActivity(activity, idString, activityId, "", "");
+    }
 
     private static long getFormId(String jrFormId) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
 
