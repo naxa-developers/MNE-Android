@@ -10,8 +10,13 @@ import timber.log.Timber;
 public class DateUtils {
 
     public static boolean hasEndDatePassed(String endate) {
-        DateTime dateTime = DateTime.parse(endate, DateTimeFormat.forPattern("yyyy-MM-dd"));
-        return dateTime.isBeforeNow();
+
+        try {
+            DateTime dateTime = DateTime.parse(endate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+            return dateTime.isBeforeNow();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
