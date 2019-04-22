@@ -51,10 +51,10 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
             tvWardNo.setText(context.getString(R.string.msg_ward_number, beneficaryStats.getWardNo()));
             tvBeneType.setText(context.getString(R.string.msg_bene_type, beneficaryStats.getType()));
             tvGovermentTranch.setText(context.getString(R.string.msg_gov_tranch, beneficaryStats.getGovernmentTranch()));
-            tvTypeOfHouse.setText(context.getString(R.string.msg_type_of_house,beneficaryStats.getTypesofhouse()));
-            tvRemarks.setText(context.getString(R.string.msg_remarks,beneficaryStats.getRemarks()));
-            tvConstructionPhase.setText(context.getString(R.string.msg_construction_phase,beneficaryStats.getConstructionPhase()));
-            tvTotalFilled.setText(String.valueOf(beneficaryStats.getCount()));
+            tvTypeOfHouse.setText(context.getString(R.string.msg_type_of_house, beneficaryStats.getTypesofhouse()));
+            tvRemarks.setText(context.getString(R.string.msg_remarks, beneficaryStats.getRemarks()));
+            tvConstructionPhase.setText(context.getString(R.string.msg_construction_phase, beneficaryStats.getConstructionPhase()));
+            tvTotalFilled.setText(beneficaryStats.getCount() == 0 ? "P" : String.valueOf(beneficaryStats.getCount()));
 
             itemView.setOnClickListener(v -> viewItemClicked(beneficaryStats));
             btnExpand.setOnClickListener(v -> toggleVisiblity());
