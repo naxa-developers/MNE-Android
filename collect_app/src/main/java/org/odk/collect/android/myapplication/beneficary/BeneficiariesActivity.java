@@ -123,7 +123,8 @@ public class BeneficiariesActivity extends BaseActivity {
                     @Override
                     public void viewItemClicked(BeneficaryStats beneficaryResponse) {
                         String beneficiaryId = String.valueOf(beneficaryResponse.getId());
-                        ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId);
+                        String beneficiaryName = String.valueOf(beneficaryResponse.getName());
+                        ActivityUtil.openFormEntryActivity(BeneficiariesActivity.this, formId, activityId, beneficiaryId,beneficiaryName);
                     }
                 };
 

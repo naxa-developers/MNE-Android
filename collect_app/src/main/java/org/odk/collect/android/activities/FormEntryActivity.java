@@ -161,6 +161,7 @@ import androidx.work.ExistingWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -282,6 +283,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
     MediaLoadingFragment mediaLoadingFragment;
     private String beneficiaryId, activityId;
+    private String beneficiaryName;
 
     public void allowSwiping(boolean doSwipe) {
         this.doSwipe = doSwipe;
@@ -468,6 +470,10 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
                 if (intent.hasExtra(ActivityUtil.KEYS.BENEFICIARY_ID)) {
                     beneficiaryId = intent.getStringExtra(ActivityUtil.KEYS.BENEFICIARY_ID);
+                }
+
+                if (intent.hasExtra(ActivityUtil.KEYS.BENEFICIARY_NAME)) {
+                    beneficiaryName = intent.getStringExtra(ActivityUtil.KEYS.BENEFICIARY_NAME);
                 }
             }
         }
@@ -1268,6 +1274,10 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                             }
                         }
                     }
+                    if (beneficiaryName != null && beneficiaryName.length() > 0) {
+                        saveName = beneficiaryName + "-" + formController.getFormTitle();
+                    }
+
                     if (saveName == null) {
                         // last resort, default to the form title
                         saveName = formController.getFormTitle();
