@@ -56,7 +56,7 @@ public class BeneficaryVH extends RecyclerView.ViewHolder {
             tvConstructionPhase.setText(context.getString(R.string.msg_construction_phase,beneficaryStats.getConstructionPhase()));
             tvTotalFilled.setText(String.valueOf(beneficaryStats.getCount()));
 
-            btnOpenForm.setOnClickListener(v -> viewItemClicked(beneficaryStats));
+            itemView.setOnClickListener(v -> viewItemClicked(beneficaryStats));
             btnExpand.setOnClickListener(v -> toggleVisiblity());
 
         } catch (NullPointerException e) {

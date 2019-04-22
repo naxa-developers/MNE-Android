@@ -92,6 +92,7 @@
             android:layout_marginRight="16dp" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_open_form"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
@@ -128,12 +129,11 @@
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/expand_button"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="0dp"
-            android:background="#00FFFFFF"
             android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_open_form"
             app:layout_constraintEnd_toEndOf="parent"
