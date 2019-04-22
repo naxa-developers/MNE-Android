@@ -1,18 +1,35 @@
 package org.odk.collect.android.myapplication.beneficary;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class BeneficaryStats {
 
-    private Integer id;
-    private String name;
-    private String address;
-    private Integer wardNo;
-    private Integer cluster;
-    private String type;
     private Integer count;
 
-    public Integer getId() {
-        return id;
-    }
+    private Integer id;
+
+    private String name;
+
+    private String address;
+
+    private String wardNo;
+
+    private String cluster;
+
+    private String type;
+
+    private String governmentTranch;
+
+    private String constructionPhase;
+
+    private String typesofhouse;
+
+    private String remarks;
+
+    private Integer progress;
+
+
 
     public Integer getCount() {
         return count;
@@ -20,6 +37,10 @@ public class BeneficaryStats {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
@@ -42,19 +63,19 @@ public class BeneficaryStats {
         this.address = address;
     }
 
-    public Integer getWardNo() {
+    public String getWardNo() {
         return wardNo;
     }
 
-    public void setWardNo(Integer wardNo) {
+    public void setWardNo(String wardNo) {
         this.wardNo = wardNo;
     }
 
-    public Integer getCluster() {
+    public String getCluster() {
         return cluster;
     }
 
-    public void setCluster(Integer cluster) {
+    public void setCluster(String cluster) {
         this.cluster = cluster;
     }
 
@@ -64,6 +85,46 @@ public class BeneficaryStats {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGovernmentTranch() {
+        return governmentTranch;
+    }
+
+    public void setGovernmentTranch(String governmentTranch) {
+        this.governmentTranch = governmentTranch;
+    }
+
+    public String getConstructionPhase() {
+        return constructionPhase;
+    }
+
+    public void setConstructionPhase(String constructionPhase) {
+        this.constructionPhase = constructionPhase;
+    }
+
+    public String getTypesofhouse() {
+        return typesofhouse;
+    }
+
+    public void setTypesofhouse(String typesofhouse) {
+        this.typesofhouse = typesofhouse;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 
 

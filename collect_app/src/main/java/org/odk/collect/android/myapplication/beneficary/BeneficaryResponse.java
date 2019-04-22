@@ -29,6 +29,21 @@ public class BeneficaryResponse {
     @SerializedName("Type")
     @Expose
     private String type;
+    @SerializedName("GovernmentTranch")
+    @Expose
+    private String governmentTranch;
+    @SerializedName("ConstructionPhase")
+    @Expose
+    private String constructionPhase;
+    @SerializedName("Typesofhouse")
+    @Expose
+    private String typesofhouse;
+    @SerializedName("Remarks")
+    @Expose
+    private String remarks;
+    @SerializedName("progress")
+    @Expose
+    private Integer progress;
 
     public Integer getId() {
         return id;
@@ -78,5 +93,44 @@ public class BeneficaryResponse {
         this.type = type;
     }
 
+    public String getGovernmentTranch() {
+        return governmentTranch;
+    }
+
+    public void setGovernmentTranch(String governmentTranch) {
+        this.governmentTranch = governmentTranch;
+    }
+
+    public String getConstructionPhase() {
+        return constructionPhase;
+    }
+
+    public void setConstructionPhase(String constructionPhase) {
+        this.constructionPhase = constructionPhase;
+    }
+
+    public String getTypesofhouse() {
+        return typesofhouse;
+    }
+
+    public void setTypesofhouse(String typesofhouse) {
+        this.typesofhouse = typesofhouse;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
 
 }

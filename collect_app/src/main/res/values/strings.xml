@@ -697,7 +697,7 @@
     <string name="action_close">close</string>
     <string name="action_open">open</string>
     <string name="action_continue_anyway">Continue anyway</string>
-    <string name="msg_double_tap_to_exit">Double tap to exit</string>
+
 
 
 </resources>

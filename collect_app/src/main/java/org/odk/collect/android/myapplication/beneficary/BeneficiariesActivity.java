@@ -110,11 +110,11 @@ public class BeneficiariesActivity extends BaseActivity {
     }
 
     private void setupAdapter() {
-        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH>(filteredList, R.layout.list_item_beneficary) {
+        adapter = new BaseFilterableRecyclerViewAdapter<BeneficaryStats, BeneficaryVH>(filteredList, R.layout.list_item_beneficary_v2) {
             @Override
             public void viewBinded(BeneficaryVH titleDescVH, BeneficaryStats beneficaryStats) {
                 titleDescVH.setActivityAndBeneficiaryIds(hashMap);
-                titleDescVH.bindView(beneficaryStats, hashMap.get("form_id"));
+                titleDescVH.bindView(beneficaryStats, titleDescVH.itemView.getContext());
             }
 
             @Override
