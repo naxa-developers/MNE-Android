@@ -425,6 +425,16 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
             if (savedInstanceState.containsKey(SAVED_FORM_START)) {
                 savedFormStart = savedInstanceState.getBoolean(SAVED_FORM_START, false);
             }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.BENEFICIARY_ID)) {
+                beneficiaryId = savedInstanceState.getString(ActivityUtil.KEYS.BENEFICIARY_ID);
+            }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.BENEFICIARY_NAME)) {
+                beneficiaryName = savedInstanceState.getString(ActivityUtil.KEYS.BENEFICIARY_NAME);
+            }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.ACTIVITY_ID)) {
+                activityId = savedInstanceState.getString(ActivityUtil.KEYS.ACTIVITY_ID);
+            }
+
         }
 
     }
@@ -691,6 +701,9 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         outState.putBoolean(KEY_READ_PHONE_STATE_PERMISSION_REQUEST_NEEDED, readPhoneStatePermissionRequestNeeded);
         outState.putBoolean(KEY_LOCATION_PERMISSIONS_GRANTED, locationPermissionsGranted);
         outState.putBoolean(SAVED_FORM_START, savedFormStart);
+        outState.putString(ActivityUtil.KEYS.BENEFICIARY_ID,beneficiaryId);
+        outState.putString(ActivityUtil.KEYS.BENEFICIARY_NAME,beneficiaryName);
+        outState.putString(ActivityUtil.KEYS.ACTIVITY_ID,activityId);
 
         if (currentView instanceof ODKView) {
             outState.putAll(((ODKView) currentView).getState());
