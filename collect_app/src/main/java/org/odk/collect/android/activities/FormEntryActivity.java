@@ -161,6 +161,7 @@ import androidx.work.ExistingWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -282,6 +283,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
     MediaLoadingFragment mediaLoadingFragment;
     private String beneficiaryId, activityId;
+    private String beneficiaryName;
 
     public void allowSwiping(boolean doSwipe) {
         this.doSwipe = doSwipe;
@@ -423,6 +425,16 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
             if (savedInstanceState.containsKey(SAVED_FORM_START)) {
                 savedFormStart = savedInstanceState.getBoolean(SAVED_FORM_START, false);
             }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.BENEFICIARY_ID)) {
+                beneficiaryId = savedInstanceState.getString(ActivityUtil.KEYS.BENEFICIARY_ID);
+            }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.BENEFICIARY_NAME)) {
+                beneficiaryName = savedInstanceState.getString(ActivityUtil.KEYS.BENEFICIARY_NAME);
+            }
+            if (savedInstanceState.containsKey(ActivityUtil.KEYS.ACTIVITY_ID)) {
+                activityId = savedInstanceState.getString(ActivityUtil.KEYS.ACTIVITY_ID);
+            }
+
         }
 
     }
@@ -468,6 +480,10 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
                 if (intent.hasExtra(ActivityUtil.KEYS.BENEFICIARY_ID)) {
                     beneficiaryId = intent.getStringExtra(ActivityUtil.KEYS.BENEFICIARY_ID);
+                }
+
+                if (intent.hasExtra(ActivityUtil.KEYS.BENEFICIARY_NAME)) {
+                    beneficiaryName = intent.getStringExtra(ActivityUtil.KEYS.BENEFICIARY_NAME);
                 }
             }
         }
@@ -685,6 +701,9 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         outState.putBoolean(KEY_READ_PHONE_STATE_PERMISSION_REQUEST_NEEDED, readPhoneStatePermissionRequestNeeded);
         outState.putBoolean(KEY_LOCATION_PERMISSIONS_GRANTED, locationPermissionsGranted);
         outState.putBoolean(SAVED_FORM_START, savedFormStart);
+        outState.putString(ActivityUtil.KEYS.BENEFICIARY_ID,beneficiaryId);
+        outState.putString(ActivityUtil.KEYS.BENEFICIARY_NAME,beneficiaryName);
+        outState.putString(ActivityUtil.KEYS.ACTIVITY_ID,activityId);
 
         if (currentView instanceof ODKView) {
             outState.putAll(((ODKView) currentView).getState());
@@ -1268,6 +1287,10 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                             }
                         }
                     }
+                    if (beneficiaryName != null && beneficiaryName.length() > 0) {
+                        saveName = beneficiaryName + "-" + formController.getFormTitle();
+                    }
+
                     if (saveName == null) {
                         // last resort, default to the form title
                         saveName = formController.getFormTitle();

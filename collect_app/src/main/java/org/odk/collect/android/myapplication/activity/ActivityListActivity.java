@@ -106,7 +106,7 @@ public class ActivityListActivity extends BaseActivity {
                 if (hasBeneficiaries) {
                     ActivityUtil.openActivity(BeneficiariesActivity.class, ActivityListActivity.this, hashMap, false);
                 } else {
-                    ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId(), "");
+                    ActivityUtil.openFormEntryActivity(ActivityListActivity.this, activity.getForm(), activity.getId());
                 }
             }
         };

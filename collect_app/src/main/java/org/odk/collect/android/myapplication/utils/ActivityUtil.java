@@ -25,6 +25,7 @@ import static android.app.Activity.RESULT_OK;
 public class ActivityUtil {
 
     public static class KEYS {
+        public static final String BENEFICIARY_NAME = "beneficiary_name";
         public static String ACTIVITY_ID = "activity_id";
         public static String BENEFICIARY_ID = "beneficiary_id";
         public static String FORM_ID = "form_id";
@@ -48,7 +49,7 @@ public class ActivityUtil {
 
 
     public static void openActivity(Class className, Context context) {
-         openActivity(className, context, null, false);
+        openActivity(className, context, null, false);
     }
 
     public static void openSettings(Activity activity) {
@@ -59,7 +60,7 @@ public class ActivityUtil {
         activity.startActivityForResult(intent, PracticalActionSplashScreenActivity.REQUEST_CODE_SETTINGS);
     }
 
-    public static void openFormEntryActivity(Context activity, String idString, String activityId, String beneficiaryId) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
+    public static void openFormEntryActivity(Context activity, String idString, String activityId, String beneficiaryId, String beneficiaryName) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
 
 
         try {
@@ -68,6 +69,7 @@ public class ActivityUtil {
             Intent toFormEntry = new Intent(Intent.ACTION_EDIT, formUri);
             toFormEntry.putExtra(KEYS.ACTIVITY_ID, activityId);
             toFormEntry.putExtra(KEYS.BENEFICIARY_ID, beneficiaryId);
+            toFormEntry.putExtra(KEYS.BENEFICIARY_NAME, beneficiaryName);
             toFormEntry.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             toFormEntry.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             activity.startActivity(toFormEntry);
@@ -82,6 +84,9 @@ public class ActivityUtil {
 
     }
 
+    public static void openFormEntryActivity(Context activity, String idString, String activityId) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
+        openFormEntryActivity(activity, idString, activityId, "", "");
+    }
 
     private static long getFormId(String jrFormId) throws CursorIndexOutOfBoundsException, NullPointerException, NumberFormatException {
 
