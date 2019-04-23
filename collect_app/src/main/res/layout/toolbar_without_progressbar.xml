@@ -8,5 +8,6 @@
     android:minHeight="?attr/actionBarSize"
     app:contentInsetEnd="0dp"
     app:contentInsetStart="0dp"
+    app:navigationIcon="@drawable/notes"
     app:contentInsetStartWithNavigation="0dp"
-    app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />

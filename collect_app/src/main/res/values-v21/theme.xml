@@ -9,5 +9,9 @@
     <style name="BaseLightAppTheme.Collect">
         <item name="android:buttonStyle">@style/CustomButtonStyle</item>
         <item name="imageButtonStyle">@style/CustomImageButtonLight</item>
+        <item name="android:statusBarColor">@color/greenDark</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/greenDark</item>
+
     </style>
 </resources>
