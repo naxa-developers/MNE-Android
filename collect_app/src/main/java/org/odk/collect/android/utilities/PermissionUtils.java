@@ -3,7 +3,6 @@ package org.odk.collect.android.utilities;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -29,7 +28,7 @@ import org.odk.collect.android.activities.InstanceUploaderActivity;
 import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.activities.SplashScreenActivity;
 import org.odk.collect.android.listeners.PermissionListener;
-import org.odk.collect.android.myapplication.utils.ActivityUtil;
+import org.odk.collect.android.mne.utils.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;

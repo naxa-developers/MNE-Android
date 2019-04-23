@@ -73,20 +73,20 @@
         android:largeHeap="true"
         android:supportsRtl="true">
 
-        <service android:name=".myapplication.sync.DataSyncService" />
+        <service android:name=".mne.sync.DataSyncService" />
 
         <activity
             android:exported="true"
-            android:name=".myapplication.cluster.ClusterListActivity"
+            android:name=".mne.cluster.ClusterListActivity"
             android:label="@string/title_activity_cluster_list_activty"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".myapplication.dashboard.DashboardActivity"
+            android:name=".mne.dashboard.DashboardActivity"
             android:exported="true"
             android:label="@string/title_activity_dashboard" />
         <activity
             android:exported="true"
-            android:name=".myapplication.beneficary.BeneficiariesActivity" />
+            android:name=".mne.beneficary.BeneficiariesActivity" />
 
         <provider
             android:name=".provider.FormsProvider"
@@ -263,11 +263,11 @@
         <activity android:name=".activities.CaptureSelfieVideoActivity" />
         <activity android:name=".activities.CaptureSelfieVideoActivityNewApi" />
         <activity
-            android:name=".myapplication.onboarding.LoginActivity"
+            android:name=".mne.onboarding.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".myapplication.PracticalActionSplashScreenActivity"
+            android:name=".mne.PracticalActionSplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -277,12 +277,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".myapplication.activitygroup.ActivityGroupListActivity"
+            android:name=".mne.activitygroup.ActivityGroupListActivity"
             android:exported="true" />
         <activity
-            android:name=".myapplication.activity.ActivityListActivity"
+            android:name=".mne.activity.ActivityListActivity"
             android:exported="true" />
-        <activity android:name=".myapplication.preferences.PreferencesActivity" />
+        <activity android:name=".mne.preferences.PreferencesActivity" />
     </application>
 
 </manifest>
