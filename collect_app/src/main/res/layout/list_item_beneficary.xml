@@ -19,6 +19,7 @@
 
 
         <RelativeLayout
+
             android:id="@+id/rela_round"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -37,7 +38,25 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_medium" />
 
+
+            <TextView
+                android:id="@+id/tv_form_fill_count"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="48dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/circle_green"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="12dp" />
+
         </RelativeLayout>
+
+
+
 
 
         <TextView
@@ -64,14 +83,28 @@
 
         <TextView
             android:id="@+id/tv_total_filled"
-            android:textColor="@color/textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_list_item_desc"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_toRightOf="@id/rela_round"
-            android:text="Filled 2 times" />
+            android:text="Filled 2 times"
+            android:textColor="@color/textColor"
+            android:visibility="gone" />
 
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/expand_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rela_round"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="0dp"
+            android:background="#00FFFFFF"
+            android:padding="6dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
