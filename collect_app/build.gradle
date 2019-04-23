@@ -68,7 +68,7 @@ android {
     compileSdkVersion(28)
     def versionMajor = 0
     def versionMinor = 0
-    def versionPatch = 2
+    def versionPatch = 4
 
     defaultConfig {
         applicationId('np.com.naxa.mande')
