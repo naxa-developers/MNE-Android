@@ -66,5 +66,10 @@ the License.
     <color name="colorPrimaryTextDefaultMaterialLight">#DE000000</color>
     <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>
 
-
+    <color name="grey">#f4f4f4</color>
+    <color name="green">#45b559</color>
+    <color name="greenDark">#43A047</color>
+    <color name="blue">#40a1c7</color>
+    <color name="orange">#ffa600</color>
+    <color name="pink">#f0638c</color>
 </resources>
