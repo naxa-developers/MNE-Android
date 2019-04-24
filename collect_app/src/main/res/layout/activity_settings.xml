@@ -11,7 +11,7 @@
 
     <fragment
 
-        android:name="org.odk.collect.android.myapplication.preferences.SettingsFragment"
+        android:name="org.odk.collect.android.mne.preferences.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

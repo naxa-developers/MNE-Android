@@ -25,7 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.odk.collect.android.BuildConfig;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.myapplication.onboarding.UserLocalSource;
+import org.odk.collect.android.mne.onboarding.UserLocalSource;
 import org.odk.collect.android.utilities.FileUtils;
 import org.opendatakit.httpclientandroidlib.Header;
 import org.opendatakit.httpclientandroidlib.HttpEntity;
