@@ -263,6 +263,7 @@
         <activity android:name=".activities.CaptureSelfieVideoActivity" />
         <activity android:name=".activities.CaptureSelfieVideoActivityNewApi" />
         <activity
+            android:noHistory="true"
             android:name=".mne.onboarding.LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" />
