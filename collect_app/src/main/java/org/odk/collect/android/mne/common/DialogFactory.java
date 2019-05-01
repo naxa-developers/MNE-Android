@@ -59,7 +59,7 @@ public final class DialogFactory {
 
 
     public static Dialog createMessageDialog(final Context context, String title, String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context,R.style.dialog_style)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(R.string.dialog_action_ok, null);
