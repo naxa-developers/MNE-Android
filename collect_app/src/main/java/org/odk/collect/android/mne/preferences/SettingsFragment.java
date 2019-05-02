@@ -1,5 +1,6 @@
 package org.odk.collect.android.mne.preferences;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.preference.PreferenceFragment;
 
 import org.odk.collect.android.BuildConfig;
 import org.odk.collect.android.R;
+import org.odk.collect.android.dao.InstancesDao;
 import org.odk.collect.android.mne.common.DialogFactory;
 import org.odk.collect.android.mne.onboarding.LoginActivity;
 import org.odk.collect.android.mne.utils.ActivityUtil;
@@ -71,17 +73,22 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private void logoutConfirmDialog() {
 
-        String message = "All your data will be deleted including \n-forms\n-clusters\n-activities\n-beneficiaries\n";
-        DialogFactory.createActionDialog(getActivity(), "Logout", message)
-                .setPositiveButton(R.string.dialog_action_ok, (dialog, which) -> {
-                    ToastUtils.showLongToast(getString(R.string.please_wait));
-                    PraticalActionUserSession.getInstance().logout(deletedForms -> {
-                        ActivityUtil.openActivity(LoginActivity.class, getActivity());
-                        getActivity().finishAffinity();
-                    });
-                })
-                .setNegativeButton(R.string.dialog_action_dismiss, null)
-                .show();
+        int unsentFormCount = new InstancesDao().getUnsentInstancesCursor().getCount();
 
+        boolean isSafeToLogout = unsentFormCount == 0;
+        if (isSafeToLogout) {
+            ToastUtils.showLongToast(getString(R.string.please_wait));
+            PraticalActionUserSession.getInstance().logout(deletedForms -> {
+                ActivityUtil.openActivity(LoginActivity.class, getActivity());
+                getActivity().finishAffinity();
+            });
+        } else {
+            String msg;
+            msg = getActivity().getString(R.string.logout_message_only_filled_forms, unsentFormCount);
+            DialogFactory.createMessageDialog(getActivity(),
+                    getActivity().getString(R.string.msg_stop_logout),
+                    msg)
+                    .show();
+        }
     }
 }

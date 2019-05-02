@@ -77,4 +77,8 @@
     <string name="msg_type_of_house"><b>Type Of House:</b> %s</string>
     <string name="msg_remarks"><b>Remarks:</b> %s</string>
     <string name="msg_construction_phase"><b>Construction Phase: </b>%s</string>
+    <string name="msg_stop_logout">Can\'t logout</string>
+    <string name="logout_message_only_filled_forms">Either upload or delete %d filled form(s) </string>
+
+
 </resources>
