@@ -89,6 +89,7 @@ public class InstanceUploaderList extends InstanceListActivity implements
     private static final String INSTANCE_UPLOADER_LIST_SORTING_ORDER = "instanceUploaderListSortingOrder";
 
     private static final int INSTANCE_UPLOADER = 0;
+    private static final boolean IS_PHONE_REQUIRED = false;
 
     @BindView(R.id.upload_button)
     Button uploadButton;
@@ -362,6 +363,11 @@ public class InstanceUploaderList extends InstanceListActivity implements
                 // otherwise, do the normal aggregate/other thing.
                 Intent i = new Intent(this, InstanceUploaderActivity.class);
                 i.putExtra(FormEntryActivity.KEY_INSTANCES, instanceIds);
+
+                if(!IS_PHONE_REQUIRED){
+                    startActivityForResult(i, INSTANCE_UPLOADER);
+                    return;
+                }
                 // Not required but without this permission a Device ID attached to a request will be empty.
                 new PermissionUtils(this).requestReadPhoneStatePermission(new PermissionListener() {
                     @Override
