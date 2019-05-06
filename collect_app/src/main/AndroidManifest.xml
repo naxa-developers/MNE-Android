@@ -284,6 +284,7 @@
             android:name=".mne.activity.ActivityListActivity"
             android:exported="true" />
         <activity android:name=".mne.preferences.PreferencesActivity" />
+        <activity android:name=".mne.FormManagerActivity" />
     </application>
 
 </manifest>

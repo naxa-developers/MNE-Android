@@ -18,10 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.odk.collect.android.R;
+import org.odk.collect.android.activities.FileManagerTabs;
 import org.odk.collect.android.activities.InstanceChooserList;
 import org.odk.collect.android.activities.InstanceUploaderList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.mne.BaseActivity;
+import org.odk.collect.android.mne.FormManagerActivity;
 import org.odk.collect.android.mne.common.BaseRecyclerViewAdapter;
 import org.odk.collect.android.mne.common.Constant;
 import org.odk.collect.android.mne.preferences.PreferencesActivity;
@@ -138,6 +140,15 @@ public class ClusterListActivity extends BaseActivity implements NavigationView.
                     Intent i = new Intent(getApplicationContext(),
                             InstanceUploaderList.class);
                     startActivity(i);
+                }
+
+            case R.id.nav_delete_form:
+                if (Collect.allowClick(getClass().getName())) {
+                    if (Collect.allowClick(getClass().getName())) {
+                        Intent i = new Intent(getApplicationContext(),
+                                FormManagerActivity.class);
+                        startActivity(i);
+                    }
                 }
                 break;
             case R.id.nav_app_settings:
