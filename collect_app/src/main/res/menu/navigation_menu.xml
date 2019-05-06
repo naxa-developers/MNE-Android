@@ -2,19 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_cloud_24dp"
         android:id="@+id/nav_upload_form"
+        android:icon="@drawable/ic_cloud_24dp"
         android:title="Upload Form(s)" />
     <item
-        android:icon="@drawable/ic_edit_24dp"
         android:id="@+id/nav_edit_form"
+        android:icon="@drawable/ic_edit_24dp"
         android:title="Edit Forms(s)" />
     <item
-        android:visible="false"
         android:id="@+id/nav_download_form"
-        android:title="Download Form(s)" />
+        android:title="Download Form(s)"
+        android:visible="false" />
+
     <item
-        android:icon="@drawable/ic_settings_24dp"
+        android:id="@+id/nav_delete_form"
+        android:icon="@drawable/ic_delete"
+        android:title="Delete Form(s)" />
+    <item
         android:id="@+id/nav_app_settings"
+        android:icon="@drawable/ic_settings_24dp"
         android:title="Settings" />
 </menu>
