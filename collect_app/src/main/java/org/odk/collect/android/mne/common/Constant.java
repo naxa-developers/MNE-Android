@@ -2,7 +2,8 @@ package org.odk.collect.android.mne.common;
 
 public class Constant {
 //    public static final String BASE_URL = "http://192.168.88.51:8001";
-    public static final String BASE_URL = "https://mne.naxa.com.np";
+//    public static final String BASE_URL = "https://mne.naxa.com.np";
+    public static final String BASE_URL = "http://mne.practicalaction.org";
     public static final String FORM_LIST = BASE_URL + "/formsList/";
 
     public static class URLs {
