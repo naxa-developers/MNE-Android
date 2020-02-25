@@ -1,5 +1,6 @@
 package org.odk.collect.android.http;
 
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
@@ -19,6 +20,8 @@ import org.odk.collect.android.utilities.FileUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -94,6 +97,21 @@ public class OkHttpConnection implements OpenRosaHttpInterface {
                 .build();
     }
 
+    private void writeToFile(String content) {
+        try {
+            File file = new File(Collect.ODK_ROOT + "/form-get.txt");
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file);
+            writer.append(content);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+        }
+    }
+
     @NonNull
     @Override
     public HttpGetResult executeGetRequest(@NonNull URI uri, @Nullable String contentType, @Nullable HttpCredentialsInterface credentials) throws Exception {
@@ -101,6 +119,7 @@ public class OkHttpConnection implements OpenRosaHttpInterface {
         Request request = buildGetRequest(uri);
 
         Response response = httpClient.newCall(request).execute();
+        writeToFile(response.body().string());
         int statusCode = response.code();
 
         if (statusCode != HttpURLConnection.HTTP_OK) {

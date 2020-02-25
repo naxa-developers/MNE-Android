@@ -108,6 +108,7 @@ public class DownloadFormListUtils {
 
         DocumentFetchResult result = collectServerClient.getXmlDocument(downloadListUrl);
 
+
         clearTemporaryCredentials(url);
 
         // If we can't get the document, return the error, cancel the task

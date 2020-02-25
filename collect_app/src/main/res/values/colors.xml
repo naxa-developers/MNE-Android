@@ -55,7 +55,7 @@ the License.
     <color name="colorPrimary">@color/bg_dark</color>
     <color name="colorPrimaryDark">@color/bg_dark</color>
     <color name="colorAccent">@color/green</color>
-
+    #2ecc71
     <color name="textColor">#8c909a</color>
     <color name="bg_dark">#1E1E2F</color>
     <color name="bg_dark_subsection">#C61E1E2F</color>

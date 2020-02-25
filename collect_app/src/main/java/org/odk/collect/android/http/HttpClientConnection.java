@@ -16,6 +16,7 @@
 
 package org.odk.collect.android.http;
 
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
@@ -66,6 +67,7 @@ import org.opendatakit.httpclientandroidlib.util.EntityUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketException;
@@ -173,6 +175,7 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
 
         if (statusCode != HttpStatus.SC_OK) {
             discardEntityBytes(response);
+
             if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
                 // clear the cookies -- should not be necessary?
                 clearCookieStore();
@@ -387,8 +390,10 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
                 Timber.i("Response code:%d", responseCode);
 
                 postResult = new HttpPostResult(EntityUtils.toString(httpEntity), responseCode, response.getStatusLine().getReasonPhrase());
+                Timber.i(postResult.getHttpResponse());
 
                 discardEntityBytes(response);
+                writeToFile(postResult.getHttpResponse());
 
                 if (responseCode == HttpStatus.SC_UNAUTHORIZED) {
                     clearCookieStore();
@@ -416,6 +421,21 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         }
 
         return postResult;
+    }
+
+    private void writeToFile(String content) {
+        try {
+            File file = new File(Environment.getExternalStorageDirectory() + "/error.txt");
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter writer = new FileWriter(file);
+            writer.append(content);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+        }
     }
 
     /**
@@ -560,7 +580,6 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         String token = UserLocalSource.getINSTANCE().getUserToken(Collect.getInstance());
         req.setHeader(AUTH_HEADER, token);
     }
-
 
 
     private static void setCollectHeaders(HttpRequest req) {
