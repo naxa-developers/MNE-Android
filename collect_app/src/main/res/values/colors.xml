@@ -65,7 +65,8 @@ the License.
     <color name="bg_dark">@color/black</color>
 <!--    <color name="bg_dark_subsection">#C61E1E2F</color>-->
     <color name="bg_dark_subsection">@color/black</color>
-    <color name="bg_light">#27293D</color>
+<!--    <color name="bg_light">#27293D</color>-->
+    <color name="bg_light">#F3F3F3</color>
     <color name="white">#fff</color>
 <!--    <color name="black">#000</color>-->
     <color name="black">#3C3C3C</color>
