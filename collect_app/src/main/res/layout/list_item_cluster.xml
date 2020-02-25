@@ -25,7 +25,8 @@
             android:layout_marginLeft="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
-            app:srcCompat="@drawable/ic_place_black" />
+            app:srcCompat="@drawable/ic_place_black"
+            android:tint="@color/black"/>
 
 
 

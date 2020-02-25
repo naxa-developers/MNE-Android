@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nav_header_root_layout"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="200dp"
     >
 
     <RelativeLayout
@@ -16,10 +16,11 @@
 
         <ImageView
 
-            android:src="@drawable/pratical_action_logo"
+            android:src="@drawable/logo_general"
             android:scaleType="centerInside"
-            android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"/>
 
 
 
