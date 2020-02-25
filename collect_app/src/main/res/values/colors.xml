@@ -27,14 +27,18 @@ the License.
     <color name="darkPopupDialogColor">#3f3f3f</color>
     <color name="defaultDarkIconColor">#deffffff</color>
     <color name="darkDividerColor">#1effffff</color>
-    <color name="darkRankItemColor">@android:color/black</color>
+<!--    <color name="darkRankItemColor">@android:color/black</color>-->
+    <color name="darkRankItemColor">@color/black</color>
     <color name="darkIconColorDisabled">#61ffffff</color>
     <color name="darkIconColorEnabled">#deffffff</color>
 
     <!-- Light Theme Palette -->
-    <color name="lightPrimaryTextColor">#de000000</color>
-    <color name="lightSecondaryTextColor">#99000000</color>
-    <color name="defaultLightIconColor">#de000000</color>
+<!--    <color name="lightPrimaryTextColor">#de000000</color>-->
+<!--    <color name="lightSecondaryTextColor">#99000000</color>-->
+    <color name="lightPrimaryTextColor">@color/black</color>
+    <color name="lightSecondaryTextColor">@color/black</color>
+<!--    <color name="defaultLightIconColor">#de000000</color>-->
+    <color name="defaultLightIconColor">#3C3C3C</color>
     <color name="lightDividerColor">#1e000000</color>
     <color name="lightRankItemColor">#EEEEEE</color>
     <color name="lightAccentColor">@color/orange</color>
@@ -57,16 +61,22 @@ the License.
     <color name="colorAccent">@color/green</color>
     #2ecc71
     <color name="textColor">#8c909a</color>
-    <color name="bg_dark">#1E1E2F</color>
-    <color name="bg_dark_subsection">#C61E1E2F</color>
+<!--    <color name="bg_dark">#1E1E2F</color>-->
+    <color name="bg_dark">@color/black</color>
+<!--    <color name="bg_dark_subsection">#C61E1E2F</color>-->
+    <color name="bg_dark_subsection">@color/black</color>
     <color name="bg_light">#27293D</color>
     <color name="white">#fff</color>
-    <color name="black">#000</color>
+<!--    <color name="black">#000</color>-->
+    <color name="black">#3C3C3C</color>
 
     <color name="colorPrimaryTextDefaultMaterialDark">#FFFFFFFF</color>
     <color name="colorSecondaryTextDefaultMaterialDark">#B3FFFFFF</color>
-    <color name="colorPrimaryTextDefaultMaterialLight">#DE000000</color>
-    <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>
+<!--    <color name="colorPrimaryTextDefaultMaterialLight">#DE000000</color>-->
+<!--    <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>-->
+    <color name="colorPrimaryTextDefaultMaterialLight">@color/black</color>
+    <color name="colorSecondaryTextDefaultMaterialLight">@color/black</color>
+
 
     <color name="grey">#f4f4f4</color>
 <!--    <color name="green">#45b559</color>-->
@@ -74,6 +84,6 @@ the License.
     <color name="greenDark">#43A047</color>
     <color name="blue">#40a1c7</color>
 <!--    <color name="orange">#ffa600</color>-->
-    <color name="orange">#2ECC71</color>
+    <color name="orange">#FFA600</color>
     <color name="pink">#f0638c</color>
 </resources>
