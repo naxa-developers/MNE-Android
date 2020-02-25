@@ -38,8 +38,10 @@ the License.
     <color name="lightDividerColor">#1e000000</color>
     <color name="lightRankItemColor">#EEEEEE</color>
     <color name="lightAccentColor">@color/orange</color>
-    <color name="lightIconColorDisabled">#61000000</color>
-    <color name="lightIconColorEnabled">#de000000</color>
+<!--    <color name="lightIconColorDisabled">#61000000</color>-->
+<!--    <color name="lightIconColorEnabled">#de000000</color>-->
+    <color name="lightIconColorDisabled">#ED3C3C3C</color>
+    <color name="lightIconColorEnabled">#3C3C3C</color>
 
     <color name="highContrastHighlight">#ff8c00</color>
     <color name="displaySubtextColor">@color/green_500</color>
@@ -67,9 +69,11 @@ the License.
     <color name="colorSecondaryTextDefaultMaterialLight">#8A000000</color>
 
     <color name="grey">#f4f4f4</color>
-    <color name="green">#45b559</color>
+<!--    <color name="green">#45b559</color>-->
+    <color name="green">#2ECC71</color>
     <color name="greenDark">#43A047</color>
     <color name="blue">#40a1c7</color>
-    <color name="orange">#ffa600</color>
+<!--    <color name="orange">#ffa600</color>-->
+    <color name="orange">#2ECC71</color>
     <color name="pink">#f0638c</color>
 </resources>
