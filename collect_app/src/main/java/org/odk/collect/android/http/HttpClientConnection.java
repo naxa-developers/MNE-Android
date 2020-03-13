@@ -53,6 +53,9 @@ import org.opendatakit.httpclientandroidlib.client.protocol.HttpClientContext;
 import org.opendatakit.httpclientandroidlib.config.SocketConfig;
 import org.opendatakit.httpclientandroidlib.conn.ConnectTimeoutException;
 import org.opendatakit.httpclientandroidlib.conn.HttpHostConnectException;
+import org.opendatakit.httpclientandroidlib.conn.ssl.NoopHostnameVerifier;
+import org.opendatakit.httpclientandroidlib.conn.ssl.SSLConnectionSocketFactory;
+import org.opendatakit.httpclientandroidlib.conn.ssl.TrustStrategy;
 import org.opendatakit.httpclientandroidlib.entity.ContentType;
 import org.opendatakit.httpclientandroidlib.entity.mime.MultipartEntityBuilder;
 import org.opendatakit.httpclientandroidlib.entity.mime.content.FileBody;
@@ -60,13 +63,15 @@ import org.opendatakit.httpclientandroidlib.entity.mime.content.StringBody;
 import org.opendatakit.httpclientandroidlib.impl.auth.BasicScheme;
 import org.opendatakit.httpclientandroidlib.impl.client.BasicAuthCache;
 import org.opendatakit.httpclientandroidlib.impl.client.BasicCookieStore;
-import org.opendatakit.httpclientandroidlib.impl.client.HttpClientBuilder;
+import org.opendatakit.httpclientandroidlib.impl.client.HttpClients;
 import org.opendatakit.httpclientandroidlib.protocol.BasicHttpContext;
 import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
+import org.opendatakit.httpclientandroidlib.ssl.SSLContextBuilder;
 import org.opendatakit.httpclientandroidlib.util.EntityUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,6 +80,11 @@ import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -172,6 +182,15 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
 
         response = httpclient.execute(req, httpContext);
         int statusCode = response.getStatusLine().getStatusCode();
+
+        InputStream is = response.getEntity().getContent();
+        String filePath = Collect.ODK_ROOT + File.separator + "error.html";
+        FileOutputStream fos = new FileOutputStream(new File(filePath));
+        int inByte;
+        while ((inByte = is.read()) != -1)
+            fos.write(inByte);
+        is.close();
+        fos.close();
 
         if (statusCode != HttpStatus.SC_OK) {
             discardEntityBytes(response);
@@ -464,6 +483,30 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
      * @return HttpClient properly configured.
      */
     private synchronized HttpClient createHttpClient(int timeout) {
+
+        SSLContextBuilder builder;
+        SSLConnectionSocketFactory sslSF = null;
+        try {
+            builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustStrategy() {
+                @Override
+                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    return true;
+                }
+            });
+
+            sslSF = new SSLConnectionSocketFactory(builder.build(),
+                    NoopHostnameVerifier.INSTANCE);
+
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+
         // configure connection
         SocketConfig socketConfig = SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(
                 2 * timeout)
@@ -486,11 +529,10 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
                 .setCookieSpec(CookieSpecs.DEFAULT)
                 .build();
 
-        return HttpClientBuilder.create()
+        return HttpClients.custom().setSSLSocketFactory(sslSF)
                 .setDefaultSocketConfig(socketConfig)
                 .setDefaultRequestConfig(requestConfig)
                 .build();
-
     }
 
     private void enablePreemptiveBasicAuth(String host) {
