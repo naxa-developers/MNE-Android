@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
+import org.odk.collect.UnsafeOkHttpClient;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.mne.common.Constant;
 import org.odk.collect.android.mne.onboarding.UserLocalSource;
@@ -41,7 +42,9 @@ public class ServiceGenerator {
     }
 
     private static OkHttpClient createOkHttpClient() {
-        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+//        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        OkHttpClient.Builder okHttpClientBuilder =  UnsafeOkHttpClient.getUnsafeOkHttpClient().newBuilder();
+
         String token = UserLocalSource.getINSTANCE().getUserToken(Collect.getInstance().getApplicationContext());
 
         boolean isTokenEmpty = token == null || token.trim().length() == 0;
