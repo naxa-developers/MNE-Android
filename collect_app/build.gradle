@@ -68,7 +68,7 @@ android {
     compileSdkVersion(28)
     def versionMajor = 1
     def versionMinor = 0
-    def versionPatch = 5
+    def versionPatch = 6
 
     defaultConfig {
         applicationId('np.com.naxa.mande')
@@ -250,7 +250,7 @@ dependencies {
     implementation "commons-io:commons-io:2.6"
     implementation "net.sf.kxml:kxml2:2.3.0"
     implementation "net.sf.opencsv:opencsv:2.3"
-    implementation("org.opendatakit:opendatakit-javarosa:2.14.0-SNAPSHOT") {
+    implementation("org.getodk:javarosa:2.18.0-SNAPSHOT") {
         exclude group: 'joda-time'
         exclude group: 'org.slf4j'
     }
