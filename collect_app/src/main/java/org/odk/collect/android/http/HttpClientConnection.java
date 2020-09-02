@@ -96,6 +96,7 @@ import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
 
+import okhttp3.Response;
 import timber.log.Timber;
 
 public class HttpClientConnection implements OpenRosaHttpInterface {
@@ -161,6 +162,17 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         }
     }
 
+    private void saveResponseToHtml(HttpResponse response) throws IOException {
+        InputStream is = response.getEntity().getContent();
+        String filePath = Collect.ODK_ROOT + File.separator + "error.html";
+        FileOutputStream fos = new FileOutputStream(new File(filePath));
+        int inByte;
+        while ((inByte = is.read()) != -1)
+            fos.write(inByte);
+        is.close();
+        fos.close();
+    }
+
     @Override
     public @NonNull
     HttpGetResult executeGetRequest(@NonNull URI uri, @Nullable final String contentType, @Nullable HttpCredentialsInterface credentials) throws Exception {
@@ -183,14 +195,6 @@ public class HttpClientConnection implements OpenRosaHttpInterface {
         response = httpclient.execute(req, httpContext);
         int statusCode = response.getStatusLine().getStatusCode();
 
-        InputStream is = response.getEntity().getContent();
-        String filePath = Collect.ODK_ROOT + File.separator + "error.html";
-        FileOutputStream fos = new FileOutputStream(new File(filePath));
-        int inByte;
-        while ((inByte = is.read()) != -1)
-            fos.write(inByte);
-        is.close();
-        fos.close();
 
         if (statusCode != HttpStatus.SC_OK) {
             discardEntityBytes(response);
